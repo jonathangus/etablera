@@ -1,0 +1,4 @@
+{
+  "js-import.semicolon": false,
+  "js-import.root": "src"
+}
