@@ -114,9 +114,10 @@ const Border = styled.div`
   z-index: 51;
   will-change: transform;
 `
-const bSizeLarge = '290px'
-const bSizeDesk = '250px'
-const bSizeMob = '45px'
+const bSizeLarge = '120px'
+const bSizeDesk = '100px'
+const bSizeTablet = '80px'
+const bSizeMob = '35px'
 const bOffset = '-0px'
 
 const BorderVertical = styled(Border)`
@@ -128,13 +129,12 @@ const BorderVertical = styled(Border)`
     width: ${bSizeDesk};
   `}
 
-
   ${media.tablet`
-    width: 100px;
+    width: ${bSizeTablet};
   `}
 
   ${media.phone`
-    width: 45px;
+    width: ${bSizeMob};
   `}
 `
 
@@ -148,11 +148,11 @@ const BorderHorizontal = styled(Border)`
   `}
 
   ${media.tablet`
-    height: 100px;
+    height: ${bSizeTablet};
   `}
 
   ${media.phone`
-    height: 45px;
+    height: ${bSizeMob};
   `}
 `
 

@@ -26,9 +26,6 @@ const transitionCss = css`
 const StyledMediaElementReveal = styled(MediaElementReveal)`
   ${p => p.type === 'left' && rightPosCss}
   ${p => p.type === 'right' && leftPosCss}
-  ${transitionCss};
-  
-
 `
 
 const LargeGrid = styled(Grid)``
@@ -53,11 +50,9 @@ const Content = styled.div`
   flex-direction: column;
   justify-content: center;
   ${transitionCss};
-  transition-delay:300ms;
 
   ${p => p.type === 'right' && rightPosCss}
   ${p => p.type === 'left' && leftPosCss}
-
 
 
   ${media.tablet`

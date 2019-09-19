@@ -18,6 +18,8 @@ const Container = styled.div`
     margin: 0 auto;
     display: block;
     min-width: 80px;
+    width: 100%;
+    object-fit: contain;
   }
 `
 

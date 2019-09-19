@@ -9,14 +9,14 @@ const Img = styled.img`
   display: block;
   left: 0;
   top: 0;
-  position: absolute;
-  height: 100%;
 
   ${p =>
-    p.loaded &&
+    !p.loaded &&
     `
-    height: auto;
-    position: static;
+     position: absolute;
+    height: 100%;
+    left: 50%;
+    transform: translate(-50%);
   `}
 `
 
@@ -36,7 +36,7 @@ const Placeholder = styled.img`
   ${p =>
     p.loaded &&
     `
-  opacity: 0;
+    opacity: 0;
     height: 100%;
     position: absolute;
 `}

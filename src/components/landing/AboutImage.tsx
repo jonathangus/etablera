@@ -11,7 +11,6 @@ const Container = styled.div`
   position: relative;
   max-width: 2600px;
   margin: 0 auto;
-  max-height: 95vh;
 
   margin-top: 30vh;
 
@@ -26,6 +25,8 @@ const ImageWrap = styled.div`
 `
 const Inner = styled.div`
   pointer-events: none;
+  overflow: hidden;
+  max-height: 95vh;
 `
 
 const WaveContainer = styled.div`

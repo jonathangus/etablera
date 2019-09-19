@@ -44,7 +44,7 @@ class SmoothCase extends SmoothItem {
         previous: 0,
         current: 0,
         ease: 0.1,
-        fromValue: Number(math.getRandomFloat(50, window.innerHeight * 0.3)),
+        fromValue: Number(math.getRandomFloat(20, window.innerHeight * 0.1)),
         setValue: () => {
           const fromValue = this.renderedStyles.titleTranslationY.fromValue
           const toValue = -1 * fromValue
