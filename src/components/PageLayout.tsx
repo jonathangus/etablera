@@ -49,7 +49,7 @@ const PageLayout = ({ children, pageContext, location }) => {
 
               <GlobalStyle />
 
-              <Header currentPath={currPath} />
+              <Header key={location.pathname} currentPath={currPath} />
               <PageTransitionHandler pathname={location.pathname}>
                 <PageLoader isFrontpage={isFrontpage} />
                 <main>{children}</main>
