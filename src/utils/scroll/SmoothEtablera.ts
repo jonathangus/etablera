@@ -54,9 +54,10 @@ class SmoothEtablera extends SmoothItem {
     const opacity = (1 - this.renderedStyles.fade.previous).toFixed(2)
     const scale = 1.65 * this.renderedStyles.fade.previous + 1
 
+    const target = document.getElementById('et-canv')
     this.DOM.description = etableraDescription.resolve()
-    this.DOM.content.style.transform = `translate(-50%,-50%) scale(${scale})`
-    this.DOM.content.style.opacity = opacity
+    target.style.transform = `translate(-50%,-50%) scale(${scale})`
+    target.style.opacity = opacity
 
     if (this.DOM.description) {
       this.DOM.description.style.opacity = (

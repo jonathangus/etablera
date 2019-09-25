@@ -33,6 +33,7 @@
     "intersection-observer": "^0.7.0",
     "ismobilejs": "^1.0.3",
     "lodash": "^4.17.15",
+    "ogl": "0.0.25",
     "plyr": "^3.5.6",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
