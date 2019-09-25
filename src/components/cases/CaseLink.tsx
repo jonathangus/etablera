@@ -62,7 +62,7 @@ const CaseLink = (
   const mediaElement = useRef<ICaseMediaHandler>()
   const t = useSetting()
   const { hideHeader } = useUiContext()
-  const href = t.url(`/${slugify(record.name)}`)
+  const href = t.url(`/${slugify(record.name)}/`)
   const animationInProgress = useRef(false)
 
   const goToCase = async () => {

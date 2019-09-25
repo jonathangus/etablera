@@ -12,6 +12,7 @@ import useScheduleEffect, { SchedulePrio } from '../hooks/useScheduleEffect'
 import Grid from './Grid'
 import { $header } from '../utils/dom-selectors'
 import headerTextDifference from '../utils/header-text-difference'
+import { useSetting } from '../contexts/SettingsContext'
 
 const lightTextStyle = css`
   --half-text-split-color: white;
@@ -49,6 +50,8 @@ const StyledGrid = styled(Grid)`
 `
 
 const Logo = styled.div`
+  transition: opacity 0.4s linear;
+  opacity: ${p => (p.isVisible ? 1 : 0)};
   a {
     display: block;
   }
@@ -77,6 +80,7 @@ const Header = ({ currentPath }: Props) => {
   const lastScrollTop = useRef(0)
   const resetScrollValue = useRef(0)
   const [show, setShow] = useState(true)
+  const t = useSetting()
 
   const onScroll = throttle(() => {
     let st = window.pageYOffset || document.documentElement.scrollTop
@@ -121,11 +125,9 @@ const Header = ({ currentPath }: Props) => {
       show={mounted && headerShown && show}
     >
       <StyledGrid>
-        {!isFrontpage && (
-          <Logo>
-            <Link to="/">{logo}</Link>
-          </Logo>
-        )}
+        <Logo isVisible={!isFrontpage}>
+          <Link to={t.url('/')}>{logo}</Link>
+        </Logo>
         <Right>
           <MenuItems />
           <LanguageSelect />
