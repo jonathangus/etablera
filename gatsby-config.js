@@ -31,11 +31,12 @@ module.exports = {
       },
     },
 
-    `gatsby-plugin-react-helmet`,
+    // `gatsby-plugin-react-helmet`,
     {
       resolve: 'gatsby-plugin-styled-components',
       options: {
-        displayName: process.env.NODE_ENV === 'development',
+        displayName: true,
+        // displayName: process.env.NODE_ENV === 'development',
       },
     },
     {
