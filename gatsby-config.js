@@ -45,7 +45,7 @@ module.exports = {
       options: {
         name: `Etablera`,
         short_name: `etablera`,
-        start_url: `/`,
+        start_url: `/?pwa`,
         background_color: `#000`,
         theme_color: `#000`,
         display: `standalone`,
