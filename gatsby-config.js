@@ -94,6 +94,7 @@ module.exports = {
       resolve: 'gatsby-plugin-netlify',
       options: {
         headers: {
+          '/sw.js': ['Cache-Control: public, no-cache'],
           '*.js': ['Cache-Control: public, max-age=31449600'],
           '*.css': ['Cache-Control: public, max-age=31449600'],
           '*.woff2': ['Cache-Control: public, max-age=31449600'],
