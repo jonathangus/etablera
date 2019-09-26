@@ -20,11 +20,16 @@ const getPathName = location => {
 }
 
 export const onClientEntry = () => {
+  const entryDate = new Date()
+
   if (window.location.search.includes('pwa')) {
     localStorage.setItem('isPwa', true)
 
     window.addEventListener('blur', () => {
-      if (localStorage.getItem('isPwa')) {
+      const difference = new Date().getTime() - entryDate.getTime()
+      const hours = Math.round(difference / 60000 / 60)
+
+      if (localStorage.getItem('isPwa') && hours > 24) {
         window.location.reload(true)
       }
     })
