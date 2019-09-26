@@ -50,8 +50,10 @@ const StyledGrid = styled(Grid)`
 `
 
 const Logo = styled.div`
-  transition: opacity 0.4s linear;
+  transition: opacity 0.8s linear;
   opacity: ${p => (p.isVisible ? 1 : 0)};
+  pointer-events: ${p => (p.isVisible ? 'all' : 'none')};
+
   a {
     display: block;
   }
@@ -126,7 +128,9 @@ const Header = ({ currentPath }: Props) => {
     >
       <StyledGrid>
         <Logo isVisible={!isFrontpage}>
-          <Link to={t.url('/')}>{logo}</Link>
+          <Link title="Etablera" to={t.url('/')}>
+            {logo}
+          </Link>
         </Logo>
         <Right>
           <MenuItems />
