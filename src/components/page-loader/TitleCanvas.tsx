@@ -42,6 +42,7 @@ const TitleCanvas = () => {
   const { animateContent } = useUiContext()
   useEffect(() => {
     if (!animateContent) return
+    const wrapper = document.getElementById('wrapper')
 
     let imgSize = [258, 45]
     // imgS
@@ -134,15 +135,13 @@ const TitleCanvas = () => {
       })
       const img = new Image()
 
-      console.log('itt', img)
       img.onload = () => {
-        console.log('loaded')
         texture.image = img
         document.getElementById('page-title').style.opacity = '0'
       }
       img.crossOrigin = 'Anonymous'
       img.src = desktop
-      console.log({ isTouchCapable })
+
       if (isTouchCapable) {
         // img.src = 'img/Alienation_mobile.svg'
         // imgSize = [800, 1000]
@@ -183,10 +182,10 @@ const TitleCanvas = () => {
       // Create handlers to get mouse position and velocity
       // const isTouchCapable = "ontouchstart" in window;
       if (isTouchCapable) {
-        target.addEventListener('touchstart', updateMouse, false)
-        target.addEventListener('touchmove', updateMouse, { passive: false })
+        wrapper.addEventListener('touchstart', updateMouse, false)
+        wrapper.addEventListener('touchmove', updateMouse, { passive: false })
       } else {
-        target.addEventListener('mousemove', updateMouse, false)
+        wrapper.addEventListener('mousemove', updateMouse, false)
       }
       let lastTime
       const lastMouse = new ogl.Vec2()
@@ -199,7 +198,6 @@ const TitleCanvas = () => {
         }
 
         if (e.changedTouches && e.changedTouches.length) {
-          console.log(bounds.top)
           pos.x = e.changedTouches[0].pageX - bounds.left
           pos.y = e.changedTouches[0].pageY - bounds.top
         } else {
@@ -207,8 +205,6 @@ const TitleCanvas = () => {
           pos.x = e.offsetX
         }
 
-        // console.log(pos)
-        // console.log(pos.x / gl.renderer.width, 1.0 - pos.y / gl.renderer.height)
         // Get mouse value in 0 to 1 range, with y flipped
         mouse.set(pos.x / gl.renderer.width, 1.0 - pos.y / gl.renderer.height)
         // Calculate velocity
@@ -256,7 +252,7 @@ const TitleCanvas = () => {
 
   return (
     <Container>
-      <Wrapper>
+      <Wrapper id="wrapper">
         <canvas id="et-canv"></canvas>
       </Wrapper>
     </Container>
