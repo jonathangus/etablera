@@ -1,18 +1,17 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import desktop from './etablera-desktop.svg'
+// import desktop from './etablera-desktop.svg'
 
+import desktop from './real.svg'
 import * as ogl from 'ogl'
 import { useUiContext } from '../../contexts/UiContext'
 
 const Container = styled.div`
   position: absolute;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   z-index: 100;
-  max-width: 1000px;
-  transform: translateX(-50%);
-  left: 50%;
+  left: 0;
 
   canvas {
     /* width: 1000px; */
@@ -27,7 +26,8 @@ const Container = styled.div`
   }
 `
 const Wrapper = styled.div`
-  height: 0;
+  height: 100%;
+  /* height: 0;
   padding-top: 17.471%;
   width: 100%;
   position: absolute;
@@ -35,18 +35,17 @@ const Wrapper = styled.div`
   left: 50%;
   top: 50%;
   max-width: 1000px;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); */
 `
 
 const TitleCanvas = () => {
   const { animateContent } = useUiContext()
   useEffect(() => {
-    if (!animateContent) return
+    // if (!animateContent) return
     const wrapper = document.getElementById('wrapper')
 
     let imgSize = [258, 45]
-    // imgS
-
+    imgSize = [1600, 1200]
     const vertex = `
 					attribute vec2 uv;
 					attribute vec2 position;
@@ -248,7 +247,7 @@ const TitleCanvas = () => {
         renderer.render({ scene: mesh })
       }
     }
-  }, [animateContent])
+  }, [])
 
   return (
     <Container>
