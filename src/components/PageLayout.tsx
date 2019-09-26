@@ -16,6 +16,7 @@ import { pageWrapper } from '../utils/dom-selectors'
 import PageTransitionHandler from './PageTransitionHandler'
 import { getCleanPath } from '../utils/url'
 import Footer from './Footer'
+import PwaRefresh from './PwaRefresh'
 
 const PageWrapper = styled.div`
   margin: 0 auto;
@@ -54,6 +55,7 @@ const PageLayout = ({ children, pageContext, location }) => {
                 <PageLoader isFrontpage={isFrontpage} />
                 <main>{children}</main>
                 {showFooter && <Footer />}
+                <PwaRefresh />
               </PageTransitionHandler>
             </SettingsContextProvider>
           </UiContextProvider>
@@ -61,6 +63,7 @@ const PageLayout = ({ children, pageContext, location }) => {
       </PageWrapper>
 
       <CaseTransitionIndicator />
+
       <div id="extra-cursor"></div>
     </HelmetProvider>
   )
