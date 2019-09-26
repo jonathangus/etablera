@@ -96,13 +96,23 @@ const Inner = styled.div`
   opacity: 0;
   transform: translateY(100%);
   animation: ${InnerAnimation} 1s cubic-bezier(0.8, 0, 0.2, 1) forwards;
-
   max-width: 1000px;
   margin: 0 auto;
 
+  height: 0;
+  padding-top: 17.471%;
+
   svg {
-    width: 1000px;
-    height: 174.71px;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+
+    /* width: 1000px;
+    height: 174.71px; */
   }
 
   h1 {
@@ -179,12 +189,11 @@ const PageLoaderContent = ({
                 height="45px"
                 viewBox="0 0 258 45"
                 version="1.1"
-                preserveAspectRatio="none"
               >
                 <g
                   id="Page-1"
                   stroke="none"
-                  stroke-width="1"
+                  strokeWidth="1"
                   fill="none"
                   fill-rule="evenodd"
                 >

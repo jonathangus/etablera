@@ -56,8 +56,8 @@ class SmoothEtablera extends SmoothItem {
 
     const target = document.getElementById('et-canv')
     this.DOM.description = etableraDescription.resolve()
-    target.style.transform = `translate(-50%,-50%) scale(${scale})`
-    target.style.opacity = opacity
+    // target.style.transform = `translate(-50%,-50%) scale(${scale})`
+    // target.style.opacity = opacity
 
     if (this.DOM.description) {
       this.DOM.description.style.opacity = (

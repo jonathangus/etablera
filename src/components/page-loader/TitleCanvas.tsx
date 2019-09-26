@@ -10,16 +10,32 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   z-index: 100;
+  max-width: 1000px;
+  transform: translateX(-50%);
+  left: 50%;
 
   canvas {
-    width: 1000px;
-    height: 174.71px;
+    /* width: 1000px; */
+    /* height: 174.71px; */
+    width: 100%;
+    height: 100%;
     position: absolute;
-    z-index: 100;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
   }
+`
+const Wrapper = styled.div`
+  height: 0;
+  padding-top: 17.471%;
+  width: 100%;
+  position: absolute;
+  z-index: 100;
+  left: 50%;
+  top: 50%;
+  max-width: 1000px;
+  transform: translate(-50%, -50%);
 `
 
 const TitleCanvas = () => {
@@ -28,6 +44,7 @@ const TitleCanvas = () => {
     if (!animateContent) return
 
     let imgSize = [258, 45]
+    // imgS
 
     const vertex = `
 					attribute vec2 uv;
@@ -116,18 +133,20 @@ const TitleCanvas = () => {
         premultiplyAlpha: true,
       })
       const img = new Image()
+
+      console.log('itt', img)
       img.onload = () => {
+        console.log('loaded')
         texture.image = img
         document.getElementById('page-title').style.opacity = '0'
       }
       img.crossOrigin = 'Anonymous'
-
+      img.src = desktop
+      console.log({ isTouchCapable })
       if (isTouchCapable) {
-        img.src = 'img/Alienation_mobile.svg'
-
-        imgSize = [800, 1000]
+        // img.src = 'img/Alienation_mobile.svg'
+        // imgSize = [800, 1000]
       } else {
-        img.src = desktop
       }
 
       let a1, a2
@@ -180,14 +199,15 @@ const TitleCanvas = () => {
         }
 
         if (e.changedTouches && e.changedTouches.length) {
-          pos.x = e.changedTouches[0].pageX
-          pos.y = e.changedTouches[0].pageY
+          console.log(bounds.top)
+          pos.x = e.changedTouches[0].pageX - bounds.left
+          pos.y = e.changedTouches[0].pageY - bounds.top
         } else {
           pos.y = e.offsetY
           pos.x = e.offsetX
         }
 
-        console.log(pos)
+        // console.log(pos)
         // console.log(pos.x / gl.renderer.width, 1.0 - pos.y / gl.renderer.height)
         // Get mouse value in 0 to 1 range, with y flipped
         mouse.set(pos.x / gl.renderer.width, 1.0 - pos.y / gl.renderer.height)
@@ -236,7 +256,9 @@ const TitleCanvas = () => {
 
   return (
     <Container>
-      <canvas id="et-canv"></canvas>
+      <Wrapper>
+        <canvas id="et-canv"></canvas>
+      </Wrapper>
     </Container>
   )
 }
