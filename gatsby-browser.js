@@ -19,6 +19,28 @@ const getPathName = location => {
   return location.pathname.replace('/en', '')
 }
 
+export const onClientEntry = () => {
+  if (window.location.search.includes('pwa')) {
+    localStorage.setItem('isPwa', true)
+
+    window.addEventListener('blur', () => {
+      if (localStorage.getItem('isPwa')) {
+        window.location.reload(true)
+      }
+    })
+  }
+}
+
+export const onServiceWorkerUpdateReady = () => {
+  if (
+    window.confirm(
+      'This site has been updated with new data. Do you wish to reload the site to get the new data?'
+    )
+  ) {
+    window.location.reload(true)
+  }
+}
+
 export const onPreRouteUpdate = ({
   location,
   prevLocation,
