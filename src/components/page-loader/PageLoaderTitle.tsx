@@ -16,6 +16,8 @@ to {
 }
 `
 
+const translateMagicOffset = '25%'
+
 const stagger = 66.1157
 const base = 0
 const getDelay = (index: number): number => {
@@ -39,7 +41,7 @@ const TitleWrapper = styled.div`
 
 const InnerAnimation = keyframes`
     from {
-        transform: translateY(300px);
+        transform: translateY(${translateMagicOffset});
         opacity:1;
     }
 
@@ -61,7 +63,8 @@ const Inner = styled.div`
   path,
   polygon,
   svg {
-    fill: white;
+    fill: ${p => p.theme.color};
+    stroke: ${p => p.theme.color};
   }
 
   h1 {
@@ -71,9 +74,10 @@ const Inner = styled.div`
     font-size: 0;
   }
 `
+const Line = styled.div``
 const Word = styled.g`
   opacity: 0;
-  transform: translateY(50%);
+  transform: translateY(${translateMagicOffset});
   animation: ${InnerAnimation} 1s cubic-bezier(0.8, 0, 0.2, 1) forwards;
 `
 
@@ -85,6 +89,9 @@ const Letter = styled.g`
   animation-delay: ${p => getDelay(p.index)}ms;
   fill: ${p => p.theme.color};
 `
+const Overflow = styled.rect`
+  fill: ${p => p.theme.backgroundColor};
+`
 
 type Props = {
   setFirstComplete: Function
@@ -93,7 +100,6 @@ type Props = {
 
 const PageLoaderTitle = ({ setFirstComplete, firstComplete }: Props) => {
   const innerEl = useRef<HTMLElement>()
-  const contentRef = useRef<HTMLElement>()
   const mainHeroRef = useRef<HTMLElement>(mainHero.resolve())
 
   // First step of the animation
@@ -142,29 +148,29 @@ const PageLoaderTitle = ({ setFirstComplete, firstComplete }: Props) => {
                     {l}
                   </Letter>
                 ))}
-                {/* <g
+                {/* <Line
+                  ready={firstComplete}
                   id="Line"
                   transform="translate(267.000000, 1121.000000)"
                   stroke="#FFFFFF"
                   stroke-linecap="square"
                   stroke-width="2"
                 >
-                  <path d="M1,0 L0.5,24.6212121" fill="#D8D8D8"></path>
+                  <path d="M1,0 L0.5,24.6212121"></path>
                   <path d="M1,24 L1465,24" id="Line-2"></path>
                   <path
                     d="M1465.5,24.6290323 L1465.5,2.37096774"
                     id="Line-3"
                   ></path>
-                </g> */}
+                </Line> */}
               </Word>
-              <rect
-                id="Overflow"
+              <Overflow
                 fill="#000000"
                 x="0"
                 y="1295"
                 width="2000"
                 height="1500"
-              ></rect>
+              ></Overflow>
             </g>
           </svg>
         </h1>

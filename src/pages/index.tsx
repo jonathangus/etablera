@@ -19,7 +19,7 @@ const IndexPage = ({ pageContext, data }) => {
         title={t('meta.home.title')}
         description={t('meta.home.description')}
       />
-      <PageLoader isFrontpage={true} />
+      {/* <PageLoader isFrontpage={true} /> */}
       <MainHero />
       <SiteIntro />
       <CaseList cases={data.cases.nodes} />

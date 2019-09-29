@@ -43,6 +43,7 @@ class SmoothEtablera extends SmoothItem {
   }
 
   cleanUp = () => {
+    window.runTitleCanvas = false
     this.DOM.content.style.opacity = '0'
     if (this.DOM.description) {
       this.DOM.description.style.opacity = '0'
@@ -50,6 +51,8 @@ class SmoothEtablera extends SmoothItem {
   }
 
   layout = () => {
+    window.runTitleCanvas = true
+
     if (this.disabled) return
     const opacity = (1 - this.renderedStyles.fade.previous).toFixed(2)
     const scale = 1.65 * this.renderedStyles.fade.previous + 1

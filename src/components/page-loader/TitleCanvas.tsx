@@ -1,11 +1,5 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
-// import desktop from './orginal.svg'
-// import desktop from './wannabe.svg'
-
-// import desktop from './real.svg'
-import mobile from './etablera_mobile.svg'
-// import desktop from './dddd.svg'
 import desktop from './Etablera_desktop.svg'
 
 import * as ogl from 'ogl'
@@ -214,23 +208,30 @@ const TitleCanvas = () => {
         // Flag update to prevent hanging velocity values when not moving
         velocity.needsUpdate = true
       }
+
+      // TODO lazy
+
+      window.runTitleCanvas = true
       requestAnimationFrame(update)
       function update(t) {
         requestAnimationFrame(update)
-        // Reset velocity when mouse not moving
-        if (!velocity.needsUpdate) {
-          mouse.set(-1)
-          velocity.set(0)
+
+        if (window.runTitleCanvas) {
+          // Reset velocity when mouse not moving
+          if (!velocity.needsUpdate) {
+            mouse.set(-1)
+            velocity.set(0)
+          }
+          velocity.needsUpdate = false
+          // Update flowmap inputs
+          flowmap.aspect = aspect
+          flowmap.mouse.copy(mouse)
+          // Ease velocity input, slower when fading out
+          flowmap.velocity.lerp(velocity, velocity.len ? 0.15 : 0.1)
+          flowmap.update()
+          program.uniforms.uTime.value = t * 0.01
+          renderer.render({ scene: mesh })
         }
-        velocity.needsUpdate = false
-        // Update flowmap inputs
-        flowmap.aspect = aspect
-        flowmap.mouse.copy(mouse)
-        // Ease velocity input, slower when fading out
-        flowmap.velocity.lerp(velocity, velocity.len ? 0.15 : 0.1)
-        flowmap.update()
-        program.uniforms.uTime.value = t * 0.01
-        renderer.render({ scene: mesh })
       }
     }
   }, [])
