@@ -51,7 +51,7 @@ const PageLayout = ({ children, pageContext, location }) => {
 
               <Header key={location.pathname} currentPath={currPath} />
               <PageTransitionHandler pathname={location.pathname}>
-                <PageLoader isFrontpage={isFrontpage} />
+                {/* <PageLoader isFrontpage={isFrontpage} /> */}
                 <main>{children}</main>
                 {showFooter && <Footer />}
               </PageTransitionHandler>

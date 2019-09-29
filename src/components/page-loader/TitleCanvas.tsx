@@ -1,51 +1,27 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
-// import desktop from './etablera-desktop.svg'
+// import desktop from './orginal.svg'
+// import desktop from './wannabe.svg'
 
-import desktop from './real.svg'
+// import desktop from './real.svg'
+import mobile from './etablera_mobile.svg'
+import desktop from './dddd.svg'
+
 import * as ogl from 'ogl'
 import { useUiContext } from '../../contexts/UiContext'
 
-const Container = styled.div`
-  position: absolute;
+const Container = styled.canvas`
   width: 100%;
-  height: 100vh;
-  z-index: 100;
-  left: 0;
-
-  canvas {
-    /* width: 1000px; */
-    /* height: 174.71px; */
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-  }
-`
-const Wrapper = styled.div`
   height: 100%;
-  /* height: 0;
-  padding-top: 17.471%;
-  width: 100%;
-  position: absolute;
-  z-index: 100;
-  left: 50%;
-  top: 50%;
-  max-width: 1000px;
-  transform: translate(-50%, -50%); */
 `
 
 const TitleCanvas = () => {
-  const { animateContent } = useUiContext()
   useEffect(() => {
-    // if (!animateContent) return
     const wrapper = document.getElementById('wrapper')
 
     let imgSize = [258, 45]
     imgSize = [1600, 1200]
+    imgSize = [2000, 2000]
     const vertex = `
 					attribute vec2 uv;
 					attribute vec2 position;
@@ -82,7 +58,7 @@ const TitleCanvas = () => {
 			`
     {
       const target = document.getElementById('et-canv')
-      const bounds = target.getBoundingClientRect()
+      let bounds = target.getBoundingClientRect()
       const renderer = new ogl.Renderer({
         dpr: 2,
         alpha: true,
@@ -98,6 +74,7 @@ const TitleCanvas = () => {
       const mouse = new ogl.Vec2(-1)
       const velocity = new ogl.Vec2()
       function resize() {
+        // bounds = target.getBoundingClientRect()
         let a1, a2
         var imageAspect = imgSize[1] / imgSize[0]
         if (bounds.height / bounds.width < imageAspect) {
@@ -140,12 +117,15 @@ const TitleCanvas = () => {
       }
       img.crossOrigin = 'Anonymous'
       img.src = desktop
+      // if (window.innerWidth < 1000) {
+      //   img.src = mobile
 
-      if (isTouchCapable) {
-        // img.src = 'img/Alienation_mobile.svg'
-        // imgSize = [800, 1000]
-      } else {
-      }
+      //   imgSize = [800, 1000]
+
+      //   console.log(imgSize, img.src)
+      // } else {
+      //   img.src = desktop
+      // }
 
       let a1, a2
       var imageAspect = imgSize[1] / imgSize[0]
@@ -181,10 +161,10 @@ const TitleCanvas = () => {
       // Create handlers to get mouse position and velocity
       // const isTouchCapable = "ontouchstart" in window;
       if (isTouchCapable) {
-        wrapper.addEventListener('touchstart', updateMouse, false)
-        wrapper.addEventListener('touchmove', updateMouse, { passive: false })
+        target.addEventListener('touchstart', updateMouse, false)
+        target.addEventListener('touchmove', updateMouse, { passive: false })
       } else {
-        wrapper.addEventListener('mousemove', updateMouse, false)
+        target.addEventListener('mousemove', updateMouse, false)
       }
       let lastTime
       const lastMouse = new ogl.Vec2()
@@ -249,13 +229,7 @@ const TitleCanvas = () => {
     }
   }, [])
 
-  return (
-    <Container>
-      <Wrapper id="wrapper">
-        <canvas id="et-canv"></canvas>
-      </Wrapper>
-    </Container>
-  )
+  return <Container id="et-canv"></Container>
 }
 
 export default TitleCanvas
