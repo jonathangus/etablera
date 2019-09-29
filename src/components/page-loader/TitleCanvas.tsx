@@ -5,7 +5,8 @@ import styled from 'styled-components'
 
 // import desktop from './real.svg'
 import mobile from './etablera_mobile.svg'
-import desktop from './dddd.svg'
+// import desktop from './dddd.svg'
+import desktop from './Etablera_desktop.svg'
 
 import * as ogl from 'ogl'
 import { useUiContext } from '../../contexts/UiContext'
@@ -160,12 +161,17 @@ const TitleCanvas = () => {
 
       // Create handlers to get mouse position and velocity
       // const isTouchCapable = "ontouchstart" in window;
-      if (isTouchCapable) {
-        target.addEventListener('touchstart', updateMouse, false)
-        target.addEventListener('touchmove', updateMouse, { passive: false })
-      } else {
-        target.addEventListener('mousemove', updateMouse, false)
-      }
+      // if (isTouchCapable) {
+      //   target.addEventListener('touchstart', updateMouse, false)
+      //   target.addEventListener('touchmove', updateMouse, { passive: false })
+      // } else {
+      //   target.addEventListener('mousemove', updateMouse, false)
+
+      // }
+
+      target.addEventListener('mousemove', updateMouse, false)
+      target.addEventListener('touchstart', updateMouse, false)
+      target.addEventListener('touchmove', updateMouse, { passive: false })
       let lastTime
       const lastMouse = new ogl.Vec2()
       function updateMouse(e) {
