@@ -35,7 +35,7 @@ const Container = styled.div<{
   bottom: 0;
   right: 0;
   background: ${p => p.theme.backgroundColor};
-  pointer-events: none; 
+  // pointer-events: none; 
   will-change: transform;
   overflow: hidden;
 
