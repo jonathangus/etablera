@@ -47,3 +47,4 @@ export const $header = getSelector('header', {
 export const $mediaImage = getSelector('media-image', {
   mediaImageClass: 'media-image',
 })
+export const $frontPageScale = getSelector('frontpage-scale')

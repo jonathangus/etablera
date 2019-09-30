@@ -5,6 +5,8 @@ import desktop from './Etablera_desktop.svg'
 const imgSize = [2000, 2000]
 const imageAspect = imgSize[1] / imgSize[0]
 
+// Got this from https://tympanus.net/codrops/2019/09/25/mouse-flowmap-deformation-with-ogl/
+
 const vertex = `
 attribute vec2 uv;
 attribute vec2 position;
@@ -53,8 +55,8 @@ export interface IOGLCanvas {
   updateMouse: (e: any) => void
 }
 
-const Options = {
-  onReady: Function,
+type Options = {
+  onReady: Function
 }
 
 class OGLCanvas implements IOGLCanvas {

@@ -2,7 +2,11 @@ import React, { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import styled from 'styled-components'
 
-import { $mainHero, $pageTitle } from '../../utils/dom-selectors'
+import {
+  $mainHero,
+  $pageTitle,
+  $frontPageScale,
+} from '../../utils/dom-selectors'
 import PageLoaderLayout from './PageLoaderLayout'
 import { ISmoothItem } from '../../utils/scroll/SmoothItem'
 import OGLCanvas, { IOGLCanvas } from './OGLCanvas'
@@ -10,6 +14,10 @@ import OGLCanvas, { IOGLCanvas } from './OGLCanvas'
 const Container = styled.canvas`
   width: 100%;
   height: 100%;
+`
+const Inner = styled.div`
+  height: 100%;
+  width: 100%;
 `
 
 type Props = {
@@ -32,6 +40,7 @@ const TitleCanvas = ({ smooth }: Props) => {
 
   useEffect(() => {
     const onReady = () => {
+      // TODO
       setTimeout(() => {
         $pageTitle.resolve().style.opacity = '0'
       }, 100)
@@ -47,7 +56,9 @@ const TitleCanvas = ({ smooth }: Props) => {
 
   return createPortal(
     <PageLoaderLayout ref={wrapperEl}>
-      <Container ref={canvasRef}></Container>
+      <Inner {...$frontPageScale.attr}>
+        <Container ref={canvasRef}></Container>
+      </Inner>
     </PageLoaderLayout>,
     portalEl.current
   )

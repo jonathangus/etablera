@@ -1,5 +1,5 @@
 import SmoothItem from './SmoothItem'
-import { etableraDescription } from '../dom-selectors'
+import { etableraDescription, $frontPageScale } from '../dom-selectors'
 import { IOGLCanvas } from '../../components/page-loader/OGLCanvas'
 
 class SmoothEtablera extends SmoothItem {
@@ -49,14 +49,16 @@ class SmoothEtablera extends SmoothItem {
   }
 
   cleanUp = () => {
-    this.oglCanvas.shouldRender = false
-    this.DOM.canvasEl.style.opacity = '0'
+    if (this.oglCanvas) this.oglCanvas.shouldRender = false
+    if (this.DOM.canvasEl) this.DOM.canvasEl.style.opacity = '0'
     // if (this.DOM.description) {
     //   this.DOM.description.style.opacity = '0'
     // }
   }
 
   layout = () => {
+    // const elements = $frontPageScale.resolveAll()
+
     if (this.oglCanvas) this.oglCanvas.shouldRender = true
 
     if (this.disabled) return
@@ -65,10 +67,16 @@ class SmoothEtablera extends SmoothItem {
 
     this.DOM.description = etableraDescription.resolve()
 
+    // elements.forEach(el => {
+    //   // el.style.transform = `scale(${scale})`
+    // })
+
     if (this.DOM.canvasEl) {
-      this.DOM.canvasEl.style.transform = `translate(-50%, -50%) scale(${scale})`
       this.DOM.canvasEl.style.opacity = opacity
     }
+
+    // this.DOM.canvasEl.style.transform = `translate(-50%, -50%) scale(${scale})`
+    //   this.DOM.canvasEl.style.opacity = opacity
 
     if (this.DOM.description) {
       this.DOM.description.style.opacity = (
