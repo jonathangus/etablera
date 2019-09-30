@@ -1,5 +1,5 @@
 import { createPortal } from 'react-dom'
-import React from 'react'
+import React, { forwardRef } from 'react'
 import styled from 'styled-components'
 import media from '../../media'
 
@@ -33,14 +33,14 @@ const Item = styled.div`
   top: 0;
 `
 
-const PageLoaderLayout = ({ children }: Props) => {
+const PageLoaderLayout = forwardRef(({ children }: Props, ref) => {
   return (
-    <Container>
+    <Container ref={ref}>
       <Inner>
         <Item>{children}</Item>
       </Inner>
     </Container>
   )
-}
+})
 
 export default PageLoaderLayout

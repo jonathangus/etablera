@@ -1,15 +1,16 @@
 import SmoothItem from './SmoothItem'
 import { etableraDescription } from '../dom-selectors'
+import { IOGLCanvas } from '../../components/page-loader/OGLCanvas'
 
 class SmoothEtablera extends SmoothItem {
   disabled: boolean = false
   nextOffset: number = 500
+  oglCanvas: IOGLCanvas
 
-  constructor(el: HTMLElement, content: HTMLElement) {
+  constructor(el: HTMLElement) {
     super(el)
     if (!el) return
 
-    this.DOM.content = content
     this.DOM.nextContent = document.querySelector('[data-scroll-target]')
     this.renderedStyles = {
       fade: {
@@ -28,9 +29,9 @@ class SmoothEtablera extends SmoothItem {
     this.update()
   }
 
-  appendCanvas(canvas) {
-    console.log({ canvas })
-    this.DOM.content = canvas
+  appendCanvas(canvasEl: HTMLElement, oglCanvas: IOGLCanvas) {
+    this.DOM.canvasEl = canvasEl
+    this.oglCanvas = oglCanvas
   }
 
   getSize() {
@@ -48,15 +49,15 @@ class SmoothEtablera extends SmoothItem {
   }
 
   cleanUp = () => {
-    window.runTitleCanvas = false
-    this.DOM.content.style.opacity = '0'
-    if (this.DOM.description) {
-      this.DOM.description.style.opacity = '0'
-    }
+    this.oglCanvas.shouldRender = false
+    this.DOM.canvasEl.style.opacity = '0'
+    // if (this.DOM.description) {
+    //   this.DOM.description.style.opacity = '0'
+    // }
   }
 
   layout = () => {
-    window.runTitleCanvas = true
+    if (this.oglCanvas) this.oglCanvas.shouldRender = true
 
     if (this.disabled) return
     const opacity = (1 - this.renderedStyles.fade.previous).toFixed(2)
@@ -64,8 +65,10 @@ class SmoothEtablera extends SmoothItem {
 
     this.DOM.description = etableraDescription.resolve()
 
-    // this.DOM.content.style.transform = `scale(${scale})`
-    this.DOM.content.style.opacity = opacity
+    if (this.DOM.canvasEl) {
+      this.DOM.canvasEl.style.transform = `translate(-50%, -50%) scale(${scale})`
+      this.DOM.canvasEl.style.opacity = opacity
+    }
 
     if (this.DOM.description) {
       this.DOM.description.style.opacity = (

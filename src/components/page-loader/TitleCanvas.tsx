@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { $mainHero } from '../../utils/dom-selectors'
 import PageLoaderLayout from './PageLoaderLayout'
 import { ISmoothItem } from '../../utils/scroll/SmoothItem'
-import OGLCanvas from './OGLCanvas'
+import OGLCanvas, { IOGLCanvas } from './OGLCanvas'
 
 const Container = styled.canvas`
   width: 100%;
@@ -17,16 +17,17 @@ type Props = {
 }
 
 const TitleCanvas = ({ smooth }: Props) => {
+  const wrapperEl = useRef<HTMLElement>()
   const portalEl = useRef<HTMLElement>($mainHero.resolve())
-  const canvasRef = useRef<HTMLElement>()
-  const oglCanvas = useRef()
+  const canvasRef = useRef<HTMLCanvasElement>()
+  const oglCanvas = useRef<IOGLCanvas>()
 
   useEffect(() => {
     portalEl.current = $mainHero.resolve()
   })
 
   useEffect(() => {
-    if (smooth) smooth.appendCanvas(canvasRef.current)
+    if (smooth) smooth.appendCanvas(wrapperEl.current, oglCanvas.current)
   }, [smooth])
 
   useEffect(() => {
@@ -40,13 +41,11 @@ const TitleCanvas = ({ smooth }: Props) => {
   if (!portalEl.current) return null
 
   return createPortal(
-    <PageLoaderLayout>
+    <PageLoaderLayout ref={wrapperEl}>
       <Container ref={canvasRef}></Container>
     </PageLoaderLayout>,
     portalEl.current
   )
-
-  return
 }
 
 export default TitleCanvas
