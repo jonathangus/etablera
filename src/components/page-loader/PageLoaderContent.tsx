@@ -70,19 +70,12 @@ const PageLoaderContent = ({
   const TitleNode = useMemo(
     () => (
       <PageLoaderTitle
-        canvasVisible={showCanvas}
         firstComplete={firstComplete}
         setFirstComplete={setFirstComplete}
       />
     ),
     [firstComplete]
   )
-
-  const CanvasNode = useMemo(() => <TitleCanvas smooth={etableraSmooth} />, [
-    showCanvas,
-  ])
-
-  console.log({ showCanvas })
 
   return (
     <>

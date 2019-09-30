@@ -80,13 +80,6 @@ const Word = styled.g`
   opacity: 0;
   transform: translateY(${translateMagicOffset});
   animation: ${InnerAnimation} 1s cubic-bezier(0.8, 0, 0.2, 1) forwards;
-
-  ${p =>
-    p.canvasVisible &&
-    `
-    animation: none;
-    transform: translateY(0);
-  `}
 `
 
 const Letter = styled.g`
@@ -96,13 +89,6 @@ const Letter = styled.g`
     cubic-bezier(0.8, 0, 0.2, 1) forwards;
   animation-delay: ${p => getDelay(p.index)}ms;
   fill: ${p => p.theme.color};
-
-  ${p =>
-    p.canvasVisible &&
-    `
-    animation: none;
-    transform: scale(1);
-  `}
 `
 const Overflow = styled.rect`
   fill: ${p => p.theme.backgroundColor};
@@ -111,7 +97,6 @@ const Overflow = styled.rect`
 type Props = {
   setFirstComplete: Function
   firstComplete: boolean
-  canvasVisible: boolean
 }
 
 const PageLoaderTitle = ({ setFirstComplete, firstComplete }: Props) => {
