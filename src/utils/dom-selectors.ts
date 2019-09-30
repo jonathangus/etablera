@@ -38,6 +38,7 @@ export const transitionPage = getSelector('transition-page', {
   activeClass: 'active',
 })
 
+export const $pageTitle = getSelector('page-title')
 export const $headerTextDiff = getSelector('light-header-text')
 export const $caseHeader = getSelector('case-header')
 export const $header = getSelector('header', {

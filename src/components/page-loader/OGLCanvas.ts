@@ -53,6 +53,10 @@ export interface IOGLCanvas {
   updateMouse: (e: any) => void
 }
 
+const Options = {
+  onReady: Function,
+}
+
 class OGLCanvas implements IOGLCanvas {
   el = null
   bounds = null
@@ -67,7 +71,7 @@ class OGLCanvas implements IOGLCanvas {
   lastMouse: ogl.Vec2
   shouldRender = true
 
-  constructor(canvas: HTMLCanvasElement) {
+  constructor(canvas: HTMLCanvasElement, { onReady }: Options) {
     this.el = canvas
     this.bounds = this.el.getBoundingClientRect()
 
@@ -105,20 +109,10 @@ class OGLCanvas implements IOGLCanvas {
 
     img.onload = () => {
       texture.image = img
-
-      document.getElementById('page-title').style.opacity = '0'
+      onReady()
     }
     img.crossOrigin = 'Anonymous'
     img.src = desktop
-    // if (window.innerWidth < 1000) {
-    //   img.src = mobile
-
-    //   imgSize = [800, 1000]
-
-    //   console.log(imgSize, img.src)
-    // } else {
-    //   img.src = desktop
-    // }
 
     let a1, a2
     if (this.bounds.height / this.bounds.width < imageAspect) {

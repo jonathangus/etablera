@@ -3,7 +3,7 @@ import styled, { keyframes, css } from 'styled-components'
 import { gutter } from '../../vars'
 import media from '../../media'
 import paths from './etablera-paths'
-import { mainHero } from '../../utils/dom-selectors'
+import { mainHero, $pageTitle } from '../../utils/dom-selectors'
 
 // Need to generate a animation for each letter so we can animate the paths transform value
 const pullInAnimation = keyframes`
@@ -122,7 +122,7 @@ const PageLoaderTitle = ({ setFirstComplete, firstComplete }: Props) => {
   }, [])
 
   return (
-    <TitleWrapper id="page-title">
+    <TitleWrapper {...$pageTitle.attr}>
       <Inner ref={innerEl}>
         <h1>
           Etablera

@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import styled from 'styled-components'
 
-import { $mainHero } from '../../utils/dom-selectors'
+import { $mainHero, $pageTitle } from '../../utils/dom-selectors'
 import PageLoaderLayout from './PageLoaderLayout'
 import { ISmoothItem } from '../../utils/scroll/SmoothItem'
 import OGLCanvas, { IOGLCanvas } from './OGLCanvas'
@@ -31,7 +31,12 @@ const TitleCanvas = ({ smooth }: Props) => {
   }, [smooth])
 
   useEffect(() => {
-    oglCanvas.current = new OGLCanvas(canvasRef.current)
+    const onReady = () => {
+      setTimeout(() => {
+        $pageTitle.resolve().style.opacity = '0'
+      }, 100)
+    }
+    oglCanvas.current = new OGLCanvas(canvasRef.current, { onReady })
 
     return () => {
       oglCanvas.current.destroy()
