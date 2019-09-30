@@ -28,7 +28,7 @@ const getSelector = (selector: string, rest: Object = {}): DomSelector => ({
   ...rest,
 })
 
-export const mainHero = getSelector('main-hero')
+export const $mainHero = getSelector('main-hero')
 export const etableraDescription = getSelector('etablera-description')
 export const pageWrapper = getSelector('page-wrapper', {
   transitionClass: 'page-transition',

@@ -28,6 +28,11 @@ class SmoothEtablera extends SmoothItem {
     this.update()
   }
 
+  appendCanvas(canvas) {
+    console.log({ canvas })
+    this.DOM.content = canvas
+  }
+
   getSize() {
     const rect = this.DOM.el.getBoundingClientRect()
     this.props = {

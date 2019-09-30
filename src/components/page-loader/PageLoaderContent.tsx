@@ -1,14 +1,17 @@
-import React, { useEffect, useState, useRef } from 'react'
+import { createPortal } from 'react-dom'
+import React, { useEffect, useState, useRef, useMemo } from 'react'
 import styled, { keyframes, css } from 'styled-components'
 import { gutter } from '../../vars'
 import { useUiContext } from '../../contexts/UiContext'
 import media from '../../media'
 import SmoothEtablera from '../../utils/scroll/SmoothEtablera'
 import useSmooth from '../../hooks/useSmooth'
-import { mainHero } from '../../utils/dom-selectors'
+import { $mainHero } from '../../utils/dom-selectors'
 import { useSetting } from '../../contexts/SettingsContext'
 import TitleCanvas from './TitleCanvas'
 import PageLoaderTitle from './PageLoaderTitle'
+import useScheduleEffect from '../../hooks/useScheduleEffect'
+import PageLoaderLayout from './PageLoaderLayout'
 
 type Props = {
   isFrontpage: boolean
@@ -47,30 +50,45 @@ const PageLoaderContent = ({
   firstComplete,
   setFirstComplete,
 }: Props) => {
-  const innerEl = useRef<HTMLElement>()
   const contentRef = useRef<HTMLElement>()
-  const mainHeroRef = useRef<HTMLElement>(mainHero.resolve())
   const { pageTransitionActive, animateContent } = useUiContext()
   const t = useSetting()
+  const [showCanvas, setShowCanvas] = useState(false)
 
-  useSmooth(() => {
-    if (isFrontpage && !pageTransitionActive) {
-      return new SmoothEtablera(mainHero.resolve(), contentRef.current)
+  useScheduleEffect(() => {
+    if (isFrontpage && animateContent) {
+      setShowCanvas(true)
     }
-  }, [t.currentLanguage, isFrontpage, pageTransitionActive])
+  }, [t.currentLanguage, isFrontpage, pageTransitionActive, animateContent])
+
+  const etableraSmooth = useSmooth(() => {
+    if (isFrontpage && !pageTransitionActive && animateContent) {
+      return new SmoothEtablera($mainHero.resolve(), $mainHero.resolve())
+    }
+  }, [t.currentLanguage, isFrontpage, pageTransitionActive, animateContent])
+
+  const TitleNode = useMemo(
+    () => (
+      <PageLoaderTitle
+        canvasVisible={showCanvas}
+        firstComplete={firstComplete}
+        setFirstComplete={setFirstComplete}
+      />
+    ),
+    [firstComplete]
+  )
+
+  const CanvasNode = useMemo(() => <TitleCanvas smooth={etableraSmooth} />, [
+    showCanvas,
+  ])
+
+  console.log({ showCanvas })
 
   return (
-    <Container>
-      <Inner ref={contentRef}>
-        <Item>
-          <PageLoaderTitle
-            firstComplete={firstComplete}
-            setFirstComplete={setFirstComplete}
-          />
-        </Item>
-        <Item>{animateContent && <TitleCanvas />}</Item>
-      </Inner>
-    </Container>
+    <>
+      <PageLoaderLayout>{TitleNode}</PageLoaderLayout>
+      {showCanvas && <TitleCanvas smooth={etableraSmooth} />}
+    </>
   )
 }
 

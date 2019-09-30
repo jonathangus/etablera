@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, memo } from 'react'
 import styled, { keyframes, css } from 'styled-components'
 import { gutter } from '../../vars'
 import media from '../../media'
@@ -74,11 +74,19 @@ const Inner = styled.div`
     font-size: 0;
   }
 `
+
 const Line = styled.div``
 const Word = styled.g`
   opacity: 0;
   transform: translateY(${translateMagicOffset});
   animation: ${InnerAnimation} 1s cubic-bezier(0.8, 0, 0.2, 1) forwards;
+
+  ${p =>
+    p.canvasVisible &&
+    `
+    animation: none;
+    transform: translateY(0);
+  `}
 `
 
 const Letter = styled.g`
@@ -88,6 +96,13 @@ const Letter = styled.g`
     cubic-bezier(0.8, 0, 0.2, 1) forwards;
   animation-delay: ${p => getDelay(p.index)}ms;
   fill: ${p => p.theme.color};
+
+  ${p =>
+    p.canvasVisible &&
+    `
+    animation: none;
+    transform: scale(1);
+  `}
 `
 const Overflow = styled.rect`
   fill: ${p => p.theme.backgroundColor};
@@ -96,15 +111,14 @@ const Overflow = styled.rect`
 type Props = {
   setFirstComplete: Function
   firstComplete: boolean
+  canvasVisible: boolean
 }
 
 const PageLoaderTitle = ({ setFirstComplete, firstComplete }: Props) => {
   const innerEl = useRef<HTMLElement>()
-  const mainHeroRef = useRef<HTMLElement>(mainHero.resolve())
 
   // First step of the animation
   useEffect(() => {
-    mainHeroRef.current = mainHero.resolve()
     // Detect if the initial css animation is done before the javascript is being triggered
     const style = window.getComputedStyle(innerEl.current)
     const values = style.transform.replace(')', '').split(',')
@@ -179,4 +193,4 @@ const PageLoaderTitle = ({ setFirstComplete, firstComplete }: Props) => {
   )
 }
 
-export default PageLoaderTitle
+export default memo(PageLoaderTitle)

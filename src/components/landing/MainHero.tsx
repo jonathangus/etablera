@@ -4,7 +4,7 @@ import HeroLeftSide from './HeroLeftSide'
 import EtableraDescription from './EtableraDescription'
 import { useUiContext } from '../../contexts/UiContext'
 import ScrollIndicator from '../ScrollIndicator'
-import { mainHero } from '../../utils/dom-selectors'
+import { $mainHero } from '../../utils/dom-selectors'
 
 const Container = styled.header`
   height: 100vh;
@@ -19,7 +19,8 @@ const Container = styled.header`
 const MainHero = () => {
   const { frontpageLoaded } = useUiContext()
   return (
-    <Container {...mainHero.attr}>
+    <Container>
+      <div {...$mainHero.attr} />
       <HeroLeftSide />
       {frontpageLoaded && <ScrollIndicator />}
     </Container>

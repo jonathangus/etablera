@@ -1,22 +1,38 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import styled from 'styled-components'
 import desktop from './Etablera_desktop.svg'
 
 import * as ogl from 'ogl'
 import { useUiContext } from '../../contexts/UiContext'
+import { $mainHero } from '../../utils/dom-selectors'
+import PageLoaderLayout from './PageLoaderLayout'
+import { ISmoothItem } from '../../utils/scroll/SmoothItem'
 
 const Container = styled.canvas`
   width: 100%;
   height: 100%;
 `
 
-const TitleCanvas = () => {
-  useEffect(() => {
-    const wrapper = document.getElementById('wrapper')
+type Props = {
+  smooth: ISmoothItem
+}
 
-    let imgSize = [258, 45]
-    imgSize = [1600, 1200]
-    imgSize = [2000, 2000]
+const TitleCanvas = ({ smooth }: Props) => {
+  const portalEl = useRef<HTMLElement>($mainHero.resolve())
+  const canvasRef = useRef<HTMLElement>()
+
+  console.log('render', smooth)
+  useEffect(() => {
+    portalEl.current = $mainHero.resolve()
+  })
+
+  useEffect(() => {
+    if (smooth) smooth.appendCanvas(canvasRef.current)
+  }, [smooth])
+
+  useEffect(() => {
+    let imgSize = [2000, 2000]
     const vertex = `
 					attribute vec2 uv;
 					attribute vec2 position;
@@ -52,13 +68,12 @@ const TitleCanvas = () => {
 					}
 			`
     {
-      const target = document.getElementById('et-canv')
-      let bounds = target.getBoundingClientRect()
+      let bounds = canvasRef.current.getBoundingClientRect()
       const renderer = new ogl.Renderer({
         dpr: 2,
         alpha: true,
         premultipliedAlpha: true,
-        canvas: target,
+        canvas: canvasRef.current,
       })
       const gl = renderer.gl
 
@@ -108,6 +123,7 @@ const TitleCanvas = () => {
 
       img.onload = () => {
         texture.image = img
+
         document.getElementById('page-title').style.opacity = '0'
       }
       img.crossOrigin = 'Anonymous'
@@ -163,9 +179,11 @@ const TitleCanvas = () => {
 
       // }
 
-      target.addEventListener('mousemove', updateMouse, false)
-      target.addEventListener('touchstart', updateMouse, false)
-      target.addEventListener('touchmove', updateMouse, { passive: false })
+      canvasRef.current.addEventListener('mousemove', updateMouse, false)
+      canvasRef.current.addEventListener('touchstart', updateMouse, false)
+      canvasRef.current.addEventListener('touchmove', updateMouse, {
+        passive: false,
+      })
       let lastTime
       const lastMouse = new ogl.Vec2()
       function updateMouse(e) {
@@ -234,9 +252,24 @@ const TitleCanvas = () => {
         }
       }
     }
+
+    return () => {
+      // canvasRef.current.removeEventListener('mousemove', updateMouse, false)
+      // canvasRef.current.removeEventListener('touchstart', updateMouse, false)
+      // canvasRef.current.removeEventListener('touchmove', updateMouse)
+    }
   }, [])
 
-  return <Container id="et-canv"></Container>
+  if (!portalEl.current) return null
+
+  return createPortal(
+    <PageLoaderLayout>
+      <Container ref={canvasRef}></Container>
+    </PageLoaderLayout>,
+    portalEl.current
+  )
+
+  return
 }
 
 export default TitleCanvas
