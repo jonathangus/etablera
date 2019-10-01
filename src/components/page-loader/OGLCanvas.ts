@@ -86,8 +86,6 @@ class OGLCanvas implements IOGLCanvas {
 
     this.gl = this.renderer.gl
 
-    const isTouchCapable = 'ontouchstart' in window
-
     // Variable inputs to control flowmap
     this.aspect = 1
     this.mouse = new ogl.Vec2(-1)
@@ -146,21 +144,7 @@ class OGLCanvas implements IOGLCanvas {
     window.addEventListener('resize', this.resize, false)
     this.resize()
 
-    // Create handlers to get mouse position and velocity
-    // const isTouchCapable = "ontouchstart" in window;
-    // if (isTouchCapable) {
-    //   target.addEventListener('touchstart', updateMouse, false)
-    //   target.addEventListener('touchmove', updateMouse, { passive: false })
-    // } else {
-    //   target.addEventListener('mousemove', updateMouse, false)
-
-    // }
-
     this.el.addEventListener('mousemove', this.updateMouse, false)
-    this.el.addEventListener('touchstart', this.updateMouse, false)
-    this.el.addEventListener('touchmove', this.updateMouse, {
-      passive: false,
-    })
     this.lastMouse = new ogl.Vec2()
 
     requestAnimationFrame(this.render)
@@ -189,10 +173,18 @@ class OGLCanvas implements IOGLCanvas {
     this.aspect = this.bounds.width / this.bounds.height
   }, 50)
 
-  render = t => {
+  play = () => {
+    this.shouldRender = true
     requestAnimationFrame(this.render)
-    if (!this.shouldRender) return
+  }
 
+  pause = () => {
+    this.shouldRender = false
+  }
+
+  render = (t: number) => {
+    if (!this.shouldRender) return
+    requestAnimationFrame(this.render)
     // Reset velocity when mouse not moving
     if (!this.velocity.needsUpdate) {
       this.mouse.set(-1)
@@ -256,9 +248,7 @@ class OGLCanvas implements IOGLCanvas {
   }
 
   destroy = () => {
-    this.el.current.removeEventListener('mousemove', this.updateMouse, false)
-    this.el.current.removeEventListener('touchstart', this.updateMouse, false)
-    this.el.current.removeEventListener('touchmove', this.updateMouse)
+    this.el.removeEventListener('mousemove', this.updateMouse, false)
   }
 }
 

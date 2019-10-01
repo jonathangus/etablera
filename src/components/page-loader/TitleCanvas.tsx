@@ -45,6 +45,7 @@ const TitleCanvas = ({ smooth }: Props) => {
         $pageTitle.resolve().style.opacity = '0'
       }, 100)
     }
+
     oglCanvas.current = new OGLCanvas(canvasRef.current, { onReady })
 
     return () => {

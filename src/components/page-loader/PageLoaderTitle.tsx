@@ -143,7 +143,7 @@ const PageLoaderTitle = ({ setFirstComplete, firstComplete }: Props) => {
               stroke="none"
               stroke-width="1"
               fill="none"
-              fill-rule="evenodd"
+              fillRule="evenodd"
             >
               <Word id="Etablera">
                 {paths.desktop.letters.map((l, i) => (

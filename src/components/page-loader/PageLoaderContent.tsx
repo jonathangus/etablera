@@ -50,15 +50,12 @@ const PageLoaderContent = ({
   firstComplete,
   setFirstComplete,
 }: Props) => {
-  const contentRef = useRef<HTMLElement>()
   const { pageTransitionActive, animateContent } = useUiContext()
   const t = useSetting()
   const [showCanvas, setShowCanvas] = useState(false)
 
   useScheduleEffect(() => {
-    if (isFrontpage && animateContent) {
-      setShowCanvas(true)
-    }
+    setShowCanvas(isFrontpage && animateContent)
   }, [t.currentLanguage, isFrontpage, pageTransitionActive, animateContent])
 
   const etableraSmooth = useSmooth(() => {
