@@ -25,6 +25,7 @@ export interface ISmoothItem {
   center?: Function
   layout: Function
   cleanUp?: Function
+  onEnter?: Function
 }
 
 let count = 0
@@ -45,6 +46,7 @@ class SmoothItem implements ISmoothItem {
   observer = null
   renderedStyles = null
   cleanUp = null
+  onEnter = null
 
   constructor(el: HTMLElement) {
     this.DOM = { el: el }
@@ -55,6 +57,8 @@ class SmoothItem implements ISmoothItem {
       this.isVisible = entries.some(entry => entry.intersectionRatio > 0)
       if (!this.isVisible && this.cleanUp) {
         this.cleanUp()
+      } else if (this.onEnter) {
+        this.onEnter()
       }
     })
 

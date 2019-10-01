@@ -1,7 +1,7 @@
 import React from 'react'
 import { Helmet } from 'react-helmet'
 import { useSetting } from '../contexts/SettingsContext'
-import { useStaticQuery, graphql } from 'gatsby'
+import socialMediaImage from '../images/social-media.png'
 
 type Props = {
   description?: string
@@ -22,12 +22,8 @@ const SEO = ({
 }: Props) => {
   const t = useSetting()
   const metaDescription = description || t('meta.home.description')
-  const data = useStaticQuery(graphql`
-    {
-      ...footerImage
-    }
-  `)
-  const metaImage = image || data.footerImage.childImageSharp.fluid.src
+
+  const metaImage = image || socialMediaImage
 
   return (
     <Helmet

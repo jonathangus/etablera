@@ -35,7 +35,7 @@ const Container = styled.div<{
   bottom: 0;
   right: 0;
   background: ${p => p.theme.backgroundColor};
-  pointer-events: none;
+  pointer-events: none; 
   will-change: transform;
   overflow: hidden;
 
@@ -89,7 +89,7 @@ const PageLoader = ({ isFrontpage }: Props) => {
   }
 
   useEffect(() => {
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === '1development') {
       setMounted()
       setFirstComplete(true)
       setSecondComplete(true)

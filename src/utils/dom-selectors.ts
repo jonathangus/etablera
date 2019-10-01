@@ -28,7 +28,7 @@ const getSelector = (selector: string, rest: Object = {}): DomSelector => ({
   ...rest,
 })
 
-export const mainHero = getSelector('main-hero')
+export const $mainHero = getSelector('main-hero')
 export const etableraDescription = getSelector('etablera-description')
 export const pageWrapper = getSelector('page-wrapper', {
   transitionClass: 'page-transition',
@@ -38,6 +38,7 @@ export const transitionPage = getSelector('transition-page', {
   activeClass: 'active',
 })
 
+export const $pageTitle = getSelector('page-title')
 export const $headerTextDiff = getSelector('light-header-text')
 export const $caseHeader = getSelector('case-header')
 export const $header = getSelector('header', {
@@ -50,3 +51,4 @@ export const $mediaImage = getSelector('media-image', {
 export const $pwaRefresh = getSelector('pwa-refresh', {
   activeClass: 'activeClass',
 })
+export const $frontPageScale = getSelector('frontpage-scale')

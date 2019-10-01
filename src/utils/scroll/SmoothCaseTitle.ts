@@ -2,7 +2,9 @@ import SmoothItem from './SmoothItem'
 import { math } from './scroll-utils'
 
 class SmoothCaseTitle extends SmoothItem {
-  constructor(el: HTMLElement, options: { title: HTMLElement } = {}) {
+  title: HTMLElement
+
+  constructor(el: HTMLElement, options: { title?: HTMLElement } = {}) {
     super(el)
 
     this.DOM.title = options.title

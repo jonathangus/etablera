@@ -1,15 +1,19 @@
 import SmoothItem from './SmoothItem'
-import { etableraDescription } from '../dom-selectors'
+import { etableraDescription, $frontPageScale } from '../dom-selectors'
+import { IOGLCanvas } from '../../components/page-loader/OGLCanvas'
 
 class SmoothEtablera extends SmoothItem {
   disabled: boolean = false
   nextOffset: number = 500
+  oglCanvas: IOGLCanvas
+  shouldScale: boolean
 
-  constructor(el: HTMLElement, content: HTMLElement) {
+  constructor(el: HTMLElement, current: HTMLElement, shouldScale: boolean) {
     super(el)
-    if (!el) return
 
-    this.DOM.content = content
+    if (!el) return
+    this.shouldScale = shouldScale
+    this.DOM.current = current
     this.DOM.nextContent = document.querySelector('[data-scroll-target]')
     this.renderedStyles = {
       fade: {
@@ -28,6 +32,12 @@ class SmoothEtablera extends SmoothItem {
     this.update()
   }
 
+  appendCanvas(canvasEl: HTMLElement, oglCanvas: IOGLCanvas) {
+    this.DOM.current = canvasEl
+    this.oglCanvas = oglCanvas
+    this.shouldScale = false
+  }
+
   getSize() {
     const rect = this.DOM.el.getBoundingClientRect()
     this.props = {
@@ -43,10 +53,15 @@ class SmoothEtablera extends SmoothItem {
   }
 
   cleanUp = () => {
-    this.DOM.content.style.opacity = '0'
-    if (this.DOM.description) {
-      this.DOM.description.style.opacity = '0'
-    }
+    this.oglCanvas && this.oglCanvas.pause()
+    if (this.DOM.current) this.DOM.current.style.opacity = '0'
+    // if (this.DOM.description) {
+    //   this.DOM.description.style.opacity = '0'
+    // }
+  }
+
+  onEnter = () => {
+    this.oglCanvas && this.oglCanvas.play()
   }
 
   layout = () => {
@@ -54,9 +69,13 @@ class SmoothEtablera extends SmoothItem {
     const opacity = (1 - this.renderedStyles.fade.previous).toFixed(2)
     const scale = 1.65 * this.renderedStyles.fade.previous + 1
 
-    this.DOM.description = etableraDescription.resolve()
-    this.DOM.content.style.transform = `translate(-50%,-50%) scale(${scale})`
-    this.DOM.content.style.opacity = opacity
+    if (this.DOM.current) {
+      this.DOM.current.style.opacity = opacity
+
+      if (this.shouldScale) {
+        this.DOM.current.style.transform = `translate(-50%, -50%) scale(${scale})`
+      }
+    }
 
     if (this.DOM.description) {
       this.DOM.description.style.opacity = (
