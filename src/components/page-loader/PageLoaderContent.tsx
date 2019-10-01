@@ -1,9 +1,5 @@
-import { createPortal } from 'react-dom'
 import React, { useEffect, useState, useRef, useMemo } from 'react'
-import styled, { keyframes, css } from 'styled-components'
-import { gutter } from '../../vars'
 import { useUiContext } from '../../contexts/UiContext'
-import media from '../../media'
 import SmoothEtablera from '../../utils/scroll/SmoothEtablera'
 import useSmooth from '../../hooks/useSmooth'
 import { $mainHero } from '../../utils/dom-selectors'
@@ -19,32 +15,7 @@ type Props = {
   setFirstComplete: Function
 }
 
-const Container = styled.div`
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-
-  ${media.phone`
-    width: 100%;
-  `}
-`
-
-const Inner = styled.div`
-  height: 0px;
-  position: relative;
-  padding-top: 100%;
-`
-
-const Item = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  left: 0;
-  top: 0;
-`
-
+const isDesktop = () => window.innerWidth > 700
 const PageLoaderContent = ({
   isFrontpage,
   firstComplete,
@@ -53,14 +24,19 @@ const PageLoaderContent = ({
   const { pageTransitionActive, animateContent } = useUiContext()
   const t = useSetting()
   const [showCanvas, setShowCanvas] = useState(false)
+  const titleRef = useRef()
 
   useScheduleEffect(() => {
-    setShowCanvas(isFrontpage && animateContent)
+    setShowCanvas(isFrontpage && animateContent && isDesktop())
   }, [t.currentLanguage, isFrontpage, pageTransitionActive, animateContent])
 
   const etableraSmooth = useSmooth(() => {
     if (isFrontpage && !pageTransitionActive && animateContent) {
-      return new SmoothEtablera($mainHero.resolve())
+      return new SmoothEtablera(
+        $mainHero.resolve(),
+        titleRef.current,
+        !isDesktop()
+      )
     }
   }, [t.currentLanguage, isFrontpage, pageTransitionActive, animateContent])
 
@@ -76,7 +52,7 @@ const PageLoaderContent = ({
 
   return (
     <>
-      <PageLoaderLayout>{TitleNode}</PageLoaderLayout>
+      <PageLoaderLayout ref={titleRef}>{TitleNode}</PageLoaderLayout>
       {showCanvas && <TitleCanvas smooth={etableraSmooth} />}
     </>
   )

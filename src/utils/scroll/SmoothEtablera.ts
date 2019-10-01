@@ -6,11 +6,14 @@ class SmoothEtablera extends SmoothItem {
   disabled: boolean = false
   nextOffset: number = 500
   oglCanvas: IOGLCanvas
+  shouldScale: boolean
 
-  constructor(el: HTMLElement) {
+  constructor(el: HTMLElement, current: HTMLElement, shouldScale: boolean) {
     super(el)
-    if (!el) return
 
+    if (!el) return
+    this.shouldScale = shouldScale
+    this.DOM.current = current
     this.DOM.nextContent = document.querySelector('[data-scroll-target]')
     this.renderedStyles = {
       fade: {
@@ -30,8 +33,9 @@ class SmoothEtablera extends SmoothItem {
   }
 
   appendCanvas(canvasEl: HTMLElement, oglCanvas: IOGLCanvas) {
-    this.DOM.canvasEl = canvasEl
+    this.DOM.current = canvasEl
     this.oglCanvas = oglCanvas
+    this.shouldScale = false
   }
 
   getSize() {
@@ -50,7 +54,7 @@ class SmoothEtablera extends SmoothItem {
 
   cleanUp = () => {
     this.oglCanvas && this.oglCanvas.pause()
-    if (this.DOM.canvasEl) this.DOM.canvasEl.style.opacity = '0'
+    if (this.DOM.current) this.DOM.current.style.opacity = '0'
     // if (this.DOM.description) {
     //   this.DOM.description.style.opacity = '0'
     // }
@@ -61,24 +65,17 @@ class SmoothEtablera extends SmoothItem {
   }
 
   layout = () => {
-    if (this.oglCanvas) this.oglCanvas.shouldRender = true
-
     if (this.disabled) return
     const opacity = (1 - this.renderedStyles.fade.previous).toFixed(2)
     const scale = 1.65 * this.renderedStyles.fade.previous + 1
 
-    this.DOM.description = etableraDescription.resolve()
+    if (this.DOM.current) {
+      this.DOM.current.style.opacity = opacity
 
-    // elements.forEach(el => {
-    //   // el.style.transform = `scale(${scale})`
-    // })
-
-    if (this.DOM.canvasEl) {
-      this.DOM.canvasEl.style.opacity = opacity
+      if (this.shouldScale) {
+        this.DOM.current.style.transform = `translate(-50%, -50%) scale(${scale})`
+      }
     }
-
-    // this.DOM.canvasEl.style.transform = `translate(-50%, -50%) scale(${scale})`
-    //   this.DOM.canvasEl.style.opacity = opacity
 
     if (this.DOM.description) {
       this.DOM.description.style.opacity = (

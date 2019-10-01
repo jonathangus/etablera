@@ -1,5 +1,4 @@
-import { createPortal } from 'react-dom'
-import React, { forwardRef } from 'react'
+import React, { forwardRef, useEffect } from 'react'
 import styled from 'styled-components'
 import media from '../../media'
 

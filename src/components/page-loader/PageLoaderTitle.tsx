@@ -1,15 +1,9 @@
 import React, { useEffect, useState, useRef, memo } from 'react'
 import styled, { keyframes, css } from 'styled-components'
-import { gutter } from '../../vars'
-import media from '../../media'
 import paths from './etablera-paths'
-import {
-  mainHero,
-  $pageTitle,
-  $frontPageScale,
-} from '../../utils/dom-selectors'
+import { $pageTitle, $frontPageScale } from '../../utils/dom-selectors'
 
-// Need to generate a animation for each letter so we can animate the paths transform value
+// There is happending some strange stuff here. Caution is advised
 const pullInAnimation = keyframes`
 from {
     transform: scale(1.4);
@@ -94,9 +88,6 @@ const Letter = styled.g`
   animation-delay: ${p => getDelay(p.index)}ms;
   fill: ${p => p.theme.color};
 `
-const Overflow = styled.rect`
-  fill: ${p => p.theme.backgroundColor};
-`
 
 type Props = {
   setFirstComplete: Function
@@ -139,36 +130,44 @@ const PageLoaderTitle = ({ setFirstComplete, firstComplete }: Props) => {
             xmlnsXlink="http://www.w3.org/1999/xlink"
           >
             <g id="Page-1" stroke="none" fill="none" fillRule="evenodd">
-              <Word id="Etablera">
-                {paths.desktop.letters.map((l, i) => (
-                  <Letter ready={firstComplete} key={i}>
-                    {l}
-                  </Letter>
-                ))}
-                <Line
-                  ready={firstComplete}
-                  id="Line"
-                  transform="translate(267.000000, 1121.000000)"
-                  stroke="#FFFFFF"
-                  stroke-linecap="square"
-                  strokeWidth="2"
-                >
-                  <path d="M1,0 L0.5,24.6212121"></path>
-                  <path d="M1,24 L1465,24" id="Line-2"></path>
-                  <path
-                    d="M1465.5,24.6290323 L1465.5,2.37096774"
-                    id="Line-3"
-                  ></path>
-                </Line>
-              </Word>
+              <defs>
+                <rect
+                  id="rect"
+                  fill="#000000"
+                  x="0"
+                  y="744"
+                  width="2722.51309"
+                  height="460"
+                ></rect>
+                <clipPath id="clip">
+                  <use xlinkHref="#rect" />
+                </clipPath>
+              </defs>
+              <g clipPath="url(#clip)">
+                <Word id="Etablera">
+                  {paths.desktop.letters.map((l, i) => (
+                    <Letter ready={firstComplete} key={i}>
+                      {l}
+                    </Letter>
+                  ))}
 
-              <Overflow
-                fill="#000000"
-                x="0"
-                y="1295"
-                width="2000"
-                height="1500"
-              ></Overflow>
+                  <Line
+                    ready={firstComplete}
+                    id="Line"
+                    transform="translate(267.000000, 1121.000000)"
+                    stroke="#FFFFFF"
+                    stroke-linecap="square"
+                    strokeWidth="2"
+                  >
+                    <path d="M1,0 L0.5,24.6212121"></path>
+                    <path d="M1,24 L1465,24" id="Line-2"></path>
+                    <path
+                      d="M1465.5,24.6290323 L1465.5,2.37096774"
+                      id="Line-3"
+                    ></path>
+                  </Line>
+                </Word>
+              </g>
             </g>
           </svg>
         </h1>
