@@ -138,13 +138,7 @@ const PageLoaderTitle = ({ setFirstComplete, firstComplete }: Props) => {
             xmlns="http://www.w3.org/2000/svg"
             xmlnsXlink="http://www.w3.org/1999/xlink"
           >
-            <g
-              id="Page-1"
-              stroke="none"
-              stroke-width="1"
-              fill="none"
-              fillRule="evenodd"
-            >
+            <g id="Page-1" stroke="none" fill="none" fillRule="evenodd">
               <Word id="Etablera">
                 {paths.desktop.letters.map((l, i) => (
                   <Letter ready={firstComplete} key={i}>
@@ -157,7 +151,7 @@ const PageLoaderTitle = ({ setFirstComplete, firstComplete }: Props) => {
                   transform="translate(267.000000, 1121.000000)"
                   stroke="#FFFFFF"
                   stroke-linecap="square"
-                  stroke-width="2"
+                  strokeWidth="2"
                 >
                   <path d="M1,0 L0.5,24.6212121"></path>
                   <path d="M1,24 L1465,24" id="Line-2"></path>

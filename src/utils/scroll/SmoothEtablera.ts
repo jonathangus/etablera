@@ -49,16 +49,18 @@ class SmoothEtablera extends SmoothItem {
   }
 
   cleanUp = () => {
-    if (this.oglCanvas) this.oglCanvas.shouldRender = false
+    this.oglCanvas && this.oglCanvas.pause()
     if (this.DOM.canvasEl) this.DOM.canvasEl.style.opacity = '0'
     // if (this.DOM.description) {
     //   this.DOM.description.style.opacity = '0'
     // }
   }
 
-  layout = () => {
-    // const elements = $frontPageScale.resolveAll()
+  onEnter = () => {
+    this.oglCanvas && this.oglCanvas.play()
+  }
 
+  layout = () => {
     if (this.oglCanvas) this.oglCanvas.shouldRender = true
 
     if (this.disabled) return

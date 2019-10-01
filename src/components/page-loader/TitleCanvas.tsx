@@ -29,6 +29,7 @@ const TitleCanvas = ({ smooth }: Props) => {
   const portalEl = useRef<HTMLElement>($mainHero.resolve())
   const canvasRef = useRef<HTMLCanvasElement>()
   const oglCanvas = useRef<IOGLCanvas>()
+  const innerEl = useRef<HTMLElement>()
 
   useEffect(() => {
     portalEl.current = $mainHero.resolve()
@@ -46,7 +47,10 @@ const TitleCanvas = ({ smooth }: Props) => {
       }, 100)
     }
 
-    oglCanvas.current = new OGLCanvas(canvasRef.current, { onReady })
+    oglCanvas.current = new OGLCanvas(canvasRef.current, {
+      onReady,
+      parentNode: innerEl.current,
+    })
 
     return () => {
       oglCanvas.current.destroy()
@@ -57,7 +61,7 @@ const TitleCanvas = ({ smooth }: Props) => {
 
   return createPortal(
     <PageLoaderLayout ref={wrapperEl}>
-      <Inner {...$frontPageScale.attr}>
+      <Inner ref={innerEl} {...$frontPageScale.attr}>
         <Container ref={canvasRef}></Container>
       </Inner>
     </PageLoaderLayout>,

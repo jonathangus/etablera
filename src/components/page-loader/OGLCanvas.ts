@@ -53,9 +53,13 @@ export interface IOGLCanvas {
   resize: () => void
   destroy: () => void
   updateMouse: (e: any) => void
+  play: () => void
+  pause: () => void
+  parentNode: HTMLElement
 }
 
 type Options = {
+  parentNode: HTMLElement
   onReady: Function
 }
 
@@ -72,10 +76,12 @@ class OGLCanvas implements IOGLCanvas {
   program: ogl.Program
   lastMouse: ogl.Vec2
   shouldRender = true
+  parentNode
 
-  constructor(canvas: HTMLCanvasElement, { onReady }: Options) {
+  constructor(canvas: HTMLCanvasElement, { onReady, parentNode }: Options) {
+    this.parentNode = parentNode
     this.el = canvas
-    this.bounds = this.el.getBoundingClientRect()
+    this.bounds = this.parentNode.getBoundingClientRect()
 
     this.renderer = new ogl.Renderer({
       dpr: 2,
@@ -151,7 +157,8 @@ class OGLCanvas implements IOGLCanvas {
   }
 
   resize = debounce(() => {
-    // bounds = target.getBoundingClientRect()
+    this.bounds = this.parentNode.getBoundingClientRect()
+
     let a1, a2
 
     if (this.bounds.height / this.bounds.width < imageAspect) {
