@@ -85,7 +85,7 @@ const Letter = styled.g`
   transform-origin: center;
   animation: ${p => (p.ready ? pullInAnimation : 'none')} 1s
     cubic-bezier(0.8, 0, 0.2, 1) forwards;
-  animation-delay: ${p => getDelay(p.index)}ms;
+  animation-delay: ${p => getDelay(p.index + 1)}ms;
   fill: ${p => p.theme.color};
 `
 
@@ -116,6 +116,7 @@ const PageLoaderTitle = ({ setFirstComplete, firstComplete }: Props) => {
     }
   }, [])
 
+  console.log(paths.desktop.letters)
   return (
     <TitleWrapper {...$pageTitle.attr} {...$frontPageScale.attr}>
       <Inner ref={innerEl}>
@@ -146,7 +147,7 @@ const PageLoaderTitle = ({ setFirstComplete, firstComplete }: Props) => {
               <g clipPath="url(#clip)">
                 <Word id="Etablera">
                   {paths.desktop.letters.map((l, i) => (
-                    <Letter ready={firstComplete} key={i}>
+                    <Letter ready={firstComplete} index={i} key={i}>
                       {l}
                     </Letter>
                   ))}
