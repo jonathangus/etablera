@@ -116,10 +116,9 @@ const PageLoaderTitle = ({ setFirstComplete, firstComplete }: Props) => {
     }
   }, [])
 
-  console.log(paths.desktop.letters)
   return (
     <TitleWrapper {...$pageTitle.attr} {...$frontPageScale.attr}>
-      <Inner ref={innerEl}>
+      <Inner>
         <h1>
           Etablera
           <svg
@@ -145,7 +144,7 @@ const PageLoaderTitle = ({ setFirstComplete, firstComplete }: Props) => {
                 </clipPath>
               </defs>
               <g clipPath="url(#clip)">
-                <Word id="Etablera">
+                <Word id="Etablera" ref={innerEl}>
                   {paths.desktop.letters.map((l, i) => (
                     <Letter ready={firstComplete} index={i} key={i}>
                       {l}
