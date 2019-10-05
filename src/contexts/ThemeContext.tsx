@@ -25,7 +25,7 @@ const lightTheme = {
 }
 
 const ThemeContextProvider = ({ children }: { children: JSX.Element }) => {
-  const [selected, setSelected] = useState('dark')
+  const [selected, setSelected] = useState<'dark' | 'light'>('dark')
   const toggleTheme = () => setSelected(selected === 'light' ? 'dark' : 'light')
 
   return (

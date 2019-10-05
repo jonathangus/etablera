@@ -1,6 +1,7 @@
 import debounce from 'lodash/debounce'
 import * as ogl from 'ogl'
-import desktop from './Etablera_desktop.svg'
+import whiteTextLogo from './Etablera_desktop.svg'
+import blackTextLogo from './Etablera_desktop_dark.svg'
 
 const imgSize = [2000, 2000]
 const imageAspect = imgSize[1] / imgSize[0]
@@ -61,6 +62,7 @@ export interface IOGLCanvas {
 type Options = {
   parentNode: HTMLElement
   onReady: Function
+  selected: 'dark' | 'light'
 }
 
 class OGLCanvas implements IOGLCanvas {
@@ -77,20 +79,27 @@ class OGLCanvas implements IOGLCanvas {
   lastMouse: ogl.Vec2
   shouldRender = true
   parentNode
+  selectedStyle: string
 
-  constructor(canvas: HTMLCanvasElement, { onReady, parentNode }: Options) {
+  constructor(
+    container: HTMLElement,
+    { onReady, parentNode, selected }: Options
+  ) {
     this.parentNode = parentNode
+
+    const canvas = document.createElement('canvas')
+    container.appendChild(canvas)
+
     this.el = canvas
     this.bounds = this.parentNode.getBoundingClientRect()
 
     this.renderer = new ogl.Renderer({
       dpr: 2,
-      alpha: true,
-      premultipliedAlpha: true,
       canvas: this.el,
     })
 
     this.gl = this.renderer.gl
+    this.selectedStyle = selected
 
     // Variable inputs to control flowmap
     this.aspect = 1
@@ -118,7 +127,7 @@ class OGLCanvas implements IOGLCanvas {
       onReady()
     }
     img.crossOrigin = 'Anonymous'
-    img.src = desktop
+    img.src = this.selectedStyle === 'light' ? blackTextLogo : whiteTextLogo
 
     let a1, a2
     if (this.bounds.height / this.bounds.width < imageAspect) {
@@ -152,6 +161,8 @@ class OGLCanvas implements IOGLCanvas {
 
     this.el.addEventListener('mousemove', this.updateMouse, false)
     this.lastMouse = new ogl.Vec2()
+
+    console.log(this.mesh, this.program, texture, this.flowmap, this.velocity)
 
     requestAnimationFrame(this.render)
   }
@@ -255,7 +266,10 @@ class OGLCanvas implements IOGLCanvas {
   }
 
   destroy = () => {
+    this.mesh.setParent(null)
+    window.removeEventListener('resize', this.resize)
     this.el.removeEventListener('mousemove', this.updateMouse, false)
+    this.el.remove()
   }
 }
 

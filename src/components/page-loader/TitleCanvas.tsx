@@ -10,14 +10,20 @@ import {
 import PageLoaderLayout from './PageLoaderLayout'
 import { ISmoothItem } from '../../utils/scroll/SmoothItem'
 import OGLCanvas, { IOGLCanvas } from './OGLCanvas'
+import { useThemeContext } from '../../contexts/ThemeContext'
 
-const Container = styled.canvas`
-  width: 100%;
-  height: 100%;
-`
 const Inner = styled.div`
   height: 100%;
   width: 100%;
+  background: ${p => p.theme.backgroundColor};
+  transition: ${p => p.theme.transition};
+
+  canvas {
+    width: 100%;
+    height: 100%;
+    background: ${p => p.theme.backgroundColor};
+    transition: ${p => p.theme.transition};
+  }
 `
 
 type Props = {
@@ -30,6 +36,7 @@ const TitleCanvas = ({ smooth }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement>()
   const oglCanvas = useRef<IOGLCanvas>()
   const innerEl = useRef<HTMLElement>()
+  const { selected } = useThemeContext()
 
   useEffect(() => {
     portalEl.current = $mainHero.resolve()
@@ -47,23 +54,22 @@ const TitleCanvas = ({ smooth }: Props) => {
       }, 100)
     }
 
-    oglCanvas.current = new OGLCanvas(canvasRef.current, {
+    oglCanvas.current = new OGLCanvas(innerEl.current, {
       onReady,
+      selected,
       parentNode: innerEl.current,
     })
 
     return () => {
       oglCanvas.current.destroy()
     }
-  }, [])
+  }, [selected])
 
   if (!portalEl.current) return null
 
   return createPortal(
     <PageLoaderLayout ref={wrapperEl}>
-      <Inner ref={innerEl} {...$frontPageScale.attr}>
-        <Container ref={canvasRef}></Container>
-      </Inner>
+      <Inner ref={innerEl} {...$frontPageScale.attr}></Inner>
     </PageLoaderLayout>,
     portalEl.current
   )
