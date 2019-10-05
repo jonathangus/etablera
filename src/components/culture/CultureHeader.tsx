@@ -23,7 +23,7 @@ const CultureHeader = () => {
     }
   }, [])
 
-  return <Title>Feed</Title>
+  return null
 }
 
 export default CultureHeader

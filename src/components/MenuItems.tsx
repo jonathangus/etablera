@@ -7,7 +7,6 @@ import { gutter, titleFont, semi } from '../vars'
 
 const Container = styled.div`
   display: flex;
-  margin-right: ${gutter * 2}px;
   font-weight: ${semi};
   font-family: ${titleFont};
 

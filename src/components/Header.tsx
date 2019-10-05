@@ -13,6 +13,7 @@ import Grid from './Grid'
 import { $header } from '../utils/dom-selectors'
 import headerTextDifference from '../utils/header-text-difference'
 import { useSetting } from '../contexts/SettingsContext'
+import media from '../media'
 
 const lightTextStyle = css`
   --half-text-split-color: white;
@@ -32,7 +33,6 @@ const Container = styled.div<{ show: boolean }>`
   left: 0;
   top: 0;
   right: 0;
-
   padding: ${gutter * 2}px 0;
   z-index: 4425;
   will-change: transform;
@@ -68,6 +68,17 @@ const Right = styled.div`
   margin-left: auto;
   display: flex;
   align-items: center;
+`
+const Divider = styled.div`
+  background: ${p => p.theme.color};
+  height: 16px;
+  width: 1px;
+  margin: 0 ${gutter * 2}px;
+  opacity: 0.5;
+
+  ${media.phone`
+    display:none;
+  `}
 `
 
 type Props = {
@@ -134,6 +145,7 @@ const Header = ({ currentPath }: Props) => {
         </Logo>
         <Right>
           <MenuItems />
+          <Divider />
           <LanguageSelect />
           <ThemeToggle />
         </Right>
