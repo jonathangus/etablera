@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, memo } from 'react'
 import styled, { keyframes, css } from 'styled-components'
 import paths from './etablera-paths'
-import { $pageTitle, $frontPageScale } from '../../utils/dom-selectors'
+import { $pageTitle } from '../../utils/dom-selectors'
 
 // There is happending some strange stuff here. Caution is advised
 const pullInAnimation = keyframes`
@@ -117,7 +117,7 @@ const PageLoaderTitle = ({ setFirstComplete, firstComplete }: Props) => {
   }, [])
 
   return (
-    <TitleWrapper {...$pageTitle.attr} {...$frontPageScale.attr}>
+    <TitleWrapper {...$pageTitle.attr}>
       <Inner>
         <h1>
           Etablera

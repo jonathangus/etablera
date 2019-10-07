@@ -51,4 +51,4 @@ export const $mediaImage = getSelector('media-image', {
 export const $pwaRefresh = getSelector('pwa-refresh', {
   activeClass: 'activeClass',
 })
-export const $frontPageScale = getSelector('frontpage-scale')
+export const $scrollTarget = getSelector('scroll-target')

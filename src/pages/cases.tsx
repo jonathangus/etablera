@@ -4,7 +4,7 @@ import AllCases from '../components/cases/all-cases/AllCases'
 import { useSetting } from '../contexts/SettingsContext'
 import { graphql } from 'gatsby'
 
-const IndexPage = ({ data }) => {
+const CasePage = ({ data }) => {
   const t = useSetting()
 
   return (
@@ -29,4 +29,4 @@ export const query = graphql`
   }
 `
 
-export default IndexPage
+export default CasePage

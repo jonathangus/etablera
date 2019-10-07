@@ -13,7 +13,6 @@ const AboutPage = ({ data }) => {
         title={t('meta.about.title')}
         description={t('meta.about.description')}
       />
-      <AllCases cases={data.cases.nodes} />
     </React.Fragment>
   )
 }

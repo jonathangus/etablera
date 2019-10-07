@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import SEO from '../components/Seo'
 import Grid from '../components/Grid'
 import styled from 'styled-components'
 import { useSetting } from '../contexts/SettingsContext'
+import { useUiContext } from '../contexts/UiContext'
 
 const Container = styled.div`
   padding: 20vh 0;
@@ -12,9 +13,17 @@ const Container = styled.div`
   }
 `
 
-const MissingPage = ({ pageContext }) => {
+const PrivacyPage = () => {
   const t = useSetting()
+  const { showHeader, hideHeader } = useUiContext()
 
+  useEffect(() => {
+    showHeader()
+
+    return () => {
+      hideHeader()
+    }
+  }, [])
   return (
     <React.Fragment>
       <SEO title="Privacy Policy" />
@@ -25,4 +34,4 @@ const MissingPage = ({ pageContext }) => {
   )
 }
 
-export default MissingPage
+export default PrivacyPage

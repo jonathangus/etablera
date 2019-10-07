@@ -89,7 +89,7 @@ const PageLoader = ({ isFrontpage }: Props) => {
   }
 
   useEffect(() => {
-    if (process.env.NODE_ENV === '1development') {
+    if (process.env.NODE_ENV === 'development') {
       setMounted()
       setFirstComplete(true)
       setSecondComplete(true)

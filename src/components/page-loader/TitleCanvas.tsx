@@ -1,12 +1,8 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useMemo, memo } from 'react'
 import { createPortal } from 'react-dom'
 import styled from 'styled-components'
 
-import {
-  $mainHero,
-  $pageTitle,
-  $frontPageScale,
-} from '../../utils/dom-selectors'
+import { $mainHero, $pageTitle } from '../../utils/dom-selectors'
 import PageLoaderLayout from './PageLoaderLayout'
 import { ISmoothItem } from '../../utils/scroll/SmoothItem'
 import OGLCanvas, { IOGLCanvas } from './OGLCanvas'
@@ -54,25 +50,32 @@ const TitleCanvas = ({ smooth }: Props) => {
       }, 100)
     }
 
-    oglCanvas.current = new OGLCanvas(innerEl.current, {
+    oglCanvas.current = new OGLCanvas(canvasRef.current, {
       onReady,
       selected,
       parentNode: innerEl.current,
     })
 
     return () => {
+      console.log('REMOVE')
       oglCanvas.current.destroy()
     }
   }, [selected])
 
   if (!portalEl.current) return null
 
-  return createPortal(
-    <PageLoaderLayout ref={wrapperEl}>
-      <Inner ref={innerEl} {...$frontPageScale.attr}></Inner>
-    </PageLoaderLayout>,
-    portalEl.current
+  const content = useMemo(
+    () => (
+      <PageLoaderLayout ref={wrapperEl}>
+        <Inner ref={innerEl}>
+          <canvas ref={canvasRef} />
+        </Inner>
+      </PageLoaderLayout>
+    ),
+    []
   )
+
+  return createPortal(content, portalEl.current)
 }
 
 export default TitleCanvas

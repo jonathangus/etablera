@@ -7,7 +7,7 @@ class SmoothCase extends SmoothItem {
 
   constructor(
     el: HTMLElement,
-    options: { shadow: HTMLElement; title: HTMLElement }
+    options: { shadow?: HTMLElement; title: HTMLElement }
   ) {
     super(el)
 
@@ -87,7 +87,6 @@ class SmoothCase extends SmoothItem {
     )
     // const scaleY = 1 - val / Math.floor(this.props.height)
     // const scaleX = 1 - val / Math.floor(this.props.width)
-    // this.DOM.shadow.style.transform = `scaleY(${scaleY})scaleX(${scaleX})`
 
     const borders = Array.from(
       this.DOM.el.querySelectorAll('[data-case-border]')

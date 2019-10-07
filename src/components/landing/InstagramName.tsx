@@ -7,7 +7,7 @@ const Container = styled.a<{ show: boolean }>`
   display: inline-block;
   color: ${p => p.theme.color};
   white-space: nowrap;
-  margin-bottom: ${gutter}px;
+  margin-bottom: ${gutter * 2}px;
   opacity: ${p => (p.show ? 1 : 0)};
   transition: opacity 1s ease;
 

@@ -1,33 +1,66 @@
 import React, { useEffect, useRef, useState } from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import { gutter, smoothTransition } from '../../vars'
 import { useSetting } from '../../contexts/SettingsContext'
 import media, { sizes } from '../../media'
 import CaseLink from './CaseLink'
 import { ICase } from '../../types'
-import { styleRef } from '../../utils'
 import SmoothCase from '../../utils/scroll/SmoothCase'
 import useSmooth from '../../hooks/useSmooth'
 import smooth from '../../utils//scroll/smooth-scroll'
 
+const ComeIn = keyframes`
+  0% {
+    transform: translateX(-120%)
+  }
+  40% {
+    transform: translateX(0%)
+
+  }
+  100% {
+    transform: translateX(120%)
+
+  }
+`
+
 const ReadMore = styled.div`
   position: absolute;
   z-index: 40;
-  left: 50%;
+  left: ${gutter * 5}px;
   bottom: ${gutter * 5}px;
   color: white;
   padding-top: 5px;
-  transform: translate(-50%, 5px);
+  transform: translateY(5px);
   opacity: 0;
   font-size: 0.9rem;
   will-change: transform, opacity;
   transition: transform ${smoothTransition}, opacity ${smoothTransition};
+  overflow: hidden;
+  padding-bottom: 2px;
+
+  &:after {
+    content: '';
+    width: 100%;
+    height: 1px;
+    background: ${p => p.theme.color};
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    bottom: 0;
+    animation: ${ComeIn} 2s ease infinite;
+    animation-play-state: paused;
+
+    ${media.tablet`
+    animation-play-state:running;
+    `}
+  }
 
   ${media.tablet`
     transform: translate(-50%,0px);
+    left:50%;
     opacity: 1;
-    border-bottom: 1px solid white;
     display: inline-block;
+    
   `}
 `
 
@@ -36,7 +69,7 @@ const CaseTitle = styled.h1`
   pointer-events: none;
   position: absolute;
   right: ${-gutter * 4}px;
-  max-width: 700px;
+  max-width: 750px;
   font-size: 6rem;
   bottom: -${gutter * 2}px;
   z-index: 55;
@@ -76,28 +109,19 @@ const Wrapper = styled.div`
   position: relative;
 `
 
-const Shadow = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 52;
-  box-shadow: 0 8px 80px 2px rgba(0, 0, 0, 0.45);
-  opacity: 0;
-  left: 0;
-  top: 0;
-  transition: opacity 0.5s ease;
-  pointer-events: none;
-  will-change: transform, opacity;
-`
-
 const StyledCaseLink = styled(CaseLink)`
   &:hover ${ReadMore} {
     opacity: 1;
-    transform: translate(-50%, 0px);
-  }
+    transform: translateY(0px);
 
-  &:hover ~ ${Shadow} {
-    opacity: 1;
+    &::after {
+      animation-play-state: running;
+    }
+
+    ${media.tablet`
+    transform: translate(-50%, 0);
+    
+    `}
   }
 
   @media (min-width: ${sizes.tablet}px) {
@@ -189,12 +213,10 @@ const Case = ({ record }: Props) => {
   const elem = useRef<HTMLElement>()
   const titleEl = useRef<HTMLElement>()
   const containerElem = useRef<HTMLElement>()
-  const shadowEl = useRef<HTMLElement>()
   const caseSmooth = useSmooth(
     () =>
       new SmoothCase(elem.current, {
         title: titleEl.current,
-        shadow: shadowEl.current,
       })
   )
 
@@ -212,7 +234,6 @@ const Case = ({ record }: Props) => {
       >
         <ReadMore>{t('case.viewcase')}</ReadMore>
       </StyledCaseLink>
-      <Shadow ref={shadowEl} />
 
       <CaseTitle ref={titleEl}>
         <span data-letters={record.name}>{record.name}</span>

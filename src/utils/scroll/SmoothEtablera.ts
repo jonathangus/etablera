@@ -1,6 +1,6 @@
 import SmoothItem from './SmoothItem'
-import { etableraDescription, $frontPageScale } from '../dom-selectors'
 import { IOGLCanvas } from '../../components/page-loader/OGLCanvas'
+import { $scrollTarget } from '../dom-selectors'
 
 class SmoothEtablera extends SmoothItem {
   disabled: boolean = false
@@ -14,7 +14,7 @@ class SmoothEtablera extends SmoothItem {
     if (!el) return
     this.shouldScale = shouldScale
     this.DOM.current = current
-    this.DOM.nextContent = document.querySelector('[data-scroll-target]')
+    this.DOM.nextContent = $scrollTarget.resolve()
     this.renderedStyles = {
       fade: {
         previous: 0,

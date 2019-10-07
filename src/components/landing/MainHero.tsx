@@ -1,7 +1,7 @@
 import React from 'react'
 import styled, { keyframes } from 'styled-components'
 import InstaLinks from './InstaLinks'
-import EtableraDescription from './EtableraDescription'
+import HeroDescription from './HeroDescription'
 import { useUiContext } from '../../contexts/UiContext'
 import ScrollIndicator from '../ScrollIndicator'
 import { $mainHero } from '../../utils/dom-selectors'
@@ -55,6 +55,7 @@ const MainHero = () => {
         <VerticalEmailLink />
       </RightSidebar>
       {frontpageLoaded && <ScrollIndicator />}
+      {frontpageLoaded && <HeroDescription />}
     </Container>
   )
 }
