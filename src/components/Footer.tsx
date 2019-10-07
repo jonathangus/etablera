@@ -82,11 +82,11 @@ const Right = styled.div`
   flex: 1;
   ${paddingHandler};
   position: relative;
-  border-left: 1px solid rgba(221, 221, 221, 0.5);
+  border-left: 1px solid ${p => p.theme.grayText};
 
   ${media.desktop`
   border-left:none;
-  border-top: 1px solid rgba(221, 221, 221, 0.5);
+  border-top: 1px solid ${p => p.theme.grayText};
 
   `}
 `
@@ -123,7 +123,7 @@ const otherLinks = [
   },
 ]
 
-const AboutImage = () => {
+const Footer = () => {
   const t = useSetting()
 
   return (
@@ -175,4 +175,4 @@ const AboutImage = () => {
   )
 }
 
-export default AboutImage
+export default Footer

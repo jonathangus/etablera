@@ -99,3 +99,8 @@ export type ISectionSectionOutro = {
   websiteLink?: string
   text?: MarkdownText
 }
+
+export type IService = {
+  name: string
+  body: MarkdownText
+}

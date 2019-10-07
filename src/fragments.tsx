@@ -16,6 +16,21 @@ export const query = graphql`
     }
   }
 
+  fragment aboutImage on Query {
+    aboutImage: file(name: { eq: "about" }) {
+      childImageSharp {
+        fluid(
+          maxWidth: 1920
+          srcSetBreakpoints: [310, 650, 1280, 1500]
+          quality: 98
+        ) {
+          ...GatsbyImageSharpFluid_withWebp
+          aspectRatio
+        }
+      }
+    }
+  }
+
   fragment codeScreen on Query {
     codeScreen: file(name: { eq: "screen" }) {
       childImageSharp {

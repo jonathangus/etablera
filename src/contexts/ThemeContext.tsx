@@ -10,7 +10,7 @@ const darkTheme = {
   backgroundColor: darkBg,
   color: lightColor,
   transition: `color 0.3s ease, background-color 0.3s ease`,
-  grayText: '#7e7f80',
+  grayText: 'rgba(221, 221, 221, 0.6)',
   scrollLooper: '#222',
   subtleBackground: '#222',
 }
@@ -19,7 +19,7 @@ const lightTheme = {
   backgroundColor: lightBg,
   color: darkText,
   transition: `color 0.3s ease, background-color 0.3s ease`,
-  grayText: '#7e7f80',
+  grayText: 'rgba(221, 221, 221, 0.6)',
   scrollLooper: '#f3f3f3',
   subtleBackground: '#f5f5f5',
 }

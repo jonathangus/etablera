@@ -4,13 +4,26 @@ import { useSetting } from '../../contexts/SettingsContext'
 import Grid from '../Grid'
 import media from '../../media'
 import { useUiContext } from '../../contexts/UiContext'
+import YFactor from '../YFactor'
 
 const Container = styled.div`
-  padding-top: 25vh;
+  padding-top: 20vh;
   text-align: center;
+
   h1 {
-    ${media.phone` hyphens: auto;`}
+    ${media.phone` 
+        font-size: 3rem;
+        `}
   }
+`
+
+const Text = styled(YFactor)`
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10vh;
+  font-size: 1.4rem;
+  text-align: left;
 `
 
 const AboutHeader = () => {
@@ -30,6 +43,9 @@ const AboutHeader = () => {
     <Container>
       <Grid>
         <h1>{t('about.title')}</h1>
+        <Text
+          dangerouslySetInnerHTML={{ __html: t('about.intro', true) }}
+        ></Text>
       </Grid>
     </Container>
   )
