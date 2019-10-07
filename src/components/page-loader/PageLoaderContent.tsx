@@ -38,7 +38,7 @@ const PageLoaderContent = ({
         !isDesktop()
       )
     }
-  }, [t.currentLanguage, isFrontpage, pageTransitionActive, animateContent])
+  }, [isFrontpage, pageTransitionActive, animateContent])
 
   const TitleNode = useMemo(
     () => (

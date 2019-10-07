@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components'
-import { titleFont, textFont, gutter } from './vars'
+import { titleFont, textFont, gutter, semi } from './vars'
 import media from './media'
 
 export default createGlobalStyle`
@@ -72,6 +72,11 @@ export default createGlobalStyle`
         transform: translateX(-50%);
         bottom: 20px;
         font-size: 16px;
+    }
+
+    a {
+        color: ${p => p.theme.color};
+        font-weight: ${semi};
     }
 
 

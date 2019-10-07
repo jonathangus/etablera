@@ -4,16 +4,15 @@ import AllCases from '../components/cases/all-cases/AllCases'
 import { useSetting } from '../contexts/SettingsContext'
 import { graphql } from 'gatsby'
 
-const CasePage = ({ data }) => {
+const AboutPage = ({ data }) => {
   const t = useSetting()
 
   return (
     <React.Fragment>
       <SEO
-        title={t('meta.cases.title')}
-        description={t('meta.cases.description')}
+        title={t('meta.about.title')}
+        description={t('meta.about.description')}
       />
-      <AllCases cases={data.cases.nodes} />
     </React.Fragment>
   )
 }
@@ -29,4 +28,4 @@ export const query = graphql`
   }
 `
 
-export default CasePage
+export default AboutPage

@@ -81,14 +81,8 @@ class OGLCanvas implements IOGLCanvas {
   parentNode
   selectedStyle: string
 
-  constructor(
-    container: HTMLElement,
-    { onReady, parentNode, selected }: Options
-  ) {
+  constructor(canvas: HTMLElement, { onReady, parentNode, selected }: Options) {
     this.parentNode = parentNode
-
-    const canvas = document.createElement('canvas')
-    container.appendChild(canvas)
 
     this.el = canvas
     this.bounds = this.parentNode.getBoundingClientRect()
@@ -161,8 +155,6 @@ class OGLCanvas implements IOGLCanvas {
 
     this.el.addEventListener('mousemove', this.updateMouse, false)
     this.lastMouse = new ogl.Vec2()
-
-    console.log(this.mesh, this.program, texture, this.flowmap, this.velocity)
 
     requestAnimationFrame(this.render)
   }

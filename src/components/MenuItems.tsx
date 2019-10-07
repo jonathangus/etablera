@@ -12,8 +12,11 @@ const Container = styled.div`
 
   a {
     padding-left: ${gutter * 2}px;
-
     text-decoration: none;
+
+    &:first-child {
+      padding-left: 0;
+    }
   }
 `
 
@@ -27,6 +30,10 @@ const MenuItems = () => {
     {
       title: t('meta.feed.title'),
       url: '/feed/',
+    },
+    {
+      title: t('meta.about.title'),
+      url: '/about/',
     },
   ]
   return (

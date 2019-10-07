@@ -4,6 +4,7 @@ import { gutter } from '../vars'
 import media from '../media'
 import { useSetting } from '../contexts/SettingsContext'
 import { scrollToElementCenter } from '../utils/scroll'
+import { $scrollTarget } from '../utils/dom-selectors'
 
 const Container = styled.div`
   transition: opacity 0.5s ease;
@@ -105,9 +106,7 @@ const ScrollIndicator = ({ color }: { color?: string }) => {
   }, [])
 
   const scrollDown = () => {
-    const sibling = document.querySelector(
-      '[data-scroll-target]'
-    ) as HTMLElement
+    const sibling = $scrollTarget.resolve() as HTMLElement
     if (sibling) {
       scrollToElementCenter(sibling)
     }

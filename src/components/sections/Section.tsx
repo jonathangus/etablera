@@ -5,6 +5,7 @@ import SectionImageGrid from './SectionImageGrid'
 import SectionFullVideo from './SectionFullVideo'
 import SectionOutro from './SectionOutro'
 import YFactor from '../YFactor'
+import { $scrollTarget } from '../../utils/dom-selectors'
 // import SectionLooper from './SectionLooper'
 
 const components = {
@@ -27,9 +28,10 @@ const Section = (props: Props) => {
     console.error({ __typename })
     return null
   }
+  const attr = firstSection ? $scrollTarget.attr : {}
 
   return (
-    <YFactor data-scroll-target={firstSection}>
+    <YFactor {...attr}>
       <Comp {...data} />
     </YFactor>
   )
