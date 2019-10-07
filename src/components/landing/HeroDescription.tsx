@@ -15,6 +15,7 @@ const Container = styled.div`
   font-size: 1.8rem;
 
   ${media.phone`
+  bottom: 25vh;
     font-size:1.4rem;
   `}
 `
@@ -26,7 +27,6 @@ const Inner = styled(RotateIn)`
 
   p {
     margin: 0 auto;
-    /* hyphens: auto; */
     display: inline;
   }
   del {
@@ -43,7 +43,9 @@ const EtableraDescription = () => {
   const [show, setShow] = useState(false)
 
   useScheduleEffect(() => {
-    setShow(true)
+    setTimeout(() => {
+      setShow(true)
+    }, 300)
   }, [])
 
   return (
