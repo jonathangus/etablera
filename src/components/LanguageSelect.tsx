@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { gutter, semi, titleFont } from '../vars'
+import { gutter, semi, titleFont, headerMobileMargin } from '../vars'
 import { useSetting } from '../contexts/SettingsContext'
 import { Link } from 'gatsby'
 import media from '../media'
@@ -29,6 +29,11 @@ const Container = styled.div`
   position: relative;
   margin-right: ${gutter * 2}px;
   z-index: 3300;
+
+  ${media.phone`
+  margin-right: ${headerMobileMargin}px;
+
+  `}
 
   &:hover ${Label} {
     transform: translateY(0%) rotateX(0deg);

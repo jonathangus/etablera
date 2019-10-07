@@ -19,3 +19,4 @@ export const easeInCubic = 'cubic-bezier(0.2, 1, 0.3, 1)'
 export const space = '10vh'
 export const niceCubic = 'cubic-bezier(0.25, 0.46, 0.45, 0.94)'
 export const revealCubicJs = 'cubicBezier(0.7,0,0.3,1)'
+export const headerMobileMargin = 8

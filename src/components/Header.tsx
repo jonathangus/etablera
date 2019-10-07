@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components'
 import ThemeToggle from './ThemeToggle'
 import { logo } from '../svg'
 import { Link } from 'gatsby'
-import { gutter } from '../vars'
+import { gutter, headerMobileMargin } from '../vars'
 import MenuItems from './MenuItems'
 import { useUiContext } from '../contexts/UiContext'
 import LanguageSelect from './LanguageSelect'
@@ -77,7 +77,8 @@ const Divider = styled.div`
   opacity: 0.5;
 
   ${media.phone`
-    display:none;
+  margin: 0 ${headerMobileMargin}px;
+
   `}
 `
 

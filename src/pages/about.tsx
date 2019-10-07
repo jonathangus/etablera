@@ -1,8 +1,8 @@
 import React from 'react'
 import SEO from '../components/Seo'
-import AllCases from '../components/cases/all-cases/AllCases'
 import { useSetting } from '../contexts/SettingsContext'
 import { graphql } from 'gatsby'
+import AboutHeader from '../components/about/AboutHeader'
 
 const AboutPage = ({ data }) => {
   const t = useSetting()
@@ -13,6 +13,7 @@ const AboutPage = ({ data }) => {
         title={t('meta.about.title')}
         description={t('meta.about.description')}
       />
+      <AboutHeader></AboutHeader>
     </React.Fragment>
   )
 }
