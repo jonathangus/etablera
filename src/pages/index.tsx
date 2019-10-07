@@ -1,7 +1,7 @@
 import React from 'react'
 import SEO from '../components/Seo'
 import CaseList from '../components/cases/CaseList'
-import AboutImage from '../components/landing/AboutImage'
+import FrontpageImage from '../components/landing/FrontpageImage'
 import LogoWall from '../components/landing/LogoWall'
 import MainHero from '../components/landing/MainHero'
 import { useSetting } from '../contexts/SettingsContext'
@@ -19,7 +19,7 @@ const IndexPage = ({ pageContext, data }) => {
       <MainHero />
       <CaseList cases={data.cases.nodes} />
       <LogoWall />
-      <AboutImage />
+      <FrontpageImage />
     </React.Fragment>
   )
 }

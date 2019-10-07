@@ -19,7 +19,7 @@ const lightTheme = {
   backgroundColor: lightBg,
   color: darkText,
   transition: `color 0.3s ease, background-color 0.3s ease`,
-  grayText: 'rgba(221, 221, 221, 0.6)',
+  grayText: '#7e7f80',
   scrollLooper: '#f3f3f3',
   subtleBackground: '#f5f5f5',
 }

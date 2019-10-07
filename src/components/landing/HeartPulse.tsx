@@ -2,6 +2,7 @@ import React, { useMemo, createRef } from 'react'
 import styled from 'styled-components'
 import deferredCallbacks from '../../utils/deferred-callbacks'
 import useScheduleEffect, { SchedulePrio } from '../../hooks/useScheduleEffect'
+import Heart from '../Heart'
 
 const Container = styled.div`
   position: absolute;
@@ -14,9 +15,8 @@ const Container = styled.div`
   top: 42%;
 `
 
-const Heart = styled.figure`
+const StyledHeart = styled(Heart)`
   position: absolute;
-  font-size: 0.8rem;
   bottom: 0;
   left: 0;
   opacity: 0;
@@ -88,9 +88,12 @@ const HeartPulse = () => {
   return (
     <Container>
       {refs.map((currRef, i) => (
-        <Heart ref={currRef} key={i}>
-          ❤️
-        </Heart>
+        <StyledHeart
+          color="#fff"
+          backgroundColor="#000"
+          ref={currRef}
+          key={i}
+        ></StyledHeart>
       ))}
     </Container>
   )

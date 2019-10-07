@@ -62,7 +62,7 @@ const Inner = styled.div`
   max-height: 85vh;
 `
 
-const AboutImage = () => {
+const FrontpageImage = () => {
   const data = useStaticQuery(graphql`
     {
       ...footerImage
@@ -106,4 +106,4 @@ const AboutImage = () => {
   )
 }
 
-export default AboutImage
+export default FrontpageImage
