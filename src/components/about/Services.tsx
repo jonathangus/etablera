@@ -20,7 +20,11 @@ const Container = styled(YFactor)`
         display:block;
   `}
 `
-const Part = styled.div``
+const Part = styled.div`
+  ${media.phone`
+margin-bottom: ${gutter * 2}px;
+  `}
+`
 const Text = styled.div`
   ul {
     padding: 0;
@@ -31,7 +35,6 @@ const Text = styled.div`
 
 const Title = styled.h4`
   margin-bottom: ${gutter}px;
-  /* font-family: ${titleFont}; */
   font-weight: ${semi};
   font-size: 1.3rem;
 `
