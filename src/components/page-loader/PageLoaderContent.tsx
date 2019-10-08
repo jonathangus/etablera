@@ -30,11 +30,7 @@ const PageLoaderContent = ({
 
   const etableraSmooth = useSmooth(() => {
     if (isFrontpage && !pageTransitionActive && animateContent) {
-      return new SmoothEtablera(
-        $mainHero.resolve(),
-        titleRef.current,
-        !isDesktop()
-      )
+      return new SmoothEtablera($mainHero.resolve(), titleRef.current, false)
     }
   }, [isFrontpage, pageTransitionActive, animateContent])
 

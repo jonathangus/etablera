@@ -35,7 +35,7 @@ const UiContextProvider = ({ children, isFrontpage }: Props) => {
     pageTransitionActive,
     setPageTransitionActive: (active: boolean) =>
       setPageTransitionActive(active),
-    showTitleCanvas: isFrontpage && animateContent && isDesktop(),
+    showTitleCanvas: isFrontpage && animateContent,
   }
 
   return <UiContext.Provider value={value}>{children}</UiContext.Provider>

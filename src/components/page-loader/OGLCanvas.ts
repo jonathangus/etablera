@@ -158,6 +158,8 @@ class OGLCanvas implements IOGLCanvas {
     this.resize()
 
     this.el.addEventListener('mousemove', this.updateMouse, false)
+    window.addEventListener('touchstart', this.updateMouse, false)
+    window.addEventListener('touchmove', this.updateMouse, { passive: false })
     this.lastMouse = new ogl.Vec2()
 
     requestAnimationFrame(this.render)
@@ -275,6 +277,8 @@ class OGLCanvas implements IOGLCanvas {
     this.pause()
     this.mesh.setParent(null)
     window.removeEventListener('resize', this.resize)
+    window.removeEventListener('touchstart', this.updateMouse)
+    window.removeEventListener('touchmove', this.updateMouse)
     this.el.removeEventListener('mousemove', this.updateMouse, false)
   }
 }
