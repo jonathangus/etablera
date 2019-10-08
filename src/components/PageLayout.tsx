@@ -17,6 +17,7 @@ import PageTransitionHandler from './PageTransitionHandler'
 import { getCleanPath } from '../utils/url'
 import Footer from './Footer'
 import PwaRefresh from './PwaRefresh'
+import Transition from './Transition'
 
 const PageWrapper = styled.div`
   margin: 0 auto;
@@ -42,22 +43,32 @@ const PageLayout = ({ children, pageContext, location }) => {
       <PageWrapper {...pageWrapper.attr} id="page-wrapper">
         <ThemeContextProvider>
           <UiContextProvider isFrontpage={isFrontpage}>
-            <SettingsContextProvider
-              currPath={currPath}
-              locale={pageContext.locale}
-            >
-              <Head />
+            <PageLoader isFrontpage={isFrontpage} />
+            <Transition pageContext={pageContext} pathname={location.pathname}>
+              <SettingsContextProvider
+                currPath={currPath}
+                locale={pageContext.locale}
+              >
+                <Head />
 
-              <GlobalStyle />
+                <GlobalStyle />
 
-              <Header key={location.pathname} currentPath={currPath} />
-              <PageTransitionHandler pathname={location.pathname}>
+                <Header key={location.pathname} currentPath={currPath} />
+
+                <>
+                  <main>{children}</main>
+                  {showFooter && <Footer />}
+                  <PwaRefresh />
+                </>
+
+                {/* <PageTransitionHandler pathname={location.pathname}>
                 <PageLoader isFrontpage={isFrontpage} />
                 <main>{children}</main>
                 {showFooter && <Footer />}
                 <PwaRefresh />
-              </PageTransitionHandler>
-            </SettingsContextProvider>
+              </PageTransitionHandler> */}
+              </SettingsContextProvider>
+            </Transition>
           </UiContextProvider>
         </ThemeContextProvider>
       </PageWrapper>

@@ -95,7 +95,6 @@ const SectionFullVideo = ({ vimeoId, poster }: ISectionFullVideo) => {
           src={`https://player.vimeo.com/video/${vimeoId}?loop=false&amp;byline=false&amp;portrait=false&amp;title=false&amp;speed=true&amp;transparent=0&amp;gesture=media`}
           allowFullScreen
           allow="autoplay"
-          allowTransparency
         />
       </div>
       {showCursor && (

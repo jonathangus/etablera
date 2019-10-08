@@ -115,14 +115,3 @@ export const requestIdleCb = cb => {
     cb()
   }
 }
-
-export const minimumTimeout = (minimumTime: Date, cb: Function): void => {
-  const d = new Date()
-  const diffTime = Math.abs(minimumTime.getTime() - d.getTime())
-
-  if (diffTime > 0) {
-    setTimeout(cb, diffTime)
-  } else {
-    cb()
-  }
-}

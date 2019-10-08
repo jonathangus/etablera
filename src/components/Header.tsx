@@ -14,6 +14,7 @@ import { $header } from '../utils/dom-selectors'
 import headerTextDifference from '../utils/header-text-difference'
 import { useSetting } from '../contexts/SettingsContext'
 import media from '../media'
+import { motion } from 'framer-motion'
 
 const lightTextStyle = css`
   --half-text-split-color: white;
@@ -28,7 +29,7 @@ const lightTextStyle = css`
     color: white;
   }
 `
-const Container = styled.div<{ show: boolean }>`
+const Container = styled.div`
   position: fixed;
   left: 0;
   top: 0;
@@ -132,10 +133,26 @@ const Header = ({ currentPath }: Props) => {
     SchedulePrio.Low
   )
 
+  const variants = {
+    enter: {
+      y: 0,
+      transition: {
+        ease: 'easeInOut',
+      },
+    },
+    exit: {
+      y: '-100%',
+      transition: {
+        ease: 'easeInOut',
+      },
+    },
+  }
+
   return (
     <Container
       {...$header.attr}
       isLightText={isLightText}
+      variants={variants}
       show={mounted && headerShown && show}
     >
       <StyledGrid>

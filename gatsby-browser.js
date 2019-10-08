@@ -2,9 +2,6 @@ import 'intersection-observer'
 import 'requestidlecallback'
 import ReactDOM from 'react-dom'
 import get from 'lodash/get'
-import { pageWrapper, transitionPage } from './src/utils/dom-selectors'
-import { transitionOptions } from './src/components/PageTransitionHandler'
-import { minimumTimeout } from './src/utils'
 
 // React fiber ⚡️⚡️⚡️
 export const replaceHydrateFunction = () => {
@@ -19,6 +16,24 @@ const getPathName = location => {
   return location.pathname.replace('/en', '')
 }
 
+export const shouldUpdateScroll = ({
+  prevRouterProps: { location, ...rest },
+  getSavedScrollPosition,
+  routerProps,
+  a,
+}) => {
+  const currentPositon = getSavedScrollPosition(location)
+  if (currentPositon) {
+    const [x, y] = currentPositon
+    // Added so the page dont flicker on page change
+    if (y) {
+      window.scrollTo(x, y)
+    }
+  }
+
+  return false
+}
+
 export const onClientEntry = () => {
   const entryDate = new Date()
 
@@ -29,7 +44,7 @@ export const onClientEntry = () => {
       const difference = new Date().getTime() - entryDate.getTime()
       const hours = Math.round(difference / 60000 / 60)
 
-      if (localStorage.getItem('isPwa') && hours > 24) {
+      if (localStorage.getItem('isPwa') && hours > 12) {
         window.location.reload(true)
       }
     })
@@ -38,66 +53,6 @@ export const onClientEntry = () => {
 
 export const onServiceWorkerUpdateReady = () => {
   window.setShowPwaRefresh()
-}
-
-export const onPreRouteUpdate = ({
-  location,
-  prevLocation,
-  getResourcesForPathname,
-  loadPageSync,
-  ...rest
-}) => {
-  if (!prevLocation) return
-  const nextPageContext = get(
-    loadPageSync(location.pathname),
-    'json.pageContext',
-    {}
-  )
-
-  const prevPageContext = get(
-    loadPageSync(prevLocation.pathname),
-    'json.pageContext',
-    {}
-  )
-
-  const isChangingLanguage = prevPageContext.locale !== nextPageContext.locale
-  const { isCasePage } = nextPageContext
-  const { isCasePage: isPrevCasePage } = nextPageContext
-
-  if (!isChangingLanguage && isCasePage) {
-    return
-  }
-
-  const t = new Date()
-  t.setMilliseconds(t.getMilliseconds() + transitionOptions.DURATION)
-  window[transitionOptions.START_TRANSITION_DATE] = t
-
-  const s = new Date()
-  s.setMilliseconds(t.getMilliseconds() + transitionOptions.DURATION * 2)
-  window[transitionOptions.END_TRANSITION_DATE] = s
-}
-
-export const shouldUpdateScroll = () =>
-  Boolean(!window[transitionOptions.START_TRANSITION_DATE])
-
-export const onRouteUpdate = ({ location, prevLocation }) => {
-  const clearIt = () => {
-    const transitionElem = transitionPage.resolve()
-    if (transitionElem)
-      transitionElem.classList.remove(transitionPage.activeClass)
-    window[transitionOptions.END_TRANSITION_DATE] = null
-    window[transitionOptions.START_TRANSITION_DATE] = null
-  }
-
-  const endDate = window[transitionOptions.END_TRANSITION_DATE]
-  if (!endDate) {
-    return clearIt()
-  }
-
-  minimumTimeout(endDate, () => {
-    window.scrollTo(0, 0)
-    clearIt()
-  })
 }
 
 if (!window.WeakSet) {

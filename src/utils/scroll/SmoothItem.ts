@@ -73,7 +73,7 @@ class SmoothItem implements ISmoothItem {
   }
 
   destroy() {
-    this.observer.unobserve(this.DOM.el)
+    this.observer && this.observer.unobserve(this.DOM.el)
     this.removeEvents()
     this.smooth.remove(this)
   }

@@ -53,9 +53,6 @@ const LanguageSelect = () => {
   const t = useSetting()
   const title = t.isSwedish ? 'en' : 'sv'
   const label = t('languageselect')
-  const { headerShown } = useUiContext()
-
-  if (!headerShown) return null
 
   return (
     <Container>

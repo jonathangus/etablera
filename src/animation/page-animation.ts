@@ -38,6 +38,8 @@ let loaderIndicatorTimeout
 
 export const cleanUpCaseAnimation = (isCleanup: boolean = false) => {
   const containerMedia = document.getElementById(CASE_ANIMATION_CONTAINER_ID)
+
+  window.shouldAnimate = true
   setPageOpacity(1)
   document.querySelector('body').classList.remove('scroll-lock')
 
@@ -59,6 +61,10 @@ export const cleanUpCaseAnimation = (isCleanup: boolean = false) => {
     containerMedia.classList.add(classStates.ANIMATION_VIDEO)
     target.parentNode && target.parentNode.replaceChild(containerMedia, target)
     containerMedia.classList.remove('fullscreen')
+    // TODO
+    setTimeout(() => {
+      currVideo.play()
+    }, 100)
   } else {
     const targetImage = $mediaImage.resolve(target)
     const containerImage = $mediaImage.resolve(containerMedia)
@@ -98,6 +104,7 @@ export const animateToCase = async (
 ): Promise<void> => {
   if (caseTransitionInProgress) return
   caseTransitionInProgress = true
+  window.shouldAnimate = false
 
   return new Promise(async resolve => {
     const animationTimeout = setTimeout(() => {
