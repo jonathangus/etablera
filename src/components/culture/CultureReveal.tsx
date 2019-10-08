@@ -1,18 +1,17 @@
 import React, { useRef, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import useScrollDisplay from '../../hooks/useScrollDisplay'
 import { useUiContext } from '../../contexts/UiContext'
+import LazyLoadImage from '../LazyLoadImage'
+import { IGatsbyImage } from '../../types'
+import RotateIn from '../RotateIn'
 
-const Container = styled.div`
+const Container = styled(RotateIn)`
   height: 100%;
-  opacity: ${p => (p.show ? 1 : 0)};
-  transform: scale(${p => (p.show ? 1 : 0.8)})
-    translateY(${p => (p.show ? 0 : -20)}%) rotate(${p => (p.show ? 0 : -5)}deg);
-  transition: all 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 
   // height: 0px;
   padding-top: 100%;
   position: relative;
+  transition-delay: 0.2s;
 
   > div {
     height: 100%;
@@ -31,14 +30,21 @@ const Container = styled.div`
   }
 `
 
-const CultureReveal = ({ children }) => {
-  const containerRef = useRef()
-  const show = useScrollDisplay(containerRef)
+const Image = styled(LazyLoadImage)`
+  max-height: 100%;
+  object-fit: cover;
+`
+
+type Props = {
+  image: IGatsbyImage
+}
+const CultureReveal = ({ image }: Props) => {
+  const [show, setShow] = useState()
   const { animateContent } = useUiContext()
 
   return (
-    <Container show={show && animateContent} ref={containerRef}>
-      {children}
+    <Container show={show && animateContent}>
+      <Image image={image} onVisible={() => setShow(true)} />
     </Container>
   )
 }

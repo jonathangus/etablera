@@ -53,21 +53,13 @@ const getGroups = items => {
 
 const MediaWall = ({ items }) => {
   const groups = getGroups(items)
-  const getElement = item => {
-    if (!item) return null
 
-    return (
-      <CultureReveal>
-        {item.type === 'image' && <CultureImage image={item.image} />}
-      </CultureReveal>
-    )
-  }
   return (
     <Container>
       {groups.map((group, i) => {
         const Comp = group.component
 
-        return <Comp key={i} items={group.items} getElement={getElement} />
+        return <Comp key={i} items={group.items} />
       })}
     </Container>
   )

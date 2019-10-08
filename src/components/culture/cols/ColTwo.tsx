@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import media from '../../../media'
+import CultureReveal from '../CultureReveal'
 
 const Container = styled.div`
   margin-bottom: 100px;
@@ -51,14 +52,20 @@ const Third = styled.div`
   `}
 `
 
-const ColTwo = ({ items, getElement }) => (
+const ColTwo = ({ items }) => (
   <Container>
     <Col>
-      <Third>{getElement(items[2])}</Third>
+      <Third>
+        {items[2] && <CultureReveal image={items[2].image}></CultureReveal>}
+      </Third>
     </Col>
     <BigCol>
-      <First>{getElement(items[0])}</First>
-      <Second>{getElement(items[1])}</Second>
+      <First>
+        {items[0] && <CultureReveal image={items[0].image}></CultureReveal>}
+      </First>
+      <Second>
+        {items[1] && <CultureReveal image={items[1].image}></CultureReveal>}
+      </Second>
     </BigCol>
   </Container>
 )

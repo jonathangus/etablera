@@ -46,6 +46,11 @@ const Scroll = styled.svg`
   path {
     fill: ${p => p.color || p.theme.color};
   }
+
+  ${media.phone`
+  height: 33px;
+
+  `}
 `
 
 const Message = styled.div`

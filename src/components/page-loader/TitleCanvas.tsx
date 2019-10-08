@@ -38,6 +38,7 @@ const TitleCanvas = () => {
 
   useEffect(() => {
     if (etableraSmooth)
+      // TODO ts
       etableraSmooth.appendCanvas(wrapperEl.current, oglCanvas.current)
   }, [Boolean(etableraSmooth)])
 
@@ -56,7 +57,6 @@ const TitleCanvas = () => {
     })
 
     return () => {
-      console.log('REMOVE')
       oglCanvas.current.destroy()
     }
   }, [selected])
