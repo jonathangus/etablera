@@ -13,7 +13,7 @@ const Container = styled.div`
   font-size: 1.8rem;
 
   ${media.phone`
-    bottom: 30vh;
+    bottom: 25vh;
     font-size:1.4rem;
   `}
 `
