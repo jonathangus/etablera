@@ -6,6 +6,7 @@ import { updateSmooth } from '../../utils/scroll/smooth-scroll'
 import { unstable_next } from 'scheduler'
 import useScheduleEffect from '../../hooks/useScheduleEffect'
 import PageLoaderContent from './PageLoaderContent'
+import media from '../../media'
 
 const AnimateOut = keyframes`
   0% {
@@ -38,6 +39,10 @@ const Container = styled.div<{
   pointer-events: none; 
   will-change: transform;
   overflow: hidden;
+
+  ${media.phone`
+    height: var(--window-height);
+  `}
 
   ${p => p.leaveAnimation === 'translate' && animateOutScreen}
 
@@ -114,10 +119,12 @@ const PageLoader = ({ isFrontpage }: Props) => {
 
   useScheduleEffect(() => {
     if (firstComplete) {
-      const newHeight = `${
-        containerEl.current.getBoundingClientRect().height
-      }px`
-      styleRef(containerEl).height(newHeight)
+      document
+        .querySelector('body')
+        .style.setProperty(
+          '--window-height',
+          `${containerEl.current.getBoundingClientRect().height}px`
+        )
 
       setTimeout(() => {
         setSecondComplete(true)

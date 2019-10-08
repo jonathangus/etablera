@@ -19,6 +19,9 @@ const Container = styled.header`
   overflow: hidden;
   pointer-events: all;
   position: relative;
+  ${media.phone`
+    height: var(--window-height);
+  `}
 `
 
 const Sidebar = styled.div`
