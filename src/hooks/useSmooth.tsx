@@ -1,5 +1,5 @@
 import SmoothItem from '../utils/scroll/SmoothItem'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import useScheduleEffect, { SchedulePrio } from './useScheduleEffect'
 
 const useSmooth = (
@@ -17,11 +17,16 @@ const useSmooth = (
   useScheduleEffect(
     () => {
       handler()
-      return smooth && smooth.destroy()
     },
     dependencies,
     prio
   )
+
+  useEffect(() => {
+    return () => {
+      smooth && smooth.destroy()
+    }
+  }, [Boolean(smooth)])
 
   return smooth
 }
