@@ -48,16 +48,16 @@ class SmoothEtablera extends SmoothItem {
     }
     if (this.DOM.nextContent) {
       const { height } = this.DOM.nextContent.getBoundingClientRect()
-      this.nextOffset = this.smooth.winSize.height / 2 - height / 2
+      this.nextOffset = this.smooth.winSize.height / 3 - height / 3
     }
   }
 
   cleanUp = () => {
     this.oglCanvas && this.oglCanvas.pause()
     if (this.DOM.current) this.DOM.current.style.opacity = '0'
-    // if (this.DOM.description) {
-    //   this.DOM.description.style.opacity = '0'
-    // }
+    if (this.DOM.description) {
+      this.DOM.description.style.opacity = '0'
+    }
   }
 
   onEnter = () => {
@@ -78,6 +78,9 @@ class SmoothEtablera extends SmoothItem {
 
       if (this.shouldScale) {
         this.DOM.current.style.transform = `translate(-50%, -50%) scale(${scale})`
+      } else {
+        this.oglCanvas &&
+          this.oglCanvas.setScale(0.8 * this.renderedStyles.fade.previous + 1)
       }
     }
 

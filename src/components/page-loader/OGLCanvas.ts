@@ -57,6 +57,8 @@ export interface IOGLCanvas {
   play: () => void
   pause: () => void
   parentNode: HTMLElement
+  setScale: (scale: number) => void
+  scale: number
 }
 
 type Options = {
@@ -80,13 +82,13 @@ class OGLCanvas implements IOGLCanvas {
   shouldRender = true
   parentNode
   selectedStyle: string
+  scale = 1
 
   constructor(canvas: HTMLElement, { onReady, parentNode, selected }: Options) {
     this.parentNode = parentNode
 
     this.el = canvas
     this.bounds = this.parentNode.getBoundingClientRect()
-
     this.renderer = new ogl.Renderer({
       dpr: 2,
       canvas: this.el,
@@ -195,6 +197,12 @@ class OGLCanvas implements IOGLCanvas {
   render = (t: number) => {
     if (!this.shouldRender) return
     requestAnimationFrame(this.render)
+
+    // Scale it
+    const diff = this.scale - 1
+    this.mesh.program.uniforms.res.value.w = 1 - diff
+    this.mesh.program.uniforms.res.value.z = 1 - diff
+
     // Reset velocity when mouse not moving
     if (!this.velocity.needsUpdate) {
       this.mouse.set(-1)
@@ -212,6 +220,10 @@ class OGLCanvas implements IOGLCanvas {
   }
 
   lastTime: any
+
+  setScale = (scale: number) => {
+    this.scale = scale
+  }
 
   updateMouse = (e: any) => {
     e.preventDefault()
