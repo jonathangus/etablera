@@ -26,13 +26,7 @@ const PageLoaderContent = ({
     animateContent,
     setEtableraSmooth,
   } = useUiContext()
-  const t = useSetting()
-  const [showCanvas, setShowCanvas] = useState(false)
   const titleRef = useRef()
-
-  useScheduleEffect(() => {
-    setShowCanvas(isFrontpage && animateContent && isDesktop())
-  }, [t.currentLanguage, isFrontpage, pageTransitionActive, animateContent])
 
   const etableraSmooth = useSmooth(() => {
     if (isFrontpage && !pageTransitionActive && animateContent) {
@@ -58,12 +52,7 @@ const PageLoaderContent = ({
     [firstComplete]
   )
 
-  return (
-    <>
-      <PageLoaderLayout ref={titleRef}>{TitleNode}</PageLoaderLayout>
-      {showCanvas && <TitleCanvas smooth={etableraSmooth} />}
-    </>
-  )
+  return <PageLoaderLayout ref={titleRef}>{TitleNode}</PageLoaderLayout>
 }
 
 export default PageLoaderContent

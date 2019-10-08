@@ -44,7 +44,8 @@ const Scroll = styled.svg`
   cursor: pointer;
 
   path {
-    fill: ${p => p.color || p.theme.color};
+    stroke: ${p => p.color || p.theme.color};
+    transition: stroke 0.3s ease;
   }
 
   ${media.phone`

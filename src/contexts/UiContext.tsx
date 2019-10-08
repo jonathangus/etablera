@@ -3,7 +3,11 @@ import { IUiContext } from '../types'
 
 const UiContext = createContext(null as IUiContext)
 
-const UiContextProvider = ({ children }: { children: JSX.Element }) => {
+const isDesktop = () => window.innerWidth > 700
+
+type Props = { children: JSX.Element; isFrontpage: boolean }
+
+const UiContextProvider = ({ children, isFrontpage }: Props) => {
   const [headerShown, setHeaderShown] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [animateContent, setAnimateContent] = useState(false)
@@ -31,6 +35,7 @@ const UiContextProvider = ({ children }: { children: JSX.Element }) => {
     pageTransitionActive,
     setPageTransitionActive: (active: boolean) =>
       setPageTransitionActive(active),
+    showTitleCanvas: isFrontpage && animateContent && isDesktop(),
   }
 
   return <UiContext.Provider value={value}>{children}</UiContext.Provider>

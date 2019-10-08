@@ -90,6 +90,7 @@ export interface IUiContext {
   setPageTransitionActive: (active: boolean) => void
   setEtableraSmooth: (smooth: SmoothItem) => void
   etableraSmooth: SmoothItem
+  showTitleCanvas: boolean
 }
 
 export type ISectionFullVideo = {

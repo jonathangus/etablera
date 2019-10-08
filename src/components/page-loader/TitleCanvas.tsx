@@ -1,10 +1,7 @@
 import React, { useEffect, useRef, useMemo, memo } from 'react'
-import { createPortal } from 'react-dom'
 import styled from 'styled-components'
-
-import { $mainHero, $pageTitle } from '../../utils/dom-selectors'
+import { $pageTitle } from '../../utils/dom-selectors'
 import PageLoaderLayout from './PageLoaderLayout'
-import { ISmoothItem } from '../../utils/scroll/SmoothItem'
 import OGLCanvas, { IOGLCanvas } from './OGLCanvas'
 import { useThemeContext } from '../../contexts/ThemeContext'
 import { useUiContext } from '../../contexts/UiContext'
@@ -25,7 +22,6 @@ const Inner = styled.div`
 
 const TitleCanvas = () => {
   const wrapperEl = useRef<HTMLElement>()
-  const portalEl = useRef<HTMLElement>($mainHero.resolve())
   const canvasRef = useRef<HTMLCanvasElement>()
   const oglCanvas = useRef<IOGLCanvas>()
   const innerEl = useRef<HTMLElement>()
@@ -33,14 +29,10 @@ const TitleCanvas = () => {
   const { etableraSmooth } = useUiContext()
 
   useEffect(() => {
-    portalEl.current = $mainHero.resolve()
-  })
-
-  useEffect(() => {
     if (etableraSmooth)
       // TODO ts
       etableraSmooth.appendCanvas(wrapperEl.current, oglCanvas.current)
-  }, [Boolean(etableraSmooth)])
+  }, [etableraSmooth])
 
   useEffect(() => {
     const onReady = () => {
@@ -56,25 +48,22 @@ const TitleCanvas = () => {
       parentNode: innerEl.current,
     })
 
+    if (etableraSmooth) {
+      etableraSmooth.appendCanvas(wrapperEl.current, oglCanvas.current)
+    }
+
     return () => {
       oglCanvas.current.destroy()
     }
   }, [selected])
 
-  if (!portalEl.current) return null
-
-  const content = useMemo(
-    () => (
-      <PageLoaderLayout ref={wrapperEl}>
-        <Inner ref={innerEl}>
-          <canvas ref={canvasRef} />
-        </Inner>
-      </PageLoaderLayout>
-    ),
-    []
+  return (
+    <PageLoaderLayout ref={wrapperEl}>
+      <Inner ref={innerEl}>
+        <canvas data-lol ref={canvasRef} />
+      </Inner>
+    </PageLoaderLayout>
   )
-
-  return createPortal(content, portalEl.current)
 }
 
-export default TitleCanvas
+export default memo(TitleCanvas)

@@ -92,6 +92,8 @@ class OGLCanvas implements IOGLCanvas {
     this.renderer = new ogl.Renderer({
       dpr: 2,
       canvas: this.el,
+      width: this.bounds.width,
+      height: this.bounds.height,
     })
 
     this.gl = this.renderer.gl
@@ -270,10 +272,10 @@ class OGLCanvas implements IOGLCanvas {
   }
 
   destroy = () => {
+    this.pause()
     this.mesh.setParent(null)
     window.removeEventListener('resize', this.resize)
     this.el.removeEventListener('mousemove', this.updateMouse, false)
-    this.el.remove()
   }
 }
 

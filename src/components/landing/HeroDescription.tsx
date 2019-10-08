@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
-import { gutter, titleFont } from '../../vars'
 import media from '../../media'
-import { etableraDescription } from '../../utils/dom-selectors'
 import { useUiContext } from '../../contexts/UiContext'
 import { useSetting } from '../../contexts/SettingsContext'
 import Grid from '../Grid'
@@ -39,13 +37,14 @@ const Inner = styled(RotateIn)`
   }
 `
 
-const EtableraDescription = () => {
+const HeroDescription = () => {
   const t = useSetting()
   const [show, setShow] = useState(false)
   const { etableraSmooth } = useUiContext()
   const elem = useRef()
 
   useEffect(() => {
+    // TODO ts
     if (etableraSmooth) etableraSmooth.appendDescription(elem.current)
   }, [Boolean(etableraSmooth)])
 
@@ -69,4 +68,4 @@ const EtableraDescription = () => {
   )
 }
 
-export default EtableraDescription
+export default HeroDescription

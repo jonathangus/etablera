@@ -41,7 +41,7 @@ const PageLayout = ({ children, pageContext, location }) => {
     <HelmetProvider>
       <PageWrapper {...pageWrapper.attr} id="page-wrapper">
         <ThemeContextProvider>
-          <UiContextProvider>
+          <UiContextProvider isFrontpage={isFrontpage}>
             <SettingsContextProvider
               currPath={currPath}
               locale={pageContext.locale}

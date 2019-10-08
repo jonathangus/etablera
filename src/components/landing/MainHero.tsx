@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import styled, { keyframes } from 'styled-components'
 import InstaLinks from './InstaLinks'
 import HeroDescription from './HeroDescription'
@@ -8,6 +8,8 @@ import { $mainHero } from '../../utils/dom-selectors'
 import { gutter, titleFont, semi } from '../../vars'
 import media from '../../media'
 import VerticalEmailLink from './VerticalEmailLink'
+import TitleCanvas from '../page-loader/TitleCanvas'
+import { useThemeContext } from '../../contexts/ThemeContext'
 
 const Container = styled.header`
   height: 100vh;
@@ -44,10 +46,18 @@ const RightSidebar = styled(Sidebar)`
 `
 
 const MainHero = () => {
-  const { frontpageLoaded } = useUiContext()
+  const { frontpageLoaded, showTitleCanvas, etableraSmooth } = useUiContext()
+  const { selected } = useThemeContext()
+
+  const TitleCanvasNode = useMemo(() => <TitleCanvas />, [
+    etableraSmooth,
+    selected,
+  ])
+
   return (
     <Container>
       <div {...$mainHero.attr} />
+      {showTitleCanvas && TitleCanvasNode}
       <Sidebar>
         <InstaLinks />
       </Sidebar>
