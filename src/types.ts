@@ -1,3 +1,5 @@
+import SmoothItem from './utils/scroll/SmoothItem'
+
 export interface ISettingsContext {
   (str: string, withHtml?: boolean): string
   url: (str: string) => string
@@ -86,6 +88,8 @@ export interface IUiContext {
   setMounted: () => void
   pageTransitionActive: boolean
   setPageTransitionActive: (active: boolean) => void
+  setEtableraSmooth: (smooth: SmoothItem) => void
+  etableraSmooth: SmoothItem
 }
 
 export type ISectionFullVideo = {

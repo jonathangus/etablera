@@ -21,7 +21,11 @@ const PageLoaderContent = ({
   firstComplete,
   setFirstComplete,
 }: Props) => {
-  const { pageTransitionActive, animateContent } = useUiContext()
+  const {
+    pageTransitionActive,
+    animateContent,
+    setEtableraSmooth,
+  } = useUiContext()
   const t = useSetting()
   const [showCanvas, setShowCanvas] = useState(false)
   const titleRef = useRef()
@@ -39,6 +43,10 @@ const PageLoaderContent = ({
       )
     }
   }, [isFrontpage, pageTransitionActive, animateContent])
+
+  useEffect(() => {
+    setEtableraSmooth(etableraSmooth)
+  }, [Boolean(etableraSmooth)])
 
   const TitleNode = useMemo(
     () => (

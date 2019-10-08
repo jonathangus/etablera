@@ -64,6 +64,10 @@ class SmoothEtablera extends SmoothItem {
     this.oglCanvas && this.oglCanvas.play()
   }
 
+  appendDescription = (description: HTMLElement) => {
+    this.DOM.description = description
+  }
+
   layout = () => {
     if (this.disabled) return
     const opacity = (1 - this.renderedStyles.fade.previous).toFixed(2)
@@ -78,10 +82,7 @@ class SmoothEtablera extends SmoothItem {
     }
 
     if (this.DOM.description) {
-      this.DOM.description.style.opacity = (
-        1 -
-        this.renderedStyles.fade.previous * 4
-      ).toFixed(2)
+      this.DOM.description.style.opacity = opacity
     }
   }
 }

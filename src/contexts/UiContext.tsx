@@ -9,6 +9,7 @@ const UiContextProvider = ({ children }: { children: JSX.Element }) => {
   const [animateContent, setAnimateContent] = useState(false)
   const [frontpageLoaded, setFrontpageLoaded] = useState(false)
   const [pageTransitionActive, setPageTransitionActive] = useState(false)
+  const [etableraSmooth, setEtableraSmooth] = useState()
 
   const value = {
     mounted,
@@ -20,6 +21,8 @@ const UiContextProvider = ({ children }: { children: JSX.Element }) => {
         setAnimateContent(true)
       }, 900)
     },
+    setEtableraSmooth,
+    etableraSmooth,
     showHeader: () => setHeaderShown(true),
     hideHeader: () => setHeaderShown(false),
     headerShown,

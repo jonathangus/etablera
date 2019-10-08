@@ -7,6 +7,7 @@ import PageLoaderLayout from './PageLoaderLayout'
 import { ISmoothItem } from '../../utils/scroll/SmoothItem'
 import OGLCanvas, { IOGLCanvas } from './OGLCanvas'
 import { useThemeContext } from '../../contexts/ThemeContext'
+import { useUiContext } from '../../contexts/UiContext'
 
 const Inner = styled.div`
   height: 100%;
@@ -22,25 +23,23 @@ const Inner = styled.div`
   }
 `
 
-type Props = {
-  smooth: ISmoothItem
-}
-
-const TitleCanvas = ({ smooth }: Props) => {
+const TitleCanvas = () => {
   const wrapperEl = useRef<HTMLElement>()
   const portalEl = useRef<HTMLElement>($mainHero.resolve())
   const canvasRef = useRef<HTMLCanvasElement>()
   const oglCanvas = useRef<IOGLCanvas>()
   const innerEl = useRef<HTMLElement>()
   const { selected } = useThemeContext()
+  const { etableraSmooth } = useUiContext()
 
   useEffect(() => {
     portalEl.current = $mainHero.resolve()
   })
 
   useEffect(() => {
-    if (smooth) smooth.appendCanvas(wrapperEl.current, oglCanvas.current)
-  }, [smooth])
+    if (etableraSmooth)
+      etableraSmooth.appendCanvas(wrapperEl.current, oglCanvas.current)
+  }, [Boolean(etableraSmooth)])
 
   useEffect(() => {
     const onReady = () => {
