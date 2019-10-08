@@ -23,7 +23,7 @@ type Props = {
 const CaseHeader = ({ record }: Props) => {
   const containerRef = useRef()
   const { idle, title } = useCasePageContext()
-  const { showHeader } = useUiContext()
+  const { showHeader, headerShown } = useUiContext()
 
   const scrollIt = async () => {
     if (window.pageYOffset === 0) await scrollToOffset(120, 650)
@@ -50,7 +50,7 @@ const CaseHeader = ({ record }: Props) => {
     >
       <CaseMedia id="case-page-media" detailPage autoPlay item={record} />
       <CaseTitle client={record.client} title={record.name} />
-      {idle && <ScrollIndicator color="white" />}
+      {idle && headerShown && <ScrollIndicator color="white" />}
     </Container>
   )
 }
