@@ -8,16 +8,10 @@ type Props = {
   pathname: string
 }
 const Transition = ({ children, pathname }: Props) => {
-  useEffect(() => {
-    window.onpopstate = () => {
-      if (isMobile(window.navigator.userAgent).apple.phone) {
-        window.shouldAnimate = false
-      }
-    }
-  }, [])
-
   const ignoreAnimate = () =>
-    typeof window !== 'undefined' && window.shouldAnimate === false
+    typeof window !== 'undefined' &&
+    (window.shouldAnimate === false ||
+      isMobile(window.navigator.userAgent).apple.phone)
 
   const variants = {
     exit: () => {
