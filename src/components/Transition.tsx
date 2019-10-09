@@ -1,12 +1,21 @@
 import React, { memo, useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { unstable_next } from 'scheduler'
+import isMobile from 'ismobilejs'
 
 type Props = {
   children: JSX.Element
   pathname: string
 }
 const Transition = ({ children, pathname }: Props) => {
+  useEffect(() => {
+    window.onpopstate = () => {
+      if (isMobile(window.navigator.userAgent).apple.phone) {
+        window.shouldAnimate = false
+      }
+    }
+  }, [])
+
   const ignoreAnimate = () =>
     typeof window !== 'undefined' && window.shouldAnimate === false
 

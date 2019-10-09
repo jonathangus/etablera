@@ -62,6 +62,7 @@ const ButtonRow = styled.div`
 declare global {
   interface Window {
     setShowPwaRefresh: () => void
+    shouldAnimate: boolean
   }
 }
 

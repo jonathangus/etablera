@@ -33,12 +33,12 @@ const MenuItems = () => {
       url: '/cases/',
     },
     {
-      title: t('meta.feed.title'),
-      url: '/feed/',
-    },
-    {
       title: t('meta.about.title'),
       url: '/about/',
+    },
+    {
+      title: t('meta.feed.title'),
+      url: '/feed/',
     },
   ]
   return (
