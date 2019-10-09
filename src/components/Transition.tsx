@@ -55,11 +55,9 @@ const Transition = ({ children, pathname }: Props) => {
   const onExitComplete = () => {
     window.scrollTo(0, 0)
 
-    setTimeout(() => {
-      unstable_next(() => {
-        window.shouldAnimate = true
-      })
-    }, 300)
+    unstable_next(() => {
+      window.shouldAnimate = true
+    })
   }
 
   return (
