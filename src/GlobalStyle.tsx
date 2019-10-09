@@ -6,6 +6,7 @@ export default createGlobalStyle`
 
     :root {
         --half-text-split-color: ${p => p.theme.color};
+     
     }
     * {
         margin: 0;

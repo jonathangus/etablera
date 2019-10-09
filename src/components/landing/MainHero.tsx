@@ -49,7 +49,12 @@ const RightSidebar = styled(Sidebar)`
 `
 
 const MainHero = () => {
-  const { frontpageLoaded, showTitleCanvas, etableraSmooth } = useUiContext()
+  const {
+    frontpageLoaded,
+    showTitleCanvas,
+    etableraSmooth,
+    animateContent,
+  } = useUiContext()
   const { selected } = useThemeContext()
 
   const TitleCanvasNode = useMemo(() => <TitleCanvas />, [
@@ -68,7 +73,7 @@ const MainHero = () => {
         <VerticalEmailLink />
       </RightSidebar>
       {frontpageLoaded && <ScrollIndicator align="top" />}
-      {frontpageLoaded && <HeroDescription />}
+      {frontpageLoaded && animateContent && <HeroDescription />}
     </Container>
   )
 }

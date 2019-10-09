@@ -2,6 +2,7 @@ import 'intersection-observer'
 import 'requestidlecallback'
 import ReactDOM from 'react-dom'
 import get from 'lodash/get'
+import isMobile from 'ismobilejs'
 
 // React fiber ⚡️⚡️⚡️
 export const replaceHydrateFunction = () => {
@@ -32,6 +33,15 @@ export const shouldUpdateScroll = ({
   }
 
   return false
+}
+
+export const onPreRouteUpdate = ({ location }) => {
+  if (
+    isMobile(window.navigator.userAgent).apple.phone &&
+    location.action === 'POP'
+  ) {
+    window.shouldAnimate = false
+  }
 }
 
 export const onClientEntry = () => {

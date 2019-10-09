@@ -3,8 +3,6 @@ import { IUiContext } from '../types'
 
 const UiContext = createContext(null as IUiContext)
 
-const isDesktop = () => window.innerWidth > 700
-
 type Props = { children: JSX.Element; isFrontpage: boolean }
 
 const UiContextProvider = ({ children, isFrontpage }: Props) => {

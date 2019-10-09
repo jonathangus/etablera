@@ -1,15 +1,18 @@
 import React, { memo, useState, useEffect } from 'react'
-import styled from 'styled-components'
 import { motion, AnimatePresence } from 'framer-motion'
+import { unstable_next } from 'scheduler'
 
 type Props = {
   children: JSX.Element
   pathname: string
 }
 const Transition = ({ children, pathname }: Props) => {
+  const ignoreAnimate = () =>
+    typeof window !== 'undefined' && window.shouldAnimate === false
+
   const variants = {
     exit: () => {
-      if (typeof window !== 'undefined' && window.shouldAnimate === false) {
+      if (ignoreAnimate()) {
         return {
           transition: {
             duration: 0,
@@ -22,7 +25,7 @@ const Transition = ({ children, pathname }: Props) => {
       }
     },
     enter: () => {
-      if (typeof window !== 'undefined' && window.shouldAnimate === false) {
+      if (ignoreAnimate()) {
         return {
           opacity: 1,
           transition: {
@@ -42,6 +45,12 @@ const Transition = ({ children, pathname }: Props) => {
   // Take care of page scroll
   const onExitComplete = () => {
     window.scrollTo(0, 0)
+
+    setTimeout(() => {
+      unstable_next(() => {
+        window.shouldAnimate = true
+      })
+    }, 300)
   }
 
   return (
