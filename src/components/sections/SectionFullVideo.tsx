@@ -12,10 +12,11 @@ const Container = styled.div`
   opacity: ${p => (p.show ? 1 : 0)};
   will-change: opacity;
   transition: opacity 0.65s ease;
+  max-width: 1400px;
+  margin: 0 auto;
 
   .plyr {
     height: calc(100% * 0.5625);
-    max-height: 80vh;
   }
 
   &:hover {
