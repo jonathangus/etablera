@@ -42,7 +42,7 @@ const ReadMore = styled.div`
     content: '';
     width: 100%;
     height: 1px;
-    background: ${p => p.theme.color};
+    background: white;
     position: absolute;
     z-index: 2;
     left: 0;

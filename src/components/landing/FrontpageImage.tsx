@@ -9,11 +9,10 @@ import Cta from '../Cta'
 import { gutter, niceCubic } from '../../vars'
 import media from '../../media'
 import useScrollDisplay from '../../hooks/useScrollDisplay'
+import Grid from '../Grid'
 
 const Container = styled.div`
   position: relative;
-  max-width: 2600px;
-  margin: 0 auto;
 
   margin-top: 30vh;
 
@@ -82,27 +81,29 @@ const FrontpageImage = () => {
   }, [showBox])
 
   return (
-    <YFactor top>
-      <Container ref={elem}>
-        <Content showBox={showBox}>
-          <ContentInner showText={showText}>
-            <Text
-              dangerouslySetInnerHTML={{ __html: t('aboutImage.text', true) }}
-            ></Text>
-            <Cta href={t.url('/about')}>{t('aboutImage.ctaText')}</Cta>
-          </ContentInner>
-        </Content>
-        <ImageWrap>
-          <HeartPulse />
-          <Inner>
-            <LazyLoadImage
-              alt="Contact"
-              image={data.footerImage.childImageSharp.fluid}
-            />
-          </Inner>
-        </ImageWrap>
-      </Container>
-    </YFactor>
+    <Grid>
+      <YFactor top>
+        <Container ref={elem}>
+          <Content showBox={showBox}>
+            <ContentInner showText={showText}>
+              <Text
+                dangerouslySetInnerHTML={{ __html: t('aboutImage.text', true) }}
+              ></Text>
+              <Cta href={t.url('/about')}>{t('aboutImage.ctaText')}</Cta>
+            </ContentInner>
+          </Content>
+          <ImageWrap>
+            <HeartPulse />
+            <Inner>
+              <LazyLoadImage
+                alt="Contact"
+                image={data.footerImage.childImageSharp.fluid}
+              />
+            </Inner>
+          </ImageWrap>
+        </Container>
+      </YFactor>
+    </Grid>
   )
 }
 
