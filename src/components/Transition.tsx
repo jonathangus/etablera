@@ -7,6 +7,9 @@ import { useUiContext } from '../contexts/UiContext'
 type Props = {
   children: JSX.Element
   pathname: string
+  pageContext: {
+    isCasePage?: boolean
+  }
 }
 const Transition = ({ children, pathname, pageContext }: Props) => {
   const { hideHeader } = useUiContext()
@@ -25,6 +28,7 @@ const Transition = ({ children, pathname, pageContext }: Props) => {
     exit: () => {
       if (ignoreAnimate()) {
         return {
+          opacity: 1,
           transition: {
             duration: 0,
           },
@@ -58,7 +62,9 @@ const Transition = ({ children, pathname, pageContext }: Props) => {
     window.scrollTo(0, 0)
 
     unstable_next(() => {
-      window.shouldAnimate = true
+      setTimeout(() => {
+        window.shouldAnimate = true
+      }, 100)
     })
   }
 
@@ -69,7 +75,7 @@ const Transition = ({ children, pathname, pageContext }: Props) => {
       initial={false}
     >
       <motion.div
-        initial="exit"
+        initial="enter"
         exit="exit"
         animate="enter"
         variants={variants}
