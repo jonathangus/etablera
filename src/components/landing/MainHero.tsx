@@ -72,7 +72,7 @@ const MainHero = () => {
       <RightSidebar>
         <VerticalEmailLink />
       </RightSidebar>
-      {frontpageLoaded && <ScrollIndicator align="top" />}
+      {frontpageLoaded && animateContent && <ScrollIndicator align="top" />}
       {frontpageLoaded && animateContent && <HeroDescription />}
     </Container>
   )

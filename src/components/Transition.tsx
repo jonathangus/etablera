@@ -12,12 +12,17 @@ type Props = {
   }
 }
 const Transition = ({ children, pathname, pageContext }: Props) => {
-  const { hideHeader } = useUiContext()
+  const { hideHeader, setFrontpageLoaded } = useUiContext()
   const ignoreAnimate = () =>
     typeof window !== 'undefined' &&
     (window.shouldAnimate === false ||
       isMobile(window.navigator.userAgent).apple.phone)
 
+  useEffect(() => {
+    return () => {
+      setFrontpageLoaded(false)
+    }
+  }, [pathname])
   useEffect(() => {
     if (pageContext.isCasePage) {
       hideHeader()

@@ -86,13 +86,13 @@ const PageLoader = ({ isFrontpage }: Props) => {
   const completeLoader = () => {
     if (isFrontpage) {
       unstable_next(() => {
-        setFrontpageLoaded()
+        // setFrontpageLoaded(true)
       })
     }
   }
 
   useEffect(() => {
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === '!development') {
       setMounted()
       setFirstComplete(true)
       setSecondComplete(true)
@@ -103,6 +103,10 @@ const PageLoader = ({ isFrontpage }: Props) => {
     if (mounted) {
       completeLoader()
       setAnimationState('none')
+    }
+
+    return () => {
+      setFrontpageLoaded(false)
     }
   }, [isFrontpage])
 

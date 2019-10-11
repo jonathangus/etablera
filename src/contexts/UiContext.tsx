@@ -45,7 +45,7 @@ const UiContextProvider = ({ children, isFrontpage }: Props) => {
     hideHeader: () => setHeaderShown(false),
     headerShown,
     frontpageLoaded,
-    setFrontpageLoaded: () => setFrontpageLoaded(true),
+    setFrontpageLoaded,
     pageTransitionActive,
     setPageTransitionActive: (active: boolean) =>
       setPageTransitionActive(active),

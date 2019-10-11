@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef, memo } from 'react'
 import styled, { keyframes, css } from 'styled-components'
 import paths from './etablera-paths'
 import { $pageTitle } from '../../utils/dom-selectors'
+import { useUiContext } from '../../contexts/UiContext'
 
 // There is happending some strange stuff here. Caution is advised
 const pullInAnimation = keyframes`
@@ -35,6 +36,7 @@ const getDelay = (index: number): number => {
 
 const TitleWrapper = styled.div`
   height: 100%;
+  opacity: ${p => (p.show ? 1 : 0)};
 `
 
 const InnerAnimation = keyframes`
@@ -96,6 +98,7 @@ type Props = {
 
 const PageLoaderTitle = ({ setFirstComplete, firstComplete }: Props) => {
   const innerEl = useRef<HTMLElement>()
+  const { frontpageLoaded } = useUiContext()
 
   // First step of the animation
   useEffect(() => {
@@ -117,7 +120,7 @@ const PageLoaderTitle = ({ setFirstComplete, firstComplete }: Props) => {
   }, [])
 
   return (
-    <TitleWrapper {...$pageTitle.attr}>
+    <TitleWrapper show={!frontpageLoaded} {...$pageTitle.attr}>
       <Inner>
         <h1>
           Etablera

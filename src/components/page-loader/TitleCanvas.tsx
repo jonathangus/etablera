@@ -26,7 +26,7 @@ const TitleCanvas = () => {
   const oglCanvas = useRef<IOGLCanvas>()
   const innerEl = useRef<HTMLElement>()
   const { selected } = useThemeContext()
-  const { etableraSmooth } = useUiContext()
+  const { etableraSmooth, setFrontpageLoaded } = useUiContext()
 
   useEffect(() => {
     if (etableraSmooth)
@@ -37,9 +37,11 @@ const TitleCanvas = () => {
   useEffect(() => {
     const onReady = () => {
       // TODO
+
       setTimeout(() => {
-        $pageTitle.resolve().style.opacity = '0'
-      }, 100)
+        // $pageTitle.resolve().style.opacity = '0'
+        setFrontpageLoaded(true)
+      }, 200)
     }
 
     oglCanvas.current = new OGLCanvas(canvasRef.current, {

@@ -17,7 +17,7 @@ const Container = styled.div`
 `
 
 const InstaLinks = () => {
-  const { frontpageLoaded } = useUiContext()
+  const { frontpageLoaded, animateContent } = useUiContext()
   const t = useSetting()
   return (
     <Container>
