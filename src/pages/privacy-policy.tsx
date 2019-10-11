@@ -15,15 +15,6 @@ const Container = styled.div`
 
 const PrivacyPage = () => {
   const t = useSetting()
-  const { showHeader, hideHeader } = useUiContext()
-
-  useEffect(() => {
-    showHeader()
-
-    return () => {
-      hideHeader()
-    }
-  }, [])
   return (
     <React.Fragment>
       <SEO title="Privacy Policy" />

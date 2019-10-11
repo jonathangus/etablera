@@ -78,7 +78,6 @@ const PageLoader = ({ isFrontpage }: Props) => {
   const {
     mounted,
     setMounted,
-    showHeader,
     setFrontpageLoaded,
     frontpageLoaded,
     animateContent,
@@ -88,7 +87,6 @@ const PageLoader = ({ isFrontpage }: Props) => {
     if (isFrontpage) {
       unstable_next(() => {
         setFrontpageLoaded()
-        showHeader()
       })
     }
   }

@@ -12,7 +12,6 @@ type Props = {
 }
 
 const AllCases = ({ cases }: Props) => {
-  const { showHeader } = useUiContext()
   const [desktopView, setDesktopView] = useState()
 
   useResize(() => {
@@ -20,7 +19,6 @@ const AllCases = ({ cases }: Props) => {
   })
 
   useEffect(() => {
-    showHeader()
     setDesktopView(window.innerWidth > mobileBreakpoint)
   }, [])
 

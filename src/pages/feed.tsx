@@ -20,7 +20,6 @@ const CulturePage = ({ data }) => {
         description={t('meta.feed.description')}
       />
       <MediaWall items={items} />
-      <CultureHeader />
     </React.Fragment>
   )
 }

@@ -2,16 +2,24 @@ import React, { memo, useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { unstable_next } from 'scheduler'
 import isMobile from 'ismobilejs'
+import { useUiContext } from '../contexts/UiContext'
 
 type Props = {
   children: JSX.Element
   pathname: string
 }
-const Transition = ({ children, pathname }: Props) => {
+const Transition = ({ children, pathname, pageContext }: Props) => {
+  const { hideHeader } = useUiContext()
   const ignoreAnimate = () =>
     typeof window !== 'undefined' &&
     (window.shouldAnimate === false ||
       isMobile(window.navigator.userAgent).apple.phone)
+
+  useEffect(() => {
+    if (pageContext.isCasePage) {
+      hideHeader()
+    }
+  }, [pageContext.isCasePage])
 
   const variants = {
     exit: () => {

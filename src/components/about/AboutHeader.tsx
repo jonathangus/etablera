@@ -3,7 +3,6 @@ import styled from 'styled-components'
 import { useSetting } from '../../contexts/SettingsContext'
 import Grid from '../Grid'
 import media from '../../media'
-import { useUiContext } from '../../contexts/UiContext'
 import YFactor from '../YFactor'
 
 const Container = styled.div`
@@ -28,16 +27,6 @@ const Text = styled(YFactor)`
 
 const AboutHeader = () => {
   const t = useSetting()
-
-  const { showHeader, hideHeader, animateContent } = useUiContext()
-
-  useEffect(() => {
-    animateContent && showHeader()
-
-    return () => {
-      hideHeader()
-    }
-  }, [animateContent])
 
   return (
     <Container>

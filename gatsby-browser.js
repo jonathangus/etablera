@@ -13,10 +13,6 @@ export const replaceHydrateFunction = () => {
   }
 }
 
-const getPathName = location => {
-  return location.pathname.replace('/en', '')
-}
-
 export const shouldUpdateScroll = ({
   prevRouterProps: { location, ...rest },
   getSavedScrollPosition,
@@ -35,8 +31,6 @@ export const shouldUpdateScroll = ({
   return false
 }
 
-export const onPreRouteUpdate = ({ location }) => {}
-
 export const onClientEntry = () => {
   const entryDate = new Date()
 
@@ -47,7 +41,7 @@ export const onClientEntry = () => {
       const difference = new Date().getTime() - entryDate.getTime()
       const hours = Math.round(difference / 60000 / 60)
 
-      if (localStorage.getItem('isPwa') && hours > 12) {
+      if (localStorage.getItem('isPwa') && hours > 2) {
         window.location.reload(true)
       }
     })

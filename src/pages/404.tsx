@@ -15,15 +15,6 @@ const Title = styled.h1`
 `
 
 const MissingPage = ({ pageContext }) => {
-  const { showHeader, hideHeader } = useUiContext()
-
-  useEffect(() => {
-    showHeader()
-
-    return () => {
-      hideHeader()
-    }
-  }, [])
   return (
     <React.Fragment>
       <SEO title="404" />

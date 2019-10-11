@@ -1,4 +1,10 @@
-import React, { useState, useContext, createContext, useEffect } from 'react'
+import React, {
+  useState,
+  useContext,
+  createContext,
+  useEffect,
+  useRef,
+} from 'react'
 import { IUiContext } from '../types'
 
 const UiContext = createContext(null as IUiContext)
@@ -12,6 +18,13 @@ const UiContextProvider = ({ children, isFrontpage }: Props) => {
   const [frontpageLoaded, setFrontpageLoaded] = useState(false)
   const [pageTransitionActive, setPageTransitionActive] = useState(false)
   const [etableraSmooth, setEtableraSmooth] = useState()
+  const ignoreDefaultHeaderAnimation = useRef(false)
+
+  useEffect(() => {
+    animateContent &&
+      !ignoreDefaultHeaderAnimation.current &&
+      setHeaderShown(true)
+  }, [animateContent])
 
   const value = {
     mounted,
@@ -25,7 +38,10 @@ const UiContextProvider = ({ children, isFrontpage }: Props) => {
     },
     setEtableraSmooth,
     etableraSmooth,
-    showHeader: () => setHeaderShown(true),
+    showHeader: () => {
+      ignoreDefaultHeaderAnimation.current = false
+      setHeaderShown(true)
+    },
     hideHeader: () => setHeaderShown(false),
     headerShown,
     frontpageLoaded,
@@ -34,6 +50,9 @@ const UiContextProvider = ({ children, isFrontpage }: Props) => {
     setPageTransitionActive: (active: boolean) =>
       setPageTransitionActive(active),
     showTitleCanvas: isFrontpage && animateContent,
+    ignoreDefaultHeaderAnimation: () => {
+      ignoreDefaultHeaderAnimation.current = true
+    },
   }
 
   return <UiContext.Provider value={value}>{children}</UiContext.Provider>

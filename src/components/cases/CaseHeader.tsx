@@ -23,7 +23,11 @@ type Props = {
 const CaseHeader = ({ record }: Props) => {
   const containerRef = useRef()
   const { idle, title } = useCasePageContext()
-  const { showHeader, headerShown } = useUiContext()
+  const {
+    showHeader,
+    headerShown,
+    ignoreDefaultHeaderAnimation,
+  } = useUiContext()
 
   const scrollIt = async () => {
     if (window.pageYOffset === 0) await scrollToOffset(120, 650)
@@ -34,6 +38,8 @@ const CaseHeader = ({ record }: Props) => {
 
   useScheduleEffect(
     () => {
+      ignoreDefaultHeaderAnimation()
+
       if (title) {
         scrollIt()
       }
