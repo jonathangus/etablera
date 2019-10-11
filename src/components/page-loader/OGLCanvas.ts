@@ -59,6 +59,8 @@ export interface IOGLCanvas {
   parentNode: HTMLElement
   setScale: (scale: number) => void
   scale: number
+  onReady: Function
+  selected: 'dark' | 'light'
 }
 
 type Options = {
@@ -83,11 +85,25 @@ class OGLCanvas implements IOGLCanvas {
   parentNode
   selectedStyle: string
   scale = 1
+  onReady
+  selected
 
   constructor(canvas: HTMLElement, { onReady, parentNode, selected }: Options) {
     this.parentNode = parentNode
 
     this.el = canvas
+    this.onReady = onReady
+    this.selected = selected
+    const img = new Image()
+    img.onload = () => {
+      this.init()
+    }
+
+    img.crossOrigin = 'Anonymous'
+    img.src = this.selectedStyle === 'light' ? blackTextLogo : whiteTextLogo
+  }
+
+  init() {
     this.bounds = this.parentNode.getBoundingClientRect()
     this.renderer = new ogl.Renderer({
       dpr: 2,
@@ -97,7 +113,7 @@ class OGLCanvas implements IOGLCanvas {
     })
 
     this.gl = this.renderer.gl
-    this.selectedStyle = selected
+    this.selectedStyle = this.selected
 
     // Variable inputs to control flowmap
     this.aspect = 1
@@ -120,12 +136,11 @@ class OGLCanvas implements IOGLCanvas {
     })
     const img = new Image()
 
-    img.onload = () => {
-      texture.image = img
-      onReady()
-    }
+    this.onReady()
+
     img.crossOrigin = 'Anonymous'
     img.src = this.selectedStyle === 'light' ? blackTextLogo : whiteTextLogo
+    texture.image = img
 
     let a1, a2
     if (this.bounds.height / this.bounds.width < imageAspect) {
