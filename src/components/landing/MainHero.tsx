@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import styled, { keyframes } from 'styled-components'
 import InstaLinks from './InstaLinks'
 import HeroDescription from './HeroDescription'
@@ -8,8 +8,7 @@ import { $mainHero } from '../../utils/dom-selectors'
 import { gutter, titleFont, semi } from '../../vars'
 import media from '../../media'
 import VerticalEmailLink from './VerticalEmailLink'
-import TitleCanvas from '../page-loader/TitleCanvas'
-import { useThemeContext } from '../../contexts/ThemeContext'
+import MainHeroTitle from './MainHeroTItle'
 
 const Container = styled.header`
   height: 100vh;
@@ -49,31 +48,21 @@ const RightSidebar = styled(Sidebar)`
 `
 
 const MainHero = () => {
-  const {
-    frontpageLoaded,
-    showTitleCanvas,
-    etableraSmooth,
-    animateContent,
-  } = useUiContext()
-  const { selected } = useThemeContext()
+  const { frontpageLoaded, animateContent, siteAnimationDone } = useUiContext()
 
-  const TitleCanvasNode = useMemo(() => <TitleCanvas />, [
-    etableraSmooth,
-    selected,
-  ])
-
+  console.log(siteAnimationDone)
   return (
     <Container>
+      {siteAnimationDone && <MainHeroTitle />}
       <div {...$mainHero.attr} />
-      {showTitleCanvas && TitleCanvasNode}
       <Sidebar>
         <InstaLinks />
       </Sidebar>
       <RightSidebar>
         <VerticalEmailLink />
       </RightSidebar>
-      {frontpageLoaded && animateContent && <ScrollIndicator align="top" />}
-      {frontpageLoaded && animateContent && <HeroDescription />}
+      {animateContent && <ScrollIndicator align="top" />}
+      {animateContent && <HeroDescription />}
     </Container>
   )
 }

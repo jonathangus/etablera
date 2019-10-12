@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useRef, memo } from 'react'
+import React, { useEffect, useState, useRef, memo, forwardRef } from 'react'
 import styled, { keyframes, css } from 'styled-components'
 import paths from './etablera-paths'
 import { $pageTitle } from '../../utils/dom-selectors'
-import { useUiContext } from '../../contexts/UiContext'
 
 // There is happending some strange stuff here. Caution is advised
 const pullInAnimation = keyframes`
@@ -36,7 +35,6 @@ const getDelay = (index: number): number => {
 
 const TitleWrapper = styled.div`
   height: 100%;
-  opacity: ${p => (p.show ? 1 : 0)};
 `
 
 const InnerAnimation = keyframes`
@@ -76,29 +74,47 @@ const Inner = styled.div`
 `
 
 const Line = styled.div``
-const Word = styled.g`
+const Word = styled.g<{ disableTransition: boolean }>`
   opacity: 0;
   transform: translateY(${translateMagicOffset});
   animation: ${InnerAnimation} 1s cubic-bezier(0.8, 0, 0.2, 1) forwards;
+
+  ${p =>
+    p.disableTransition &&
+    `
+    opacity:1;
+    transform:none;
+    animation: none;
+  `}
 `
 
-const Letter = styled.g`
+const Letter = styled.g<{ disableTransition: boolean }>`
   transform: scale(1.4);
   transform-origin: center;
   animation: ${p => (p.ready ? pullInAnimation : 'none')} 1s
     cubic-bezier(0.8, 0, 0.2, 1) forwards;
   animation-delay: ${p => getDelay(p.index + 1)}ms;
   fill: ${p => p.theme.color};
+
+  ${p =>
+    p.disableTransition &&
+    `
+    animation: none;
+    transform: none;
+  `}
 `
 
 type Props = {
-  setFirstComplete: Function
-  firstComplete: boolean
+  setFirstComplete?: Function
+  firstComplete?: boolean
+  disableTransition?: boolean
 }
 
-const PageLoaderTitle = ({ setFirstComplete, firstComplete }: Props) => {
+const PageLoaderTitle = (
+  { setFirstComplete = () => {}, firstComplete, disableTransition }: Props,
+  ref
+) => {
   const innerEl = useRef<HTMLElement>()
-  const { frontpageLoaded } = useUiContext()
 
   // First step of the animation
   useEffect(() => {
@@ -119,8 +135,8 @@ const PageLoaderTitle = ({ setFirstComplete, firstComplete }: Props) => {
     }
   }, [])
 
-  return (
-    <TitleWrapper show={!frontpageLoaded} {...$pageTitle.attr}>
+  const node = (
+    <TitleWrapper ref={ref} {...$pageTitle.attr}>
       <Inner>
         <h1>
           Etablera
@@ -147,9 +163,18 @@ const PageLoaderTitle = ({ setFirstComplete, firstComplete }: Props) => {
                 </clipPath>
               </defs>
               <g clipPath="url(#clip)">
-                <Word id="Etablera" ref={innerEl}>
+                <Word
+                  id="Etablera"
+                  disableTransition={disableTransition}
+                  ref={innerEl}
+                >
                   {paths.desktop.letters.map((l, i) => (
-                    <Letter ready={firstComplete} index={i} key={i}>
+                    <Letter
+                      ready={firstComplete}
+                      disableTransition={disableTransition}
+                      index={i}
+                      key={i}
+                    >
                       {l}
                     </Letter>
                   ))}
@@ -177,6 +202,8 @@ const PageLoaderTitle = ({ setFirstComplete, firstComplete }: Props) => {
       </Inner>
     </TitleWrapper>
   )
+
+  return node
 }
 
-export default memo(PageLoaderTitle)
+export default memo(forwardRef(PageLoaderTitle))

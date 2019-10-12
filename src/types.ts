@@ -84,7 +84,7 @@ export interface IUiContext {
   headerShown: boolean
   mounted: boolean
   frontpageLoaded: boolean
-  setFrontpageLoaded: () => void
+  setFrontpageLoaded: (value: boolean) => void
   setMounted: () => void
   pageTransitionActive: boolean
   setPageTransitionActive: (active: boolean) => void

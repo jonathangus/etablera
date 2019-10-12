@@ -1,17 +1,16 @@
 import React, { useEffect, useRef, useMemo, memo } from 'react'
 import styled from 'styled-components'
-import { $pageTitle } from '../../utils/dom-selectors'
-import PageLoaderLayout from './PageLoaderLayout'
 import OGLCanvas, { IOGLCanvas } from './OGLCanvas'
 import { useThemeContext } from '../../contexts/ThemeContext'
 import { useUiContext } from '../../contexts/UiContext'
 
-const Inner = styled.div`
+const Wrapper = styled.div`
   height: 100%;
   width: 100%;
   background: ${p => p.theme.backgroundColor};
   transition: ${p => p.theme.transition};
-
+`
+const Inner = styled(Wrapper)`
   canvas {
     width: 100%;
     height: 100%;
@@ -20,7 +19,10 @@ const Inner = styled.div`
   }
 `
 
-const TitleCanvas = () => {
+type Props = {
+  setCanvasActive: (active: boolean) => void
+}
+const TitleCanvas = ({ setCanvasActive }: Props) => {
   const wrapperEl = useRef<HTMLElement>()
   const canvasRef = useRef<HTMLCanvasElement>()
   const oglCanvas = useRef<IOGLCanvas>()
@@ -29,19 +31,17 @@ const TitleCanvas = () => {
   const { etableraSmooth, setFrontpageLoaded } = useUiContext()
 
   useEffect(() => {
-    if (etableraSmooth)
+    if (etableraSmooth) {
       // TODO ts
       etableraSmooth.appendCanvas(wrapperEl.current, oglCanvas.current)
+    }
   }, [etableraSmooth])
 
   useEffect(() => {
-    const onReady = () => {
-      // TODO
+    setFrontpageLoaded(true)
 
-      setTimeout(() => {
-        // $pageTitle.resolve().style.opacity = '0'
-        setFrontpageLoaded(true)
-      }, 200)
+    const onReady = () => {
+      setCanvasActive(true)
     }
 
     oglCanvas.current = new OGLCanvas(canvasRef.current, {
@@ -55,16 +55,17 @@ const TitleCanvas = () => {
     }
 
     return () => {
-      oglCanvas.current.destroy()
+      oglCanvas.current && oglCanvas.current.destroy()
+      setCanvasActive(false)
     }
   }, [selected])
 
   return (
-    <PageLoaderLayout ref={wrapperEl}>
+    <Wrapper ref={wrapperEl}>
       <Inner ref={innerEl}>
-        <canvas data-lol ref={canvasRef} />
+        <canvas ref={canvasRef} />
       </Inner>
-    </PageLoaderLayout>
+    </Wrapper>
   )
 }
 

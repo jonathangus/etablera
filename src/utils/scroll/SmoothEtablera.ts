@@ -7,13 +7,15 @@ class SmoothEtablera extends SmoothItem {
   nextOffset: number = 500
   oglCanvas: IOGLCanvas
   shouldScale: boolean
+  titleEl: HTMLElement
 
-  constructor(el: HTMLElement, current: HTMLElement, shouldScale: boolean) {
+  constructor(el: HTMLElement, title: HTMLElement, isDesktop: boolean) {
     super(el)
 
     if (!el) return
-    this.shouldScale = shouldScale
-    this.DOM.current = current
+    this.shouldScale = !isDesktop
+    this.DOM.titleEl = title
+
     this.DOM.nextContent = $scrollTarget.resolve()
     this.renderedStyles = {
       fade: {
@@ -32,10 +34,13 @@ class SmoothEtablera extends SmoothItem {
     this.update()
   }
 
+  isDesktop = (active: boolean) => {
+    this.shouldScale = !active
+  }
+
   appendCanvas(canvasEl: HTMLElement, oglCanvas: IOGLCanvas) {
     this.DOM.current = canvasEl
     this.oglCanvas = oglCanvas
-    this.shouldScale = false
   }
 
   getSize() {
@@ -77,11 +82,14 @@ class SmoothEtablera extends SmoothItem {
       this.DOM.current.style.opacity = opacity
 
       if (this.shouldScale) {
-        this.DOM.current.style.transform = `translate(-50%, -50%) scale(${scale})`
+        this.DOM.current.style.transform = `scale(${scale})`
       } else {
         this.oglCanvas &&
           this.oglCanvas.setScale(0.8 * this.renderedStyles.fade.previous + 1)
       }
+    } else if (this.DOM.titleEl) {
+      this.DOM.titleEl.style.opacity = opacity
+      this.DOM.titleEl.style.transform = `scale(${scale})`
     }
 
     if (this.DOM.description) {

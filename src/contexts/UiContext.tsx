@@ -15,8 +15,8 @@ const UiContextProvider = ({ children, isFrontpage }: Props) => {
   const [headerShown, setHeaderShown] = useState(false)
   const [mounted, setMounted] = useState(false)
   const [animateContent, setAnimateContent] = useState(false)
+  const [siteAnimationDone, setPageLoaderAnimationDone] = useState()
   const [frontpageLoaded, setFrontpageLoaded] = useState(false)
-  const [pageTransitionActive, setPageTransitionActive] = useState(false)
   const [etableraSmooth, setEtableraSmooth] = useState()
   const ignoreDefaultHeaderAnimation = useRef(false)
 
@@ -46,10 +46,9 @@ const UiContextProvider = ({ children, isFrontpage }: Props) => {
     headerShown,
     frontpageLoaded,
     setFrontpageLoaded,
-    pageTransitionActive,
-    setPageTransitionActive: (active: boolean) =>
-      setPageTransitionActive(active),
     showTitleCanvas: isFrontpage && animateContent,
+    setPageLoaderAnimationDone: () => setPageLoaderAnimationDone(true),
+    siteAnimationDone,
     ignoreDefaultHeaderAnimation: () => {
       ignoreDefaultHeaderAnimation.current = true
     },

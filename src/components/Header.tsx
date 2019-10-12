@@ -111,10 +111,6 @@ const Header = ({ currentPath }: Props) => {
   }, 100)
 
   useEffect(() => {
-    setShow(headerShown)
-  }, [headerShown])
-
-  useEffect(() => {
     headerTextDifference.onRouteChange()
     headerTextDifference.onChange = isLight => {
       setLightText(isLight)
@@ -133,26 +129,10 @@ const Header = ({ currentPath }: Props) => {
     SchedulePrio.Low
   )
 
-  const variants = {
-    enter: {
-      y: 0,
-      transition: {
-        ease: 'easeInOut',
-      },
-    },
-    exit: {
-      y: '-100%',
-      transition: {
-        ease: 'easeInOut',
-      },
-    },
-  }
-
   return (
     <Container
       {...$header.attr}
       isLightText={isLightText}
-      variants={variants}
       show={mounted && headerShown && show}
     >
       <StyledGrid>

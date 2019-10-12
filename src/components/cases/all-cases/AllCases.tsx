@@ -1,5 +1,4 @@
 import React, { useEffect, useState, memo } from 'react'
-import { useUiContext } from '../../../contexts/UiContext'
 import DesktopAllCases from './DesktopAllCases'
 import MobileAllCases from './MobileAllCases'
 import useResize from '../../../hooks/useResize'

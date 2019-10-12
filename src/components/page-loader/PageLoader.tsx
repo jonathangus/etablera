@@ -81,15 +81,8 @@ const PageLoader = ({ isFrontpage }: Props) => {
     setFrontpageLoaded,
     frontpageLoaded,
     animateContent,
+    setPageLoaderAnimationDone,
   } = useUiContext()
-
-  const completeLoader = () => {
-    if (isFrontpage) {
-      unstable_next(() => {
-        // setFrontpageLoaded(true)
-      })
-    }
-  }
 
   useEffect(() => {
     if (process.env.NODE_ENV === '!development') {
@@ -101,7 +94,6 @@ const PageLoader = ({ isFrontpage }: Props) => {
 
   useScheduleEffect(() => {
     if (mounted) {
-      completeLoader()
       setAnimationState('none')
     }
 
@@ -121,6 +113,7 @@ const PageLoader = ({ isFrontpage }: Props) => {
 
   useScheduleEffect(() => {
     if (firstComplete) {
+      // TODO
       document
         .querySelector('body')
         .style.setProperty(
@@ -129,6 +122,7 @@ const PageLoader = ({ isFrontpage }: Props) => {
         )
 
       setTimeout(() => {
+        setPageLoaderAnimationDone()
         setSecondComplete(true)
       }, 1000)
     }
@@ -136,7 +130,6 @@ const PageLoader = ({ isFrontpage }: Props) => {
 
   useScheduleEffect(() => {
     if (secondComplete) {
-      completeLoader()
       setMounted()
     }
   }, [secondComplete])
