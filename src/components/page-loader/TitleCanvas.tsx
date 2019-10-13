@@ -42,7 +42,9 @@ const TitleCanvas = ({ setCanvasActive }: Props) => {
     setFrontpageLoaded(true)
 
     const onReady = () => {
-      setCanvasActive(true)
+      setTimeout(() => {
+        setCanvasActive(true)
+      }, 400)
     }
 
     oglCanvas.current = new OGLCanvas(canvasRef.current, {

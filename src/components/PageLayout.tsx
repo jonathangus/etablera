@@ -49,23 +49,12 @@ const PageLayout = ({ children, pageContext, location }) => {
                 locale={pageContext.locale}
               >
                 <Head />
-
                 <GlobalStyle />
 
                 <Header key={location.pathname} currentPath={currPath} />
-
-                <>
-                  <main>{children}</main>
-                  {showFooter && <Footer />}
-                  <PwaRefresh />
-                </>
-
-                {/* <PageTransitionHandler pathname={location.pathname}>
-                <PageLoader isFrontpage={isFrontpage} />
                 <main>{children}</main>
                 {showFooter && <Footer />}
                 <PwaRefresh />
-              </PageTransitionHandler> */}
               </SettingsContextProvider>
             </Transition>
           </UiContextProvider>

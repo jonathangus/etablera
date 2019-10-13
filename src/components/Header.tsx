@@ -10,7 +10,6 @@ import LanguageSelect from './LanguageSelect'
 import throttle from 'lodash/throttle'
 import useScheduleEffect, { SchedulePrio } from '../hooks/useScheduleEffect'
 import Grid from './Grid'
-import { $header } from '../utils/dom-selectors'
 import headerTextDifference from '../utils/header-text-difference'
 import { useSetting } from '../contexts/SettingsContext'
 import media from '../media'
@@ -133,11 +132,7 @@ const Header = ({ currentPath }: Props) => {
 
   console.log({ mounted, headerShown, show })
   return (
-    <Container
-      {...$header.attr}
-      isLightText={isLightText}
-      show={mounted && headerShown && show}
-    >
+    <Container isLightText={isLightText} show={mounted && headerShown && show}>
       <StyledGrid>
         <Logo isVisible={!isFrontpage}>
           <Link title="Etablera" to={t.url('/')}>
