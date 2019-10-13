@@ -37,7 +37,6 @@ const Container = styled.div`
   z-index: 4425;
   will-change: transform;
   transition: transform ease-in-out 0.45s;
-  transform: translateY(${p => (p.show ? 0 : -80)}%);
 
   ${p => p.isLightText && lightTextStyle}
 `
@@ -130,8 +129,12 @@ const Header = ({ currentPath }: Props) => {
     SchedulePrio.Low
   )
 
+  const shouldShow = Boolean(mounted && headerShown && show)
   return (
-    <Container isLightText={isLightText} show={mounted && headerShown && show}>
+    <Container
+      style={{ transform: `translateY(${shouldShow ? 0 : -80}%)` }}
+      isLightText={isLightText}
+    >
       <StyledGrid>
         <Logo isVisible={!isFrontpage}>
           <Link title="Etablera" to={t.url('/')}>
