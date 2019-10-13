@@ -40,6 +40,10 @@ const Container = styled.div`
   transform: translateY(${p => (p.show ? 0 : -80)}%);
 
   ${p => p.isLightText && lightTextStyle}
+
+  ${media.phone`
+    transform:none;
+  `}
 `
 
 const StyledGrid = styled(Grid)`
@@ -130,7 +134,6 @@ const Header = ({ currentPath }: Props) => {
     SchedulePrio.Low
   )
 
-  console.log({ mounted, headerShown, show })
   return (
     <Container isLightText={isLightText} show={mounted && headerShown && show}>
       <StyledGrid>

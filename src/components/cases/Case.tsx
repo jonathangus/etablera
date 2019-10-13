@@ -131,9 +131,11 @@ const StyledCaseLink = styled(CaseLink)`
   }
 
   ${media.phone`
-    height: 70vh;
-    width:70%;
+    /* height: 70vh;
+    width:70%; */
     margin: 0 auto;
+    height: calc(100vh - 80px );
+    width: calc(100% - 80px);
   `}
 `
 

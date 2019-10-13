@@ -6,7 +6,7 @@ export const sizes = {
   desktop: 992,
   tablet: 768,
   phone: 576,
-  smallPhone: 380,
+  smallPhone: 360,
 }
 
 type Sizes = {
