@@ -6,6 +6,7 @@ export default createGlobalStyle`
 
     :root {
         --half-text-split-color: ${p => p.theme.color};
+        --window-height: 100vh;
      
     }
     * {
@@ -41,7 +42,7 @@ export default createGlobalStyle`
     }
 
     body {
-       
+        width: 100%;
         color: ${p => p.theme.color};
         transition: ${p => p.theme.transition};
         font-family: ${textFont};

@@ -18,6 +18,7 @@ const Container = styled.header`
   overflow: hidden;
   pointer-events: all;
   position: relative;
+
   ${media.phone`
     height: var(--window-height);
   `}
@@ -48,9 +49,7 @@ const RightSidebar = styled(Sidebar)`
 `
 
 const MainHero = () => {
-  const { frontpageLoaded, animateContent, siteAnimationDone } = useUiContext()
-
-  console.log(siteAnimationDone)
+  const { animateContent, siteAnimationDone } = useUiContext()
   return (
     <Container>
       {siteAnimationDone && <MainHeroTitle />}

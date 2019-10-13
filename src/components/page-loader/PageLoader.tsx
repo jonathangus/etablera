@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useRef } from 'react'
 import styled, { keyframes, css } from 'styled-components'
 import { useUiContext } from '../../contexts/UiContext'
-import { styleRef } from '../../utils'
 import { updateSmooth } from '../../utils/scroll/smooth-scroll'
 import { unstable_next } from 'scheduler'
 import useScheduleEffect from '../../hooks/useScheduleEffect'
 import PageLoaderContent from './PageLoaderContent'
 import media from '../../media'
+import debounce from 'lodash/debounce'
+import useResize from '../../hooks/useResize'
 
 const AnimateOut = keyframes`
   0% {
@@ -84,6 +85,19 @@ const PageLoader = ({ isFrontpage }: Props) => {
     setPageLoaderAnimationDone,
   } = useUiContext()
 
+  const setWindowHeight = () => {
+    document
+      .querySelector('body')
+      .style.setProperty(
+        '--window-height',
+        `${containerEl.current.getBoundingClientRect().height}px`
+      )
+  }
+
+  useResize(() => {
+    document.querySelector('body').style.removeProperty('--window-height')
+  })
+
   useEffect(() => {
     if (process.env.NODE_ENV === '!development') {
       setMounted()
@@ -113,13 +127,7 @@ const PageLoader = ({ isFrontpage }: Props) => {
 
   useScheduleEffect(() => {
     if (firstComplete) {
-      // TODO
-      document
-        .querySelector('body')
-        .style.setProperty(
-          '--window-height',
-          `${containerEl.current.getBoundingClientRect().height}px`
-        )
+      setWindowHeight()
 
       setTimeout(() => {
         setPageLoaderAnimationDone()

@@ -92,6 +92,7 @@ export interface IUiContext {
   etableraSmooth: SmoothItem
   showTitleCanvas: boolean
   ignoreDefaultHeaderAnimation: () => void
+  siteAnimationDone: boolean
 }
 
 export type ISectionFullVideo = {

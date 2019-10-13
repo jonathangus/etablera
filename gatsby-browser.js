@@ -3,6 +3,9 @@ import 'requestidlecallback'
 import ReactDOM from 'react-dom'
 import get from 'lodash/get'
 import isMobile from 'ismobilejs'
+import _onInitialClientRender from './src/gatsby/browser/onInitialClientRender'
+
+export const onInitialClientRender = _onInitialClientRender
 
 // React fiber ⚡️⚡️⚡️
 export const replaceHydrateFunction = () => {

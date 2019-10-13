@@ -95,6 +95,7 @@ class OGLCanvas implements IOGLCanvas {
     this.onReady = onReady
     this.selected = selected
     const img = new Image()
+
     img.onload = () => {
       this.init()
     }
@@ -105,6 +106,7 @@ class OGLCanvas implements IOGLCanvas {
 
   init() {
     this.bounds = this.parentNode.getBoundingClientRect()
+
     this.renderer = new ogl.Renderer({
       dpr: 2,
       canvas: this.el,

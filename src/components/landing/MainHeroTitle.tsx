@@ -18,22 +18,13 @@ const Container = styled.div`
   top: 0;
 `
 const MainHeroTitle = () => {
-  const {
-    frontpageLoaded,
-    showTitleCanvas,
-    animateContent,
-    setEtableraSmooth,
-  } = useUiContext()
+  const { animateContent, setEtableraSmooth } = useUiContext()
   const containerEl = useRef()
   const [canvasActive, setCanvasActive] = useState(false)
-
-  const { selected } = useThemeContext()
   const titleRef = useRef()
   const [isDesktop, setIsDesktop] = useState<boolean>()
 
   const calcIsDesktop = () => {
-    // setIsDesktop(false)
-    // console.log(window.innerWidth > sizes.phone, media.phone, window.innerWidth)
     setIsDesktop(window.innerWidth > sizes.phone)
   }
   useEffect(() => {
@@ -41,25 +32,23 @@ const MainHeroTitle = () => {
   }, [])
   useResize(calcIsDesktop)
 
-  const etableraSmooth = useSmooth(() => {
+  const etableraSmooth: SmoothEtablera = useSmooth(() => {
     if (animateContent) {
       return new SmoothEtablera(
         containerEl.current,
         titleRef.current,
-        !isDesktop
+        isDesktop
       )
     }
   }, [animateContent])
 
   useEffect(() => {
-    etableraSmooth && etableraSmooth.isDesktop(isDesktop)
+    etableraSmooth && etableraSmooth.setDesktopState(isDesktop)
   }, [isDesktop])
 
   useEffect(() => {
     setEtableraSmooth(etableraSmooth)
   }, [Boolean(etableraSmooth)])
-
-  console.log({ isDesktop })
 
   return (
     <PageLoaderLayout ref={containerEl}>
