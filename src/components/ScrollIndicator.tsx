@@ -43,12 +43,11 @@ const Scroll = styled.svg`
   height: 53px;
   animation: ${ScrollAnimation} 5s infinite;
   cursor: pointer;
+  opacity: ${p => (p.show ? 1 : 0)};
 
   path {
     stroke: ${p => p.color || p.theme.color};
     transition: stroke 0.3s ease;
-    stroke-dashoffset: 100px;
-    stroke-dasharray: 100px;
   }
 
   ${media.phone`
@@ -83,6 +82,8 @@ type Props = {
 
 const ScrollIndicator = ({ color, align = 'center' }: Props) => {
   const [message, setMessage] = useState(false)
+  const [show, setShow] = useState(false)
+
   const timeoutId = useRef<number>()
   const t = useSetting()
   const mounted = useRef<boolean>()
@@ -91,7 +92,7 @@ const ScrollIndicator = ({ color, align = 'center' }: Props) => {
 
   const showArrow = async () => {
     const anime = await DefferedCallbacks.anime()
-
+    setShow(true)
     anime({
       targets: pathEl.current,
       strokeDashoffset: {
@@ -153,6 +154,7 @@ const ScrollIndicator = ({ color, align = 'center' }: Props) => {
         height="55"
         viewBox="0 0 19 55"
         color={color}
+        show={show}
       >
         <path
           ref={pathEl}

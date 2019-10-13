@@ -15,13 +15,6 @@ module.exports = {
     'gatsby-transformer-sharp',
     'gatsby-transformer-remark',
     {
-      resolve: 'gatsby-plugin-styled-components',
-      options: {
-        displayName: true,
-        // displayName: process.env.NODE_ENV === 'development',
-      },
-    },
-    {
       resolve: 'gatsby-source-filesystem',
       options: {
         name: `images`,
@@ -116,6 +109,13 @@ module.exports = {
             variants: ['400', '700'],
           },
         ],
+      },
+    },
+    {
+      resolve: 'gatsby-plugin-styled-components',
+      options: {
+        displayName: true,
+        // displayName: process.env.NODE_ENV === 'development',
       },
     },
     {

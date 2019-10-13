@@ -131,11 +131,7 @@ const Header = ({ currentPath }: Props) => {
   )
 
   return (
-    <Container
-      key={currentPath}
-      isLightText={isLightText}
-      show={mounted && headerShown && show}
-    >
+    <Container isLightText={isLightText} show={mounted && headerShown && show}>
       <StyledGrid>
         <Logo isVisible={!isFrontpage}>
           <Link title="Etablera" to={t.url('/')}>
