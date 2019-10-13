@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef, memo, forwardRef } from 'react'
 import styled, { keyframes, css } from 'styled-components'
 import paths from './etablera-paths'
-import { $pageTitle } from '../../utils/dom-selectors'
 
 // There is happending some strange stuff here. Caution is advised
 const pullInAnimation = keyframes`
@@ -136,7 +135,7 @@ const PageLoaderTitle = (
   }, [])
 
   const node = (
-    <TitleWrapper ref={ref} {...$pageTitle.attr}>
+    <TitleWrapper ref={ref}>
       <Inner>
         <h1>
           Etablera

@@ -1,6 +1,7 @@
 import SmoothItem from './SmoothItem'
 import { math } from './scroll-utils'
 import DefferedCallbacks from '../deferred-callbacks'
+import { $caseBorder } from '../dom-selectors'
 
 class SmoothCase extends SmoothItem {
   borderSize: number = 0
@@ -11,8 +12,8 @@ class SmoothCase extends SmoothItem {
   ) {
     super(el)
 
-    this.borderSize = this.DOM.el
-      .querySelector('[data-case-border]')
+    this.borderSize = $caseBorder
+      .resolve(this.DOM.el)
       .getBoundingClientRect().width
 
     this.DOM.title = options.title
@@ -81,22 +82,10 @@ class SmoothCase extends SmoothItem {
   }
 
   layout = () => {
-    const stupidPixelFix = 2
-    const val = Math.floor(
-      this.renderedStyles.scale.previous * this.borderSize * 2 + stupidPixelFix
+    this.DOM.el.style.setProperty(
+      '--border-size',
+      `${this.renderedStyles.scale.previous}`
     )
-    // const scaleY = 1 - val / Math.floor(this.props.height)
-    // const scaleX = 1 - val / Math.floor(this.props.width)
-
-    const borders = Array.from(
-      this.DOM.el.querySelectorAll('[data-case-border]')
-    )
-    borders.forEach((borderEl: HTMLElement) => {
-      borderEl.style.setProperty(
-        '--border-size',
-        `${this.renderedStyles.scale.previous}`
-      )
-    })
 
     this.DOM.title.style.setProperty(
       '--translate-y-title',

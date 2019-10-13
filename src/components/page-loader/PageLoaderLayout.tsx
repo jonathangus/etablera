@@ -15,6 +15,7 @@ const Container = styled.div`
 
   ${media.phone`
     width: 100%;
+    transform: translate(-50%, -60%);
   `}
 `
 

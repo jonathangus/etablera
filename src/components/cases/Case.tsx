@@ -8,6 +8,7 @@ import { ICase } from '../../types'
 import SmoothCase from '../../utils/scroll/SmoothCase'
 import useSmooth from '../../hooks/useSmooth'
 import smooth from '../../utils//scroll/smooth-scroll'
+import { $caseBorder } from '../../utils/dom-selectors'
 
 const ComeIn = keyframes`
   0% {
@@ -74,7 +75,6 @@ const CaseTitle = styled.h1`
   bottom: -${gutter * 2}px;
   z-index: 55;
   text-align: right;
-  text-transform: uppercase;
   will-change: transform, color;
   transform: translateY(var(--translate-y-title));
   overflow: hidden;
@@ -238,10 +238,10 @@ const Case = ({ record }: Props) => {
       <CaseTitle ref={titleEl}>
         <span data-letters={record.name}>{record.name}</span>
       </CaseTitle>
-      <BorderLeft data-case-border />
-      <BorderRight data-case-border />
-      <BorderTop data-case-border />
-      <BorderBottom data-case-border />
+      <BorderLeft {...$caseBorder.attr} />
+      <BorderRight {...$caseBorder.attr} />
+      <BorderTop {...$caseBorder.attr} />
+      <BorderBottom {...$caseBorder.attr} />
     </Wrapper>
   )
 }

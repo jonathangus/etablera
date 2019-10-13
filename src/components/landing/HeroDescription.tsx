@@ -14,7 +14,7 @@ const Container = styled.div`
 
   ${media.phone`
     bottom: 25vh;
-    font-size:1.4rem;
+    font-size:1.25rem;
   `}
 `
 
@@ -44,7 +44,6 @@ const HeroDescription = () => {
   const elem = useRef()
 
   useEffect(() => {
-    // TODO ts
     if (etableraSmooth) etableraSmooth.appendDescription(elem.current)
   }, [Boolean(etableraSmooth)])
 

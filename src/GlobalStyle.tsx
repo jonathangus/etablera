@@ -7,6 +7,7 @@ export default createGlobalStyle`
     :root {
         --half-text-split-color: ${p => p.theme.color};
         --window-height: 100vh;
+        --border-size:30px;
      
     }
     * {

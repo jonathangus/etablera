@@ -3,7 +3,7 @@ type DomSelector = {
     [key: string]: true
   }
   resolve: (parent?: HTMLElement) => HTMLElement
-  resolveAll: () => HTMLElement[]
+  resolveAll: (parent?: HTMLElement) => HTMLElement[]
   [any: string]: any
 }
 
@@ -20,10 +20,14 @@ const getSelector = (selector: string, rest: Object = {}): DomSelector => ({
       ? parent.querySelector(`[data-${selector}]`)
       : document.querySelector(`[data-${selector}]`)
   },
-  resolveAll: () => {
+  resolveAll: (parent?: HTMLElement) => {
     if (!isClient) return []
 
-    return Array.from(document.querySelectorAll(`[data-${selector}]`))
+    return Array.from(
+      parent
+        ? parent.querySelectorAll(`[data-${selector}]`)
+        : document.querySelectorAll(`[data-${selector}]`)
+    )
   },
   ...rest,
 })
@@ -34,7 +38,6 @@ export const pageWrapper = getSelector('page-wrapper', {
   transitionClass: 'page-transition',
 })
 
-export const $pageTitle = getSelector('page-title')
 export const $headerTextDiff = getSelector('light-header-text')
 export const $caseHeader = getSelector('case-header')
 export const $header = getSelector('header', {
@@ -49,3 +52,4 @@ export const $pwaRefresh = getSelector('pwa-refresh', {
 })
 export const $scrollTarget = getSelector('scroll-target')
 export const $pageLoaderHeight = getSelector('page-loader-height')
+export const $caseBorder = getSelector('case-border')
