@@ -6,6 +6,7 @@ import { gutter, titleFont } from '../../../vars'
 import Slideshow from './Slideshow'
 import useShowContent from '../../../hooks/useShowContent'
 import SwipeIndicator from './SwipeIndicator'
+import media from '../../../media'
 
 const ratio = 0.562
 
@@ -18,6 +19,11 @@ const Container = styled.div`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+
+  ${media.smallPhone`
+  width: 60vw;
+  height: calc(60vw / ${ratio});
+  `}
 `
 const ImageContainer = styled.div`
   height: 100%;

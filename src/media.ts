@@ -6,12 +6,14 @@ export const sizes = {
   desktop: 992,
   tablet: 768,
   phone: 576,
+  smallPhone: 380,
 }
 
 type Sizes = {
   tablet: any
   phone: any
   desktop: any
+  smallPhone: any
 }
 
 const media: Sizes = Object.keys(sizes).reduce(
@@ -28,6 +30,7 @@ const media: Sizes = Object.keys(sizes).reduce(
     tablet: '',
     phone: '',
     desktop: '',
+    smallPhone: '',
   }
 )
 

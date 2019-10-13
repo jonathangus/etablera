@@ -11,6 +11,10 @@ const Container = styled.div`
   font-weight: ${semi};
   font-family: ${titleFont};
 
+  ${media.smallPhone`
+    font-size: 0.7rem;
+  `}
+
   a {
     padding-left: ${gutter * 2}px;
     text-decoration: none;
