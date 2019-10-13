@@ -129,6 +129,12 @@ const StyledCaseLink = styled(CaseLink)`
       color: rgba(255, 255, 255, 0.83);
     }
   }
+
+  ${media.phone`
+    height: 70vh;
+    width:70%;
+    margin: 0 auto;
+  `}
 `
 
 const Border = styled.div`
