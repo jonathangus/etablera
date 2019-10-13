@@ -1,106 +1,46 @@
-import React, { useEffect, useRef, memo, useState } from 'react'
+import React, { useRef, memo } from 'react'
 import styled from 'styled-components'
 import { ISectionFullVideo } from '../../types'
-import PlayCursor from '../PlayCursor'
-import media from '../../media'
 import useScrollDisplay from '../../hooks/useScrollDisplay'
-import useScheduleEffect, { SchedulePrio } from '../../hooks/useScheduleEffect'
-import DefferedCallbacks from '../../utils/deferred-callbacks'
+import Grid from '../Grid'
 
-const Container = styled.div`
+const Container = styled(Grid)`
   position: relative;
+  padding: 0 !important;
   opacity: ${p => (p.show ? 1 : 0)};
   will-change: opacity;
   transition: opacity 0.65s ease;
   max-width: 1400px;
   margin: 0 auto;
+`
 
-  .plyr {
-    height: calc(100% * 0.5625);
-  }
-
-  &:hover {
-    cursor: none;
-  }
-
-  .plyr__control--overlaid {
-    display: none !important;
-
-    ${media.phone`
-      display: block !important;
-    `}
-  }
-
+const IFrameWrapper = styled.div`
+  position: relative;
+  overflow: hidden;
+  padding-top: 56.25%;
   iframe {
     width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    border: 0;
   }
 `
 
 const SectionFullVideo = ({ vimeoId, poster }: ISectionFullVideo) => {
-  const elem = useRef()
-  const show = useScrollDisplay(elem)
   const containerEl = useRef()
-  const [showCursor, setShowCursor] = useState(false)
-  const [isPlaying, setPlaying] = useState(false)
-  const player = useRef<any>()
-
-  const onEnter = () => setShowCursor(true)
-  const onLeave = () => setShowCursor(false)
-
-  const initializePlayer = async () => {
-    const Plyr = await DefferedCallbacks.Plyr()
-
-    if (elem.current) {
-      const options = {
-        hideControls: false,
-        fullscreen: { enabled: true, fallback: true, iosNative: true },
-      }
-      player.current = new Plyr(elem.current, options)
-
-      if (poster) {
-        player.current.poster = poster.fluid.src
-      }
-
-      player.current.toggleControls(false)
-
-      player.current.on('play', () => {
-        player.current.toggleControls(true)
-        setPlaying(true)
-      })
-
-      player.current.on('pause', () => {
-        player.current.toggleControls(false)
-        setPlaying(false)
-      })
-    }
-  }
-
-  useScheduleEffect(
-    () => {
-      initializePlayer()
-      return () => player.current && player.current.destroy()
-    },
-    [],
-    SchedulePrio.Idle
-  )
+  const show = useScrollDisplay(containerEl)
 
   return (
-    <Container
-      show={show}
-      onMouseEnter={onEnter}
-      ref={containerEl}
-      onMouseLeave={onLeave}
-    >
-      <div className="aplyr__video-embed" ref={elem}>
+    <Container show={show} ref={containerEl}>
+      <IFrameWrapper>
         <iframe
           src={`https://player.vimeo.com/video/${vimeoId}?loop=false&amp;byline=false&amp;portrait=false&amp;title=false&amp;speed=true&amp;transparent=0&amp;gesture=media`}
           allowFullScreen
           allow="autoplay"
         />
-      </div>
-      {showCursor && (
-        <PlayCursor parent={containerEl.current} isPlaying={isPlaying} />
-      )}
+      </IFrameWrapper>
     </Container>
   )
 }
