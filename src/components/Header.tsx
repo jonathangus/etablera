@@ -40,10 +40,6 @@ const Container = styled.div`
   transform: translateY(${p => (p.show ? 0 : -80)}%);
 
   ${p => p.isLightText && lightTextStyle}
-
-  ${media.phone`
-    transform:none;
-  `}
 `
 
 const StyledGrid = styled(Grid)`
@@ -135,7 +131,11 @@ const Header = ({ currentPath }: Props) => {
   )
 
   return (
-    <Container isLightText={isLightText} show={mounted && headerShown && show}>
+    <Container
+      key={currentPath}
+      isLightText={isLightText}
+      show={mounted && headerShown && show}
+    >
       <StyledGrid>
         <Logo isVisible={!isFrontpage}>
           <Link title="Etablera" to={t.url('/')}>
