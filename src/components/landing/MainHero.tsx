@@ -8,7 +8,7 @@ import { $mainHero } from '../../utils/dom-selectors'
 import { gutter, titleFont, semi } from '../../vars'
 import media from '../../media'
 import VerticalEmailLink from './VerticalEmailLink'
-import MainHeroTitle from './MainHeroTItle'
+import MainHeroTitle from './MainHeroTitle'
 
 const Container = styled.header`
   height: 100vh;
