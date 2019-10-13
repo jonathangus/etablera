@@ -94,6 +94,11 @@ const Header = ({ currentPath }: Props) => {
   const resetScrollValue = useRef(0)
   const [show, setShow] = useState(true)
   const t = useSetting()
+  const [key, setKey] = useState(currentPath)
+
+  useEffect(() => {
+    setKey(`${Math.random}`)
+  }, [currentPath, headerShown, show, mounted])
 
   const onScroll = throttle(() => {
     let st = window.pageYOffset || document.documentElement.scrollTop
@@ -132,6 +137,7 @@ const Header = ({ currentPath }: Props) => {
   const shouldShow = Boolean(mounted && headerShown && show)
   return (
     <Container
+      key={key}
       style={{ transform: `translateY(${shouldShow ? 0 : -80}%)` }}
       isLightText={isLightText}
     >

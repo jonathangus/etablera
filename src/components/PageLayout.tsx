@@ -51,7 +51,7 @@ const PageLayout = ({ children, pageContext, location }) => {
                 <Head />
                 <GlobalStyle />
 
-                <Header key={location.pathname} currentPath={currPath} />
+                <Header currentPath={currPath} />
                 <main>{children}</main>
                 {showFooter && <Footer />}
                 <PwaRefresh />
