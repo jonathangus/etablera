@@ -34,7 +34,6 @@ const UiContextProvider = ({ children, isFrontpage }: Props) => {
       setTimeout(() => {
         document.querySelector('body').classList.add('scroll')
         setAnimateContent(true)
-        console.log('SHOW HEADER')
       }, 900)
     },
     setEtableraSmooth,

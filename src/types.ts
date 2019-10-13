@@ -1,4 +1,5 @@
 import SmoothItem from './utils/scroll/SmoothItem'
+import SmoothEtablera from './utils/scroll/SmoothEtablera'
 
 export interface ISettingsContext {
   (str: string, withHtml?: boolean): string
@@ -89,7 +90,7 @@ export interface IUiContext {
   pageTransitionActive: boolean
   setPageTransitionActive: (active: boolean) => void
   setEtableraSmooth: (smooth: SmoothItem) => void
-  etableraSmooth: SmoothItem
+  etableraSmooth: SmoothEtablera
   ignoreDefaultHeaderAnimation: () => void
   siteAnimationDone: boolean
   setPageLoaderAnimationDone: () => void

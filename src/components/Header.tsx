@@ -120,13 +120,14 @@ const Header = ({ currentPath }: Props) => {
 
   useScheduleEffect(
     () => {
+      setShow(true)
       window.addEventListener('scroll', onScroll)
 
       return () => {
         window.removeEventListener('scroll', onScroll)
       }
     },
-    [currentPath],
+    [currentPath, headerShown],
     SchedulePrio.Low
   )
 

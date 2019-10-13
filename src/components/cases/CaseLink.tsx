@@ -61,12 +61,15 @@ const CaseLink = (
 ) => {
   const mediaElement = useRef<ICaseMediaHandler>()
   const t = useSetting()
-  const { hideHeader } = useUiContext()
+  const { hideHeader, etableraSmooth } = useUiContext()
   const href = t.url(`/${slugify(record.name)}/`)
   const animationInProgress = useRef(false)
 
   const goToCase = async () => {
     if (animationInProgress.current) return
+    if (etableraSmooth) {
+      etableraSmooth.pause()
+    }
 
     animationInProgress.current = true
     hideHeader()

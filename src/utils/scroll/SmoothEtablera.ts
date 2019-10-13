@@ -57,6 +57,11 @@ class SmoothEtablera extends SmoothItem {
     }
   }
 
+  pause = () => {
+    this.disabled = true
+    this.oglCanvas && this.oglCanvas.pause()
+  }
+
   cleanUp = () => {
     this.oglCanvas && this.oglCanvas.pause()
 
