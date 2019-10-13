@@ -131,6 +131,7 @@ const Header = ({ currentPath }: Props) => {
     SchedulePrio.Low
   )
 
+  console.log({ mounted, headerShown, show })
   return (
     <Container
       {...$header.attr}

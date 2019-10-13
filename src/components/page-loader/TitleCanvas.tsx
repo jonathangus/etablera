@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import OGLCanvas, { IOGLCanvas } from './OGLCanvas'
 import { useThemeContext } from '../../contexts/ThemeContext'
 import { useUiContext } from '../../contexts/UiContext'
+import useScheduleEffect from '../../hooks/useScheduleEffect'
 
 const Wrapper = styled.div`
   height: 100%;
@@ -30,14 +31,14 @@ const TitleCanvas = ({ setCanvasActive }: Props) => {
   const { selected } = useThemeContext()
   const { etableraSmooth, setFrontpageLoaded } = useUiContext()
 
-  useEffect(() => {
+  useScheduleEffect(() => {
     if (etableraSmooth) {
       // TODO ts
       etableraSmooth.appendCanvas(wrapperEl.current, oglCanvas.current)
     }
   }, [etableraSmooth])
 
-  useEffect(() => {
+  useScheduleEffect(() => {
     setFrontpageLoaded(true)
 
     const onReady = () => {

@@ -6,6 +6,7 @@ import { useSetting } from '../contexts/SettingsContext'
 import { scrollToElementCenter, scrollToElement } from '../utils/scroll'
 import { $scrollTarget } from '../utils/dom-selectors'
 import DefferedCallbacks from '../utils/deferred-callbacks'
+import useScheduleEffect, { SchedulePrio } from '../hooks/useScheduleEffect'
 
 const Container = styled.div`
   position: absolute;
@@ -46,6 +47,8 @@ const Scroll = styled.svg`
   path {
     stroke: ${p => p.color || p.theme.color};
     transition: stroke 0.3s ease;
+    stroke-dashoffset: 100px;
+    stroke-dasharray: 100px;
   }
 
   ${media.phone`
@@ -123,9 +126,13 @@ const ScrollIndicator = ({ color, align = 'center' }: Props) => {
     }
   }, [])
 
-  useEffect(() => {
-    showArrow()
-  }, [])
+  useScheduleEffect(
+    () => {
+      showArrow()
+    },
+    [],
+    SchedulePrio.Normal
+  )
 
   const scrollDown = () => {
     const sibling = $scrollTarget.resolve() as HTMLElement
@@ -151,7 +158,6 @@ const ScrollIndicator = ({ color, align = 'center' }: Props) => {
           ref={pathEl}
           d="M9.56944 0.526062L9.56944 54.0942M9.56944 54.0942L18.5725 45.0912M9.56944 54.0942L0.566408 45.0912"
           stroke="white"
-          strokeDasharray="82px"
         />
       </Scroll>
       <Message color={color} show={message}>

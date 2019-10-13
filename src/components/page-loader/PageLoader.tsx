@@ -141,7 +141,7 @@ const PageLoader = ({ isFrontpage }: Props) => {
         setTimeout(() => {
           setPageLoaderAnimationDone()
           setSecondComplete(true)
-        }, 500)
+        }, 1000)
       }
     },
     [firstComplete],
