@@ -3,11 +3,12 @@ import styled, { keyframes, css } from 'styled-components'
 import { useUiContext } from '../../contexts/UiContext'
 import { updateSmooth } from '../../utils/scroll/smooth-scroll'
 import { unstable_next } from 'scheduler'
-import useScheduleEffect from '../../hooks/useScheduleEffect'
+import useScheduleEffect, { SchedulePrio } from '../../hooks/useScheduleEffect'
 import PageLoaderContent from './PageLoaderContent'
 import media from '../../media'
 import debounce from 'lodash/debounce'
 import useResize from '../../hooks/useResize'
+import { $pageLoaderHeight } from '../../utils/dom-selectors'
 
 const AnimateOut = keyframes`
   0% {
@@ -41,9 +42,7 @@ const Container = styled.div<{
   will-change: transform;
   overflow: hidden;
 
-  ${media.phone`
-    height: var(--window-height);
-  `}
+
 
   ${p => p.leaveAnimation === 'translate' && animateOutScreen}
 
@@ -86,6 +85,12 @@ const PageLoader = ({ isFrontpage }: Props) => {
   } = useUiContext()
 
   const setWindowHeight = () => {
+    $pageLoaderHeight.resolveAll().forEach(el => {
+      el.style.height = `${
+        containerEl.current.getBoundingClientRect().height
+      }px`
+    })
+
     document
       .querySelector('body')
       .style.setProperty(
@@ -95,6 +100,9 @@ const PageLoader = ({ isFrontpage }: Props) => {
   }
 
   useResize(() => {
+    $pageLoaderHeight.resolveAll().forEach(el => {
+      el.style.height = 'auto'
+    })
     document.querySelector('body').style.removeProperty('--window-height')
   })
 
@@ -125,22 +133,30 @@ const PageLoader = ({ isFrontpage }: Props) => {
     }
   }, [animateContent])
 
-  useScheduleEffect(() => {
-    if (firstComplete) {
-      setWindowHeight()
+  useScheduleEffect(
+    () => {
+      if (firstComplete) {
+        setWindowHeight()
 
-      setTimeout(() => {
-        setPageLoaderAnimationDone()
-        setSecondComplete(true)
-      }, 1000)
-    }
-  }, [firstComplete])
+        setTimeout(() => {
+          setPageLoaderAnimationDone()
+          setSecondComplete(true)
+        }, 500)
+      }
+    },
+    [firstComplete],
+    SchedulePrio.Immediate
+  )
 
-  useScheduleEffect(() => {
-    if (secondComplete) {
-      setMounted()
-    }
-  }, [secondComplete])
+  useScheduleEffect(
+    () => {
+      if (secondComplete) {
+        setMounted()
+      }
+    },
+    [secondComplete],
+    SchedulePrio.Immediate
+  )
 
   useEffect(() => {
     unstable_next(updateSmooth)
@@ -151,6 +167,7 @@ const PageLoader = ({ isFrontpage }: Props) => {
       isFrontpage={isFrontpage}
       leaveAnimation={leaveAnimation}
       ref={containerEl}
+      {...$pageLoaderHeight.attr}
     >
       <PageLoaderContent
         firstComplete={firstComplete}

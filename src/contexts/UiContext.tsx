@@ -34,6 +34,7 @@ const UiContextProvider = ({ children, isFrontpage }: Props) => {
       setTimeout(() => {
         document.querySelector('body').classList.add('scroll')
         setAnimateContent(true)
+        console.log('SHOW HEADER')
       }, 900)
     },
     setEtableraSmooth,
@@ -46,7 +47,6 @@ const UiContextProvider = ({ children, isFrontpage }: Props) => {
     headerShown,
     frontpageLoaded,
     setFrontpageLoaded,
-    showTitleCanvas: isFrontpage && animateContent,
     setPageLoaderAnimationDone: () => setPageLoaderAnimationDone(true),
     siteAnimationDone,
     ignoreDefaultHeaderAnimation: () => {

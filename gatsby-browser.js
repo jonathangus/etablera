@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom'
 import get from 'lodash/get'
 import isMobile from 'ismobilejs'
 import _onInitialClientRender from './src/gatsby/browser/onInitialClientRender'
+import { staticPageTransition } from './src/config'
 
 export const onInitialClientRender = _onInitialClientRender
 
@@ -22,6 +23,8 @@ export const shouldUpdateScroll = ({
   routerProps,
   a,
 }) => {
+  if (staticPageTransition()) return true
+
   const currentPositon = getSavedScrollPosition(location)
   if (currentPositon) {
     const [x, y] = currentPositon

@@ -14,7 +14,7 @@ import { $header } from '../utils/dom-selectors'
 import headerTextDifference from '../utils/header-text-difference'
 import { useSetting } from '../contexts/SettingsContext'
 import media from '../media'
-import { motion } from 'framer-motion'
+import isMobile from 'ismobilejs'
 
 const lightTextStyle = css`
   --half-text-split-color: white;
@@ -99,6 +99,7 @@ const Header = ({ currentPath }: Props) => {
 
   const onScroll = throttle(() => {
     let st = window.pageYOffset || document.documentElement.scrollTop
+    if (isMobile(window.navigator.userAgent).any) return
 
     if (st < lastScrollTop.current) {
       setShow(true)

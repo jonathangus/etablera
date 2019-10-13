@@ -4,7 +4,7 @@ import InstaLinks from './InstaLinks'
 import HeroDescription from './HeroDescription'
 import { useUiContext } from '../../contexts/UiContext'
 import ScrollIndicator from '../ScrollIndicator'
-import { $mainHero } from '../../utils/dom-selectors'
+import { $mainHero, $pageLoaderHeight } from '../../utils/dom-selectors'
 import { gutter, titleFont, semi } from '../../vars'
 import media from '../../media'
 import VerticalEmailLink from './VerticalEmailLink'
@@ -49,7 +49,7 @@ const RightSidebar = styled(Sidebar)`
 `
 
 const MainHero = () => {
-  const { animateContent, siteAnimationDone } = useUiContext()
+  const { mounted, siteAnimationDone } = useUiContext()
   return (
     <Container>
       {siteAnimationDone && <MainHeroTitle />}
@@ -60,8 +60,8 @@ const MainHero = () => {
       <RightSidebar>
         <VerticalEmailLink />
       </RightSidebar>
-      {animateContent && <ScrollIndicator align="top" />}
-      {animateContent && <HeroDescription />}
+      {mounted && <ScrollIndicator align="top" />}
+      {mounted && <HeroDescription />}
     </Container>
   )
 }

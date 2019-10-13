@@ -1,8 +1,8 @@
 import React, { memo, useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { unstable_next } from 'scheduler'
-import isMobile from 'ismobilejs'
 import { useUiContext } from '../contexts/UiContext'
+import { staticPageTransition } from '../config'
 
 type Props = {
   children: JSX.Element
@@ -28,10 +28,7 @@ const Transition = ({ children, pathname, pageContext }: Props) => {
     }
   }, [pageContext.isCasePage])
 
-  if (
-    typeof window !== 'undefined' &&
-    isMobile(window.navigator.userAgent).apple.phone
-  ) {
+  if (staticPageTransition()) {
     return children
   }
 

@@ -34,10 +34,6 @@ export const pageWrapper = getSelector('page-wrapper', {
   transitionClass: 'page-transition',
 })
 
-export const transitionPage = getSelector('transition-page', {
-  activeClass: 'active',
-})
-
 export const $pageTitle = getSelector('page-title')
 export const $headerTextDiff = getSelector('light-header-text')
 export const $caseHeader = getSelector('case-header')
@@ -52,3 +48,4 @@ export const $pwaRefresh = getSelector('pwa-refresh', {
   activeClass: 'activeClass',
 })
 export const $scrollTarget = getSelector('scroll-target')
+export const $pageLoaderHeight = getSelector('page-loader-height')
