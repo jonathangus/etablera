@@ -116,14 +116,14 @@ export const query = graphql`
           title
         }
       }
-      ... on ContentfulSectionImage {
-        image {
-          title
-          fluid(maxWidth: 1920, quality: 98) {
-            ...GatsbyContentfulFluid_withWebp
-          }
-        }
-      }
+      # ... on ContentfulSectionImage {
+      #   image {
+      #     title
+      #     fluid(maxWidth: 1920, quality: 98) {
+      #       ...GatsbyContentfulFluid_withWebp
+      #     }
+      #   }
+      # }
 
       ... on ContentfulSectionImageGrid {
         images {
