@@ -9,13 +9,13 @@ import { staticPageTransition } from './src/config'
 export const onInitialClientRender = _onInitialClientRender
 
 // React fiber ⚡️⚡️⚡️
-export const replaceHydrateFunction = () => {
-  return (element, container, callback) => {
-    const root = ReactDOM.unstable_createRoot(container, { hydrate: true })
+// export const replaceHydrateFunction = () => {
+//   return (element, container, callback) => {
+//     const root = ReactDOM.unstable_createRoot(container, { hydrate: true })
 
-    root.render(element, callback)
-  }
-}
+//     root.render(element, callback)
+//   }
+// }
 
 export const shouldUpdateScroll = ({
   prevRouterProps: { location, ...rest },
@@ -60,18 +60,18 @@ export const onServiceWorkerUpdateReady = () => {
 
 if (!window.WeakSet) {
   window.WeakSet = b
-  var c = Date.now() % 1e9
+  let c = Date.now() % 1e9
   function b(a) {
-    this.name = '__st' + ((1e9 * Math.random()) >>> 0) + (c++ + '__')
+    this.name = `__st${  (1e9 * Math.random()) >>> 0  }${c++  }__`
     a && a.forEach && a.forEach(this.add, this)
   }
-  var e = b.prototype
+  let e = b.prototype
   e.add = function(a) {
-    var d = this.name
+    let d = this.name
     a[d] || Object.defineProperty(a, d, { value: !0, writable: !0 })
     return this
   }
-  e['delete'] = function(a) {
+  e.delete = function(a) {
     if (!a[this.name]) return !1
     a[this.name] = void 0
     return !0
@@ -82,12 +82,12 @@ if (!window.WeakSet) {
 }
 if (!Array.from) {
   Array.from = (function() {
-    var toStr = Object.prototype.toString
-    var isCallable = function(fn) {
+    let toStr = Object.prototype.toString
+    let isCallable = function(fn) {
       return typeof fn === 'function' || toStr.call(fn) === '[object Function]'
     }
-    var toInteger = function(value) {
-      var number = Number(value)
+    let toInteger = function(value) {
+      let number = Number(value)
       if (isNaN(number)) {
         return 0
       }
@@ -96,19 +96,19 @@ if (!Array.from) {
       }
       return (number > 0 ? 1 : -1) * Math.floor(Math.abs(number))
     }
-    var maxSafeInteger = Math.pow(2, 53) - 1
-    var toLength = function(value) {
-      var len = toInteger(value)
+    let maxSafeInteger = Math.pow(2, 53) - 1
+    let toLength = function(value) {
+      let len = toInteger(value)
       return Math.min(Math.max(len, 0), maxSafeInteger)
     }
 
     // The length property of the from method is 1.
-    return function from(arrayLike /*, mapFn, thisArg */) {
+    return function from(arrayLike /* , mapFn, thisArg */) {
       // 1. Let C be the this value.
-      var C = this
+      let C = this
 
       // 2. Let items be ToObject(arrayLike).
-      var items = Object(arrayLike)
+      let items = Object(arrayLike)
 
       // 3. ReturnIfAbrupt(items).
       if (arrayLike == null) {
@@ -118,8 +118,8 @@ if (!Array.from) {
       }
 
       // 4. If mapfn is undefined, then let mapping be false.
-      var mapFn = arguments.length > 1 ? arguments[1] : void undefined
-      var T
+      let mapFn = arguments.length > 1 ? arguments[1] : void undefined
+      let T
       if (typeof mapFn !== 'undefined') {
         // 5. else
         // 5. a If IsCallable(mapfn) is false, throw a TypeError exception.
@@ -137,18 +137,18 @@ if (!Array.from) {
 
       // 10. Let lenValue be Get(items, "length").
       // 11. Let len be ToLength(lenValue).
-      var len = toLength(items.length)
+      let len = toLength(items.length)
 
       // 13. If IsConstructor(C) is true, then
       // 13. a. Let A be the result of calling the [[Construct]] internal method
       // of C with an argument list containing the single item len.
       // 14. a. Else, Let A be ArrayCreate(len).
-      var A = isCallable(C) ? Object(new C(len)) : new Array(len)
+      let A = isCallable(C) ? Object(new C(len)) : new Array(len)
 
       // 16. Let k be 0.
-      var k = 0
+      let k = 0
       // 17. Repeat, while k < len… (also steps a - h)
-      var kValue
+      let kValue
       while (k < len) {
         kValue = items[k]
         if (mapFn) {
