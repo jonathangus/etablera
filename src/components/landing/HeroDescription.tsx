@@ -6,6 +6,7 @@ import { useSetting } from '../../contexts/SettingsContext'
 import Grid from '../Grid'
 import useScheduleEffect, { SchedulePrio } from '../../hooks/useScheduleEffect'
 import RotateIn from '../RotateIn'
+import { Link } from 'gatsby'
 
 const Container = styled.div`
   position: absolute;
@@ -58,10 +59,12 @@ const HeroDescription = () => {
   return (
     <Container ref={elem}>
       <Grid>
-        <Inner
-          show={show}
-          dangerouslySetInnerHTML={{ __html: t('hero.description', true) }}
-        ></Inner>
+        <Inner show={show}>
+          <p
+            dangerouslySetInnerHTML={{ __html: t('hero.description', true) }}
+          ></p>
+          <Link to={t.url('/about')}>{t('hero.linkText')}</Link>
+        </Inner>
       </Grid>
     </Container>
   )

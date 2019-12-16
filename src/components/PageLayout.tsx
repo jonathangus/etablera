@@ -43,20 +43,19 @@ const PageLayout = ({ children, pageContext, location }) => {
         <ThemeContextProvider>
           <UiContextProvider isFrontpage={isFrontpage}>
             <PageLoader isFrontpage={isFrontpage} />
-            <Transition pageContext={pageContext} pathname={location.pathname}>
-              <SettingsContextProvider
-                currPath={currPath}
-                locale={pageContext.locale}
-              >
-                <Head />
-                <GlobalStyle />
 
-                <Header currentPath={currPath} />
-                <main>{children}</main>
-                {showFooter && <Footer />}
-                <PwaRefresh />
-              </SettingsContextProvider>
-            </Transition>
+            <SettingsContextProvider
+              currPath={currPath}
+              locale={pageContext.locale}
+            >
+              <Head />
+              <GlobalStyle />
+
+              <Header currentPath={currPath} />
+              <main>{children}</main>
+              {showFooter && <Footer />}
+              <PwaRefresh />
+            </SettingsContextProvider>
           </UiContextProvider>
         </ThemeContextProvider>
       </PageWrapper>

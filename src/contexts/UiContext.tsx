@@ -21,7 +21,6 @@ const UiContextProvider = ({ children, isFrontpage }: Props) => {
   const ignoreDefaultHeaderAnimation = useRef(false)
 
   useEffect(() => {
-    console.log('IGNORE HEADER ANIM: ', ignoreDefaultHeaderAnimation.current)
     mounted && !ignoreDefaultHeaderAnimation.current && setHeaderShown(true)
   }, [mounted])
 

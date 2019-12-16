@@ -7,11 +7,8 @@ import RotateIn from '../RotateIn'
 
 const Container = styled(RotateIn)`
   height: 100%;
-
-  // height: 0px;
   padding-top: 100%;
   position: relative;
-  transition-delay: 0.2s;
 
   > div {
     height: 100%;

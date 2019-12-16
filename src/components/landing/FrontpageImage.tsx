@@ -35,7 +35,7 @@ const Content = styled.div<{ showBox: boolean }>`
   transition: transform 0.65s ${niceCubic};
   transform-origin: top;
 
-  ${media.phone`
+  ${media.desktop`
     position:relative;
     left:0;
     top:0;

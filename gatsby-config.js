@@ -118,36 +118,36 @@ module.exports = {
         // displayName: process.env.NODE_ENV === 'development',
       },
     },
-    {
-      resolve: `gatsby-plugin-offline`,
-      options: {
-        precachePages: [`/*`],
+    // {
+    //   resolve: `gatsby-plugin-offline`,
+    //   options: {
+    //     precachePages: [`/*`],
 
-        //   runtimeCaching: [
-        //     {
-        //       // Use cacheFirst since these don't need to be revalidated (same RegExp
-        //       // and same reason as above)
-        //       urlPattern: /(\.js$|\.css$|static\/)/,
-        //       handler: `NetworkFirst`,
-        //     },
-        //     {
-        //       // page-data.json files are not content hashed
-        //       urlPattern: /^https?:.*\page-data\/.*\/page-data\.json/,
-        //       handler: `NetworkFirst`,
-        //     },
-        //     {
-        //       // Add runtime caching of various other page resources
-        //       urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
-        //       handler: `StaleWhileRevalidate`,
-        //     },
-        //     {
-        //       // Google Fonts CSS (doesn't end in .css so we need to specify it)
-        //       urlPattern: /^https?:\/\/fonts\.googleapis\.com\/css/,
-        //       handler: `StaleWhileRevalidate`,
-        //     },
-        //   ],
-      },
-    },
+    //     //   runtimeCaching: [
+    //     //     {
+    //     //       // Use cacheFirst since these don't need to be revalidated (same RegExp
+    //     //       // and same reason as above)
+    //     //       urlPattern: /(\.js$|\.css$|static\/)/,
+    //     //       handler: `NetworkFirst`,
+    //     //     },
+    //     //     {
+    //     //       // page-data.json files are not content hashed
+    //     //       urlPattern: /^https?:.*\page-data\/.*\/page-data\.json/,
+    //     //       handler: `NetworkFirst`,
+    //     //     },
+    //     //     {
+    //     //       // Add runtime caching of various other page resources
+    //     //       urlPattern: /^https?:.*\.(png|jpg|jpeg|webp|svg|gif|tiff|js|woff|woff2|json|css)$/,
+    //     //       handler: `StaleWhileRevalidate`,
+    //     //     },
+    //     //     {
+    //     //       // Google Fonts CSS (doesn't end in .css so we need to specify it)
+    //     //       urlPattern: /^https?:\/\/fonts\.googleapis\.com\/css/,
+    //     //       handler: `StaleWhileRevalidate`,
+    //     //     },
+    //     //   ],
+    //   },
+    // },
     `gatsby-plugin-react-helmet`,
   ],
 }

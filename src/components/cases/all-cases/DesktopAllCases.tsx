@@ -5,7 +5,9 @@ import SmoothSideScroll from '../../../utils/scroll/SmoothSideScroll'
 import AllCaseTitle, { Title, Client } from './AllCaseTitle'
 import { ICase } from '../../../types'
 import useSmooth from '../../../hooks/useSmooth'
-import { SchedulePrio } from '../../../hooks/useScheduleEffect'
+import useScheduleEffect, {
+  SchedulePrio,
+} from '../../../hooks/useScheduleEffect'
 import { useUiContext } from '../../../contexts/UiContext'
 
 const Wrapper = styled.div`
@@ -78,9 +80,13 @@ const DesktopAllCases = ({ nodes }: Props) => {
   )
   const { animateContent } = useUiContext()
 
-  useEffect(() => {
-    setShow(animateContent)
-  }, [animateContent])
+  useScheduleEffect(
+    () => {
+      setShow(animateContent)
+    },
+    [animateContent],
+    SchedulePrio.Idle
+  )
 
   const centerCase = (index: number) => {
     return smooth && smooth.center(index)

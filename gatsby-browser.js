@@ -3,39 +3,6 @@ import 'requestidlecallback'
 import ReactDOM from 'react-dom'
 import get from 'lodash/get'
 import isMobile from 'ismobilejs'
-import _onInitialClientRender from './src/gatsby/browser/onInitialClientRender'
-import { staticPageTransition } from './src/config'
-
-export const onInitialClientRender = _onInitialClientRender
-
-// React fiber ⚡️⚡️⚡️
-// export const replaceHydrateFunction = () => {
-//   return (element, container, callback) => {
-//     const root = ReactDOM.unstable_createRoot(container, { hydrate: true })
-
-//     root.render(element, callback)
-//   }
-// }
-
-export const shouldUpdateScroll = ({
-  prevRouterProps: { location, ...rest },
-  getSavedScrollPosition,
-  routerProps,
-  a,
-}) => {
-  if (staticPageTransition()) return true
-
-  const currentPositon = getSavedScrollPosition(location)
-  if (currentPositon) {
-    const [x, y] = currentPositon
-    // Added so the page dont flicker on page change
-    if (y) {
-      window.scrollTo(x, y)
-    }
-  }
-
-  return false
-}
 
 export const onClientEntry = () => {
   const entryDate = new Date()
@@ -62,7 +29,7 @@ if (!window.WeakSet) {
   window.WeakSet = b
   let c = Date.now() % 1e9
   function b(a) {
-    this.name = `__st${  (1e9 * Math.random()) >>> 0  }${c++  }__`
+    this.name = `__st${(1e9 * Math.random()) >>> 0}${c++}__`
     a && a.forEach && a.forEach(this.add, this)
   }
   let e = b.prototype
