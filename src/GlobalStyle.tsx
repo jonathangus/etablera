@@ -25,9 +25,6 @@ export default createGlobalStyle`
      height: 100%;
     }
 
-    html {
-        overflow-y: scroll
-    }
 
      
     
@@ -44,6 +41,7 @@ export default createGlobalStyle`
             font-size: 14px;   
         `}
     }
+    
 
     body {
         width: 100%;
@@ -58,11 +56,12 @@ export default createGlobalStyle`
         -ms-font-smoothing: antialiased;
         font-smoothing: antialiased;
         overscroll-behavior: none;
-
         position:fixed;
+        overflow-y: scroll;
     }
 
     body.scroll {
+        overflow-y: visible;
         position:static;
     }
     
