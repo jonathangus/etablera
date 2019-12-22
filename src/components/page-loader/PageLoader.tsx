@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import styled, { keyframes, css } from 'styled-components'
 import { useUiContext } from '../../contexts/UiContext'
 import { updateSmooth } from '../../utils/scroll/smooth-scroll'
-import { unstable_next } from 'scheduler'
+import { unstable_next, unstable_scheduleCallback } from 'scheduler'
 import useScheduleEffect, { SchedulePrio } from '../../hooks/useScheduleEffect'
 import PageLoaderContent from './PageLoaderContent'
 import media from '../../media'
@@ -139,9 +139,11 @@ const PageLoader = ({ isFrontpage }: Props) => {
         setWindowHeight()
 
         setTimeout(() => {
-          setPageLoaderAnimationDone()
-          setSecondComplete(true)
-        }, 1200)
+          unstable_scheduleCallback(SchedulePrio.Idle, () => {
+            setPageLoaderAnimationDone()
+            setSecondComplete(true)
+          })
+        }, 800)
       }
     },
     [firstComplete],

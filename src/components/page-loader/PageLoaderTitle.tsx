@@ -98,8 +98,8 @@ const Word = styled.g<{ disableTransition: boolean }>`
     p.disableTransition &&
     `
     opacity:1 !important;
-    transform:none;
-    animation: none;
+    transform: none !important;
+    animation: none !important;
   `}
 `
 
@@ -130,7 +130,7 @@ const PageLoaderTitle = (
   ref
 ) => {
   const innerEl = useRef<HTMLElement>()
-  console.log({ firstComplete, disableTransition })
+
   // First step of the animation
   useEffect(() => {
     // Detect if the initial css animation is done before the javascript is being triggered
