@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef, memo, forwardRef } from 'react'
 import styled, { keyframes, css } from 'styled-components'
 import paths from './etablera-paths'
+import media from '../../media'
 
 // There is happending some strange stuff here. Caution is advised
 const pullInAnimation = keyframes`
@@ -72,16 +73,31 @@ const Inner = styled.div`
   }
 `
 
+const InnerFade = keyframes`
+    from {
+        opacity:0;
+    }
+
+    to {
+        opacity:1;
+    }
+`
+
 const Line = styled.div``
 const Word = styled.g<{ disableTransition: boolean }>`
   opacity: 0;
   transform: translateY(${translateMagicOffset});
   animation: ${InnerAnimation} 1s cubic-bezier(0.8, 0, 0.2, 1) forwards;
 
+  ${media.phone`
+    animation: ${InnerFade} 1s cubic-bezier(0.8, 0, 0.2, 1) forwards;
+    transform: none;
+  `}
+
   ${p =>
     p.disableTransition &&
     `
-    opacity:1;
+    opacity:1 !important;
     transform:none;
     animation: none;
   `}
@@ -114,7 +130,7 @@ const PageLoaderTitle = (
   ref
 ) => {
   const innerEl = useRef<HTMLElement>()
-
+  console.log({ firstComplete, disableTransition })
   // First step of the animation
   useEffect(() => {
     // Detect if the initial css animation is done before the javascript is being triggered
