@@ -139,7 +139,7 @@ const PageLoaderTitle = (
     const style = window.getComputedStyle(innerEl.current)
     const values = style.transform.replace(')', '').split(',')
     const translateYValue = parseInt(values[values.length - 1])
-    const opacityValue = parseFloat(style.opacity)
+    const opacityValue = parseInt(style.opacity)
 
     // Transition is complete
     if (translateYValue == 0 && opacityValue === 1) {
