@@ -133,13 +133,16 @@ const PageLoaderTitle = (
 
   // First step of the animation
   useEffect(() => {
+    if (disableTransition) return
+
     // Detect if the initial css animation is done before the javascript is being triggered
     const style = window.getComputedStyle(innerEl.current)
     const values = style.transform.replace(')', '').split(',')
     const translateYValue = parseInt(values[values.length - 1])
+    const opacityValue = parseFloat(style.opacity)
 
     // Transition is complete
-    if (translateYValue == 0) {
+    if (translateYValue == 0 && opacityValue === 1) {
       setFirstComplete(true)
     } else {
       const onAnimationComplete = () => {
