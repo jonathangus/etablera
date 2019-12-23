@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef, memo, forwardRef } from 'react'
 import styled, { keyframes, css } from 'styled-components'
 import paths from './etablera-paths'
 import media from '../../media'
+import useScheduleEffect, { SchedulePrio } from '../../hooks/useScheduleEffect'
 
 // There is happending some strange stuff here. Caution is advised
 const pullInAnimation = keyframes`
@@ -137,7 +138,11 @@ const PageLoaderTitle = (
 
     // Detect if the initial css animation is done before the javascript is being triggered
     const style = window.getComputedStyle(innerEl.current)
-    const values = style.transform.replace(')', '').split(',')
+    const values =
+      style.transform === 'none'
+        ? '0'
+        : style.transform.replace(')', '').split(',')
+
     const translateYValue = parseInt(values[values.length - 1])
     const opacityValue = parseInt(style.opacity)
 
