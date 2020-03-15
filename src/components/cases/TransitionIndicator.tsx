@@ -1,6 +1,6 @@
 import React, { useRef } from 'react'
 import styled, { keyframes } from 'styled-components'
-import { CASE_INDICATOR_ID } from '../../animation/page-animation'
+import { $transitionIndicator } from '../../utils/dom-selectors'
 
 const Rotate = keyframes`
      100% {
@@ -49,7 +49,7 @@ const Loader = styled.div`
 
 const TransitionIndicator = () => {
   return (
-    <Loader id={CASE_INDICATOR_ID}>
+    <Loader {...$transitionIndicator.attr} className="show">
       <svg viewBox="0 0 50 50">
         <circle cx="25" cy="25" r="20" fill="none" strokeWidth="5" />
       </svg>

@@ -53,3 +53,4 @@ export const $pwaRefresh = getSelector('pwa-refresh', {
 export const $scrollTarget = getSelector('scroll-target')
 export const $pageLoaderHeight = getSelector('page-loader-height')
 export const $caseBorder = getSelector('case-border')
+export const $transitionIndicator = getSelector('transition-indicator')

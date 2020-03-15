@@ -1,18 +1,13 @@
-import React, { useEffect } from 'react'
-import styled, { keyframes } from 'styled-components'
+import React from 'react'
+import styled from 'styled-components'
 import InstaLinks from './InstaLinks'
 import HeroDescription from './HeroDescription'
 import { useUiContext } from '../../contexts/UiContext'
 import ScrollIndicator from '../ScrollIndicator'
-import { $mainHero, $pageLoaderHeight } from '../../utils/dom-selectors'
 import { gutter, titleFont, semi } from '../../vars'
 import media from '../../media'
 import VerticalEmailLink from './VerticalEmailLink'
 import MainHeroTitle from './MainHeroTitle'
-import PageLoaderInner from '../page-loader/PageLoaderInner'
-import PageLoaderTitle from '../page-loader/PageLoaderTitle'
-import useSmooth from '../../hooks/useSmooth'
-import SmoothEtablera from '../../utils/scroll/SmoothEtablera'
 
 const Container = styled.header`
   height: 100vh;

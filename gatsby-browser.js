@@ -3,6 +3,7 @@ import 'requestidlecallback'
 import ReactDOM from 'react-dom'
 import get from 'lodash/get'
 import isMobile from 'ismobilejs'
+import { $transitionIndicator } from './src/utils/dom-selectors'
 
 export const onClientEntry = () => {
   const entryDate = new Date()
@@ -25,6 +26,14 @@ export const onServiceWorkerUpdateReady = () => {
   window.setShowPwaRefresh()
 }
 
+export const onRouteUpdateDelayed = () => {
+  $transitionIndicator.resolve().classList.add('show')
+}
+
+export const onRouteUpdate = () => {
+  $transitionIndicator.resolve().classList.remove('show')
+}
+
 if (!window.WeakSet) {
   window.WeakSet = b
   let c = Date.now() % 1e9
@@ -32,9 +41,9 @@ if (!window.WeakSet) {
     this.name = `__st${(1e9 * Math.random()) >>> 0}${c++}__`
     a && a.forEach && a.forEach(this.add, this)
   }
-  let e = b.prototype
+  const e = b.prototype
   e.add = function(a) {
-    let d = this.name
+    const d = this.name
     a[d] || Object.defineProperty(a, d, { value: !0, writable: !0 })
     return this
   }
@@ -49,12 +58,12 @@ if (!window.WeakSet) {
 }
 if (!Array.from) {
   Array.from = (function() {
-    let toStr = Object.prototype.toString
-    let isCallable = function(fn) {
+    const toStr = Object.prototype.toString
+    const isCallable = function(fn) {
       return typeof fn === 'function' || toStr.call(fn) === '[object Function]'
     }
-    let toInteger = function(value) {
-      let number = Number(value)
+    const toInteger = function(value) {
+      const number = Number(value)
       if (isNaN(number)) {
         return 0
       }
@@ -63,19 +72,19 @@ if (!Array.from) {
       }
       return (number > 0 ? 1 : -1) * Math.floor(Math.abs(number))
     }
-    let maxSafeInteger = Math.pow(2, 53) - 1
-    let toLength = function(value) {
-      let len = toInteger(value)
+    const maxSafeInteger = Math.pow(2, 53) - 1
+    const toLength = function(value) {
+      const len = toInteger(value)
       return Math.min(Math.max(len, 0), maxSafeInteger)
     }
 
     // The length property of the from method is 1.
     return function from(arrayLike /* , mapFn, thisArg */) {
       // 1. Let C be the this value.
-      let C = this
+      const C = this
 
       // 2. Let items be ToObject(arrayLike).
-      let items = Object(arrayLike)
+      const items = Object(arrayLike)
 
       // 3. ReturnIfAbrupt(items).
       if (arrayLike == null) {
@@ -85,7 +94,7 @@ if (!Array.from) {
       }
 
       // 4. If mapfn is undefined, then let mapping be false.
-      let mapFn = arguments.length > 1 ? arguments[1] : void undefined
+      const mapFn = arguments.length > 1 ? arguments[1] : void undefined
       let T
       if (typeof mapFn !== 'undefined') {
         // 5. else
@@ -104,13 +113,13 @@ if (!Array.from) {
 
       // 10. Let lenValue be Get(items, "length").
       // 11. Let len be ToLength(lenValue).
-      let len = toLength(items.length)
+      const len = toLength(items.length)
 
       // 13. If IsConstructor(C) is true, then
       // 13. a. Let A be the result of calling the [[Construct]] internal method
       // of C with an argument list containing the single item len.
       // 14. a. Else, Let A be ArrayCreate(len).
-      let A = isCallable(C) ? Object(new C(len)) : new Array(len)
+      const A = isCallable(C) ? Object(new C(len)) : new Array(len)
 
       // 16. Let k be 0.
       let k = 0

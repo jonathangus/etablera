@@ -12,7 +12,6 @@ export const CASE_ANIMATION_DURATION = 450
 
 let caseTransitionInProgress = false
 export const CASE_ANIMATION_CONTAINER_ID = 'case-animation-container'
-export const CASE_INDICATOR_ID = 'case-indicator'
 
 export const classStates = {
   ANIMATED_COMPLETE: 'animated',
@@ -39,7 +38,6 @@ let loaderIndicatorTimeout
 export const cleanUpCaseAnimation = (isCleanup: boolean = false) => {
   const containerMedia = document.getElementById(CASE_ANIMATION_CONTAINER_ID)
 
-  window.shouldAnimate = true
   setPageOpacity(1)
   document.querySelector('body').classList.remove('scroll-lock')
 
@@ -86,9 +84,6 @@ export const cleanUpCaseAnimation = (isCleanup: boolean = false) => {
     }
   }
 
-  clearTimeout(loaderIndicatorTimeout)
-  document.getElementById(CASE_INDICATOR_ID).classList.remove('show')
-
   containerMedia.classList.remove(classStates.TRANSITION_COMPLETE)
   caseTransitionInProgress = false
 }
@@ -104,7 +99,6 @@ export const animateToCase = async (
 ): Promise<void> => {
   if (caseTransitionInProgress) return
   caseTransitionInProgress = true
-  window.shouldAnimate = false
 
   return new Promise(async resolve => {
     const animationTimeout = setTimeout(() => {

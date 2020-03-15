@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import media from '../../media'
-import { useUiContext } from '../../contexts/UiContext'
 import { useSetting } from '../../contexts/SettingsContext'
 import Grid from '../Grid'
 import useScheduleEffect, { SchedulePrio } from '../../hooks/useScheduleEffect'
