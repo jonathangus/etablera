@@ -13,9 +13,10 @@ import useSmooth from '../../hooks/useSmooth'
 import letters from './etablera-letters'
 import { useSetting } from '../../contexts/SettingsContext'
 
-const noAnimation = css`
-  ${p => !p.withAnimation && `animation-duration: 0s; animation-delay: 0s;`}
-`
+const getToTransform = l =>
+  `scale(0.5) translate(${l.transform[0]}px, ${l.transform[1]}px)`
+const getToTransformMob = l =>
+  `scale(0.8) translate(${l.transform[0]}px, ${l.transform[1]}px)`
 // Need to generate a animation for each letter so we can animate the paths transform value
 const pullInAnimations = letters.map(
   (l, i) =>
@@ -25,7 +26,7 @@ const pullInAnimations = letters.map(
     }
     
     to {
-        transform: scale(0.5) translate(${l.transform[0]}px, ${l.transform[1]}px);
+        transform: ${getToTransform(l)};
     }
 `
 )
@@ -37,7 +38,7 @@ const pullInAnimationsMobile = letters.map(
     }
     
     to {
-        transform: scale(0.8) translate(${l.transform[0]}px, ${l.transform[1]}px);
+      transform: ${getToTransformMob(l)};
     }
 `
 )
@@ -59,6 +60,16 @@ const getDelay = (index: number): number => {
   return k * stagger + base
 }
 
+const letterNoAnimation = css`
+  animation: none;
+  transform: ${p => getToTransform(letters[0])};
+
+  ${media.phone`
+  transform: ${getToTransformMob(letters[0])};
+
+  `}
+`
+
 const Letter = styled.path`
   transform-origin: center;
   animation: ${p => (p.ready ? pullInAnimations[p.index - 1] : 'none')} 1s
@@ -71,7 +82,7 @@ const Letter = styled.path`
     p.ready ? pullInAnimationsMobile[p.index - 1] : 'none'};
   `}
 
-  ${noAnimation}
+  ${p => !p.withAnimation && letterNoAnimation}
 `
 
 const TitleWrapper = styled.div`
@@ -98,12 +109,19 @@ const InnerAnimation = keyframes`
     }
 `
 
+const innerNoAnimation = css`
+  opacity: 1;
+  transform: translateY(0%);
+  animation: none;
+`
+
 const Inner = styled.div`
   position: relative;
   opacity: 0;
   transform: translateY(100%);
   animation: ${InnerAnimation} 1s cubic-bezier(0.8, 0, 0.2, 1) forwards;
-  ${noAnimation}
+
+  ${p => !p.withAnimation && innerNoAnimation}
 
   h1 {
     margin: 0;
