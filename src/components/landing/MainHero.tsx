@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled, { keyframes } from 'styled-components'
 import InstaLinks from './InstaLinks'
 import HeroDescription from './HeroDescription'
@@ -9,6 +9,10 @@ import { gutter, titleFont, semi } from '../../vars'
 import media from '../../media'
 import VerticalEmailLink from './VerticalEmailLink'
 import MainHeroTitle from './MainHeroTitle'
+import PageLoaderInner from '../page-loader/PageLoaderInner'
+import PageLoaderTitle from '../page-loader/PageLoaderTitle'
+import useSmooth from '../../hooks/useSmooth'
+import SmoothEtablera from '../../utils/scroll/SmoothEtablera'
 
 const Container = styled.header`
   height: 100vh;
@@ -49,11 +53,11 @@ const RightSidebar = styled(Sidebar)`
 `
 
 const MainHero = () => {
-  const { mounted, siteAnimationDone } = useUiContext()
+  const { mounted } = useUiContext()
+
   return (
     <Container>
-      {siteAnimationDone && <MainHeroTitle />}
-      <div {...$mainHero.attr} />
+      {mounted && <MainHeroTitle />}
       <Sidebar>
         <InstaLinks />
       </Sidebar>

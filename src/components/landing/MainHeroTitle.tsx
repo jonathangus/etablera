@@ -18,44 +18,10 @@ const Container = styled.div`
   top: 0;
 `
 const MainHeroTitle = () => {
-  const { animateContent, setEtableraSmooth } = useUiContext()
-  const containerEl = useRef()
-  const [canvasActive, setCanvasActive] = useState(false)
-  const titleRef = useRef()
-  const [isDesktop, setIsDesktop] = useState<boolean>()
+  const titleRef = useRef<HTMLElement>()
+  useSmooth(() => new SmoothEtablera(titleRef.current))
 
-  const calcIsDesktop = () => {
-    setIsDesktop(window.innerWidth > sizes.phone)
-  }
-  useEffect(() => {
-    calcIsDesktop()
-  }, [])
-  useResize(calcIsDesktop)
-
-  const etableraSmooth: SmoothEtablera = useSmooth(() => {
-    if (animateContent) {
-      return new SmoothEtablera(
-        containerEl.current,
-        titleRef.current,
-        isDesktop
-      )
-    }
-  }, [animateContent])
-
-  useEffect(() => {
-    etableraSmooth && etableraSmooth.setDesktopState(isDesktop)
-  }, [isDesktop])
-
-  useEffect(() => {
-    setEtableraSmooth(etableraSmooth)
-  }, [Boolean(etableraSmooth)])
-
-  return (
-    <PageLoaderLayout ref={containerEl}>
-      {!canvasActive && <PageLoaderTitle ref={titleRef} disableTransition />}
-      {isDesktop && <TitleCanvas setCanvasActive={setCanvasActive} />}
-    </PageLoaderLayout>
-  )
+  return <PageLoaderTitle ref={titleRef} />
 }
 
 export default MainHeroTitle

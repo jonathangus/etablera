@@ -9,6 +9,7 @@ import media from '../../media'
 import debounce from 'lodash/debounce'
 import useResize from '../../hooks/useResize'
 import { $pageLoaderHeight } from '../../utils/dom-selectors'
+import PageLoaderTitle from './PageLoaderTitle'
 
 const AnimateOut = keyframes`
   0% {
@@ -42,8 +43,6 @@ const Container = styled.div<{
   will-change: transform;
   overflow: hidden;
 
-
-
   ${p => p.leaveAnimation === 'translate' && animateOutScreen}
 
    ${p =>
@@ -67,115 +66,18 @@ type Props = {
 }
 
 const PageLoader = ({ isFrontpage }: Props) => {
-  // Transform y animation
-  const [firstComplete, setFirstComplete] = useState()
-  // Scale down animation
-  const [secondComplete, setSecondComplete] = useState(false)
+  const { setPageLoaderAnimationDone, mounted, setMounted } = useUiContext()
+  const containerEl = useRef<HTMLElement>()
   const [leaveAnimation, setAnimationState] = useState<ContainerAnimation>()
 
-  const containerEl = useRef<HTMLElement>()
-
-  const {
-    mounted,
-    setMounted,
-    setFrontpageLoaded,
-    frontpageLoaded,
-    animateContent,
-    setPageLoaderAnimationDone,
-  } = useUiContext()
-
-  const setWindowHeight = () => {
-    $pageLoaderHeight.resolveAll().forEach(el => {
-      el.style.height = `${
-        containerEl.current.getBoundingClientRect().height
-      }px`
-    })
-
-    document
-      .querySelector('body')
-      .style.setProperty(
-        '--window-height',
-        `${containerEl.current.getBoundingClientRect().height}px`
-      )
+  const onDone = () => {
+    setMounted()
+    setAnimationState(isFrontpage ? 'none' : 'translate')
   }
 
-  useResize(() => {
-    $pageLoaderHeight.resolveAll().forEach(el => {
-      el.style.height = 'auto'
-    })
-    document.querySelector('body').style.removeProperty('--window-height')
-  })
-
-  useEffect(() => {
-    if (process.env.NODE_ENV === '!development') {
-      setMounted()
-      setFirstComplete(true)
-      setSecondComplete(true)
-    }
-  }, [])
-
-  useScheduleEffect(() => {
-    if (mounted) {
-      setAnimationState('none')
-    }
-
-    return () => {
-      setFrontpageLoaded(false)
-    }
-  }, [isFrontpage])
-
-  // We only want to animate out the page loader on child pages
-  useEffect(() => {
-    if (animateContent && !isFrontpage) {
-      setAnimationState('translate')
-    } else if (animateContent) {
-      setAnimationState('none')
-    }
-  }, [animateContent])
-
-  useScheduleEffect(
-    () => {
-      if (firstComplete) {
-        setWindowHeight()
-
-        setTimeout(() => {
-          unstable_scheduleCallback(SchedulePrio.Idle, () => {
-            setPageLoaderAnimationDone()
-            setSecondComplete(true)
-          })
-        }, 800)
-      }
-    },
-    [firstComplete],
-    SchedulePrio.Immediate
-  )
-
-  useScheduleEffect(
-    () => {
-      if (secondComplete) {
-        setMounted()
-      }
-    },
-    [secondComplete],
-    SchedulePrio.Immediate
-  )
-
-  useEffect(() => {
-    unstable_next(updateSmooth)
-  }, [frontpageLoaded, isFrontpage])
-
   return (
-    <Container
-      isFrontpage={isFrontpage}
-      leaveAnimation={leaveAnimation}
-      ref={containerEl}
-      {...$pageLoaderHeight.attr}
-    >
-      <PageLoaderContent
-        firstComplete={firstComplete}
-        setFirstComplete={setFirstComplete}
-        isFrontpage={isFrontpage}
-      />
+    <Container ref={containerEl} leaveAnimation={leaveAnimation}>
+      <PageLoaderTitle onDone={onDone} />
     </Container>
   )
 }

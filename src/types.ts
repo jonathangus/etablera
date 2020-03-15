@@ -84,16 +84,9 @@ export interface IUiContext {
   hideHeader: () => void
   headerShown: boolean
   mounted: boolean
-  frontpageLoaded: boolean
-  setFrontpageLoaded: (value: boolean) => void
   setMounted: () => void
-  pageTransitionActive: boolean
-  setPageTransitionActive: (active: boolean) => void
-  setEtableraSmooth: (smooth: SmoothItem) => void
-  etableraSmooth: SmoothEtablera
   ignoreDefaultHeaderAnimation: () => void
   siteAnimationDone: boolean
-  setPageLoaderAnimationDone: () => void
 }
 
 export type ISectionFullVideo = {

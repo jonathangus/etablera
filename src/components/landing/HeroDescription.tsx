@@ -7,6 +7,7 @@ import Grid from '../Grid'
 import useScheduleEffect, { SchedulePrio } from '../../hooks/useScheduleEffect'
 import RotateIn from '../RotateIn'
 import { Link } from 'gatsby'
+import { $etableraDescription } from '../../utils/dom-selectors'
 
 const Container = styled.div`
   position: absolute;
@@ -41,12 +42,7 @@ const Inner = styled(RotateIn)`
 const HeroDescription = () => {
   const t = useSetting()
   const [show, setShow] = useState(false)
-  const { etableraSmooth } = useUiContext()
   const elem = useRef()
-
-  useEffect(() => {
-    if (etableraSmooth) etableraSmooth.appendDescription(elem.current)
-  }, [Boolean(etableraSmooth)])
 
   useScheduleEffect(
     () => {
@@ -57,7 +53,7 @@ const HeroDescription = () => {
   )
 
   return (
-    <Container ref={elem}>
+    <Container {...$etableraDescription.attr} ref={elem}>
       <Grid>
         <Inner show={show}>
           <p

@@ -16,8 +16,6 @@ const UiContextProvider = ({ children, isFrontpage }: Props) => {
   const [mounted, setMounted] = useState(false)
   const [animateContent, setAnimateContent] = useState(false)
   const [siteAnimationDone, setPageLoaderAnimationDone] = useState()
-  const [frontpageLoaded, setFrontpageLoaded] = useState(false)
-  const [etableraSmooth, setEtableraSmooth] = useState()
   const ignoreDefaultHeaderAnimation = useRef(false)
 
   useEffect(() => {
@@ -29,22 +27,15 @@ const UiContextProvider = ({ children, isFrontpage }: Props) => {
     animateContent,
     setMounted: () => {
       setMounted(true)
-      setTimeout(() => {
-        document.querySelector('body').classList.add('scroll')
-        setAnimateContent(true)
-      }, 900)
+      document.querySelector('body').classList.add('scroll')
+      setAnimateContent(true)
     },
-    setEtableraSmooth,
-    etableraSmooth,
     showHeader: () => {
       ignoreDefaultHeaderAnimation.current = false
       setHeaderShown(true)
     },
     hideHeader: () => setHeaderShown(false),
     headerShown,
-    frontpageLoaded,
-    setFrontpageLoaded,
-    setPageLoaderAnimationDone: () => setPageLoaderAnimationDone(true),
     siteAnimationDone,
     ignoreDefaultHeaderAnimation: () => {
       ignoreDefaultHeaderAnimation.current = true

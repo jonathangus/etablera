@@ -2,21 +2,20 @@ import React, {
   useEffect,
   useState,
   useRef,
-  useLayoutEffect,
   forwardRef,
+  useLayoutEffect,
 } from 'react'
 import styled, { keyframes, css } from 'styled-components'
 import { gutter } from '../../vars'
-import { useUiContext } from '../../contexts/UiContext'
 import media from '../../media'
-import EtableraDescription from '../landing/EtableraDescription'
 import SmoothEtablera from '../../utils/scroll/SmoothEtablera'
 import useSmooth from '../../hooks/useSmooth'
 import letters from './etablera-letters'
-import { mainHero } from '../../utils/dom-selectors'
 import { useSetting } from '../../contexts/SettingsContext'
-import PageLoaderInner from './PageLoaderInner'
 
+const noAnimation = css`
+  ${p => !p.withAnimation && `animation-duration: 0s; animation-delay: 0s;`}
+`
 // Need to generate a animation for each letter so we can animate the paths transform value
 const pullInAnimations = letters.map(
   (l, i) =>
@@ -71,6 +70,8 @@ const Letter = styled.path`
   animation-name: ${p =>
     p.ready ? pullInAnimationsMobile[p.index - 1] : 'none'};
   `}
+
+  ${noAnimation}
 `
 
 const TitleWrapper = styled.div`
@@ -102,6 +103,7 @@ const Inner = styled.div`
   opacity: 0;
   transform: translateY(100%);
   animation: ${InnerAnimation} 1s cubic-bezier(0.8, 0, 0.2, 1) forwards;
+  ${noAnimation}
 
   h1 {
     margin: 0;
@@ -111,27 +113,73 @@ const Inner = styled.div`
   }
 `
 
-const Content = styled.div`
-  position: absolute;
-  will-change: transform, opacity;
-  top: 50%;
-  left: 50%;
-  width: 100%;
-
-  transform: translate(-50%, -50%);
-  margin-top: -3%; // To center
-`
-
 type Props = {
-  onDone?: Function
+  onDone: Function
 }
 
-const PageLoaderTitle = ({ onDone }: Props, ref) => {
+const onAnimationEnd = (el, cb) => {
+  const onAnimationComplete = () => {
+    cb()
+    el.removeEventListener('animationend', onAnimationComplete)
+  }
+  el.addEventListener('animationend', onAnimationComplete)
+}
+
+const PageLoaderInner = ({ onDone }: Props) => {
+  const letterRefs = useRef<HTMLElement[]>([])
+  const innerEl = useRef<HTMLElement>()
+  const withAnimation = Boolean(onDone)
+  const [firstAnimationDone, setFirstAnimationDone] = useState(!withAnimation)
+
+  useLayoutEffect(() => {
+    if (!withAnimation) return
+    // Detect if the initial css animation is done before the javascript is being triggered
+    const style = window.getComputedStyle(innerEl.current)
+    const values = style.transform.replace(')', '').split(',')
+    const translateYValue = parseInt(values[values.length - 1])
+
+    // Transition is complete
+    if (translateYValue == 0) {
+      setFirstAnimationDone(true)
+    } else {
+      onAnimationEnd(innerEl.current, () => setFirstAnimationDone(true))
+    }
+  }, [])
+
+  useLayoutEffect(() => {
+    if (withAnimation && firstAnimationDone) {
+      const lastLetter = letterRefs.current[letterRefs.current.length - 1]
+      onAnimationEnd(lastLetter, onDone)
+    }
+  }, [firstAnimationDone])
+
   return (
-    <Content ref={ref}>
-      <PageLoaderInner onDone={onDone}></PageLoaderInner>
-    </Content>
+    <TitleWrapper>
+      <Inner ref={innerEl} withAnimation={withAnimation}>
+        <h1>
+          Etablera
+          <svg
+            id="logo1"
+            data-name="Layer 1"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 256.44 44.82"
+          >
+            {letters.map((l, i) => (
+              <Letter
+                ref={el => (letterRefs.current[i] = el)}
+                d={l.d}
+                ready={firstAnimationDone}
+                key={i}
+                transform={`translate(${l.transform[0]} ${l.transform[1]})`}
+                index={i + 1}
+                withAnimation={withAnimation}
+              />
+            ))}
+          </svg>
+        </h1>
+      </Inner>
+    </TitleWrapper>
   )
 }
 
-export default forwardRef(PageLoaderTitle)
+export default PageLoaderInner
