@@ -19,7 +19,8 @@ const IndexPage = ({ pageContext, data }) => {
       <MainHero />
       <CaseList cases={data.cases.nodes} />
       <LogoWall />
-      <FrontpageImage />
+      {/* Commented out until we have a less grabbig picture <3 */}
+      {/* <FrontpageImage /> */}
     </React.Fragment>
   )
 }

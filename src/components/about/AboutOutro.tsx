@@ -24,7 +24,8 @@ const AboutOutro = () => {
     <Container top>
       <Grid>
         <h3>{t('about.outroText')}</h3>
-        <Cta>
+        {/* Our e-mail is right under this now that we've excluded the image (until we take or find a better and more up-to-date one) */}
+        {/* <Cta>
           <a href="mailto:hej@etablera.co">hej@etablera.co</a>
         </Cta>
         <YFactor top>
@@ -32,7 +33,7 @@ const AboutOutro = () => {
             alt="About"
             image={data.aboutImage.childImageSharp.fluid}
           />
-        </YFactor>
+        </YFactor> */}
       </Grid>
     </Container>
   )
