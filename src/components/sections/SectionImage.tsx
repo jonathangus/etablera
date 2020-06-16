@@ -30,9 +30,7 @@ const SectionImage = ({ image }) => {
 
   return (
     <Container>
-      <Inner ref={el}>
-        <Image image={image.fluid} />
-      </Inner>
+      <Inner ref={el}>{image && <Image image={image.fluid} />}</Inner>
     </Container>
   )
 }
