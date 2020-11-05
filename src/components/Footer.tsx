@@ -53,7 +53,6 @@ const Title = styled.h2`
 `
 
 const Email = styled(Link)``
-const Tel = styled(Link)``
 const Main = styled.div`
   margin-top: ${gutter * 2}px;
 `
@@ -234,9 +233,6 @@ const Footer = () => {
                   <Email href="mailto:hej@etablera.co">
                     <HalfTextSplit text="hej@etablera.co"></HalfTextSplit>
                   </Email>
-                  <Tel href="tel:+46738046047">
-                    <HalfTextSplit text="073 804 60 47"></HalfTextSplit>
-                  </Tel>
                 </Main>
               </Info>
             </Left>
