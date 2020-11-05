@@ -30,6 +30,12 @@ const Item = styled.div`
   justify-content: center;
   position: relative;
   height: 100%;
+  opacity: 0.8;
+  transition: opacity 0.4s ease-in;
+
+  &:hover {
+    opacity: 1;
+  }
 
   &:after,
   &:before {
@@ -80,8 +86,6 @@ const Item = styled.div`
       }
     }
   }
-
-  opacity: 0.8;
 `
 
 const LogoWall = () => {
