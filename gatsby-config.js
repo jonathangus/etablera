@@ -91,21 +91,12 @@ module.exports = {
 
     'gatsby-plugin-netlify-cache',
     'gatsby-plugin-sitemap',
-    // {
-    //   resolve: `gatsby-plugin-prefetch-google-fonts`,
-    //   options: {
-    //     fonts: [
-    //       {
-    //         family: `Poppins`,
-    //         variants: ['400', '700', '800'],
-    //       },
-    //       {
-    //         family: 'Karla',
-    //         variants: ['400', '700'],
-    //       },
-    //     ],
-    //   },
-    // },
+    {
+      resolve: `gatsby-plugin-google-fonts`,
+      options: {
+        fonts: [`Poppins\:400,700,800`, `Karla\:400,700`],
+      },
+    },
     {
       resolve: 'gatsby-plugin-styled-components',
       options: {
